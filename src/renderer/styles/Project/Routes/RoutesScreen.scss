@@ -1,0 +1,24 @@
+@import '../../config';
+
+.routesContainer {
+    width: 100%;
+    min-height: 100px;
+}
+
+.headerContainer {
+    padding: 20px 12px 0px 12px;
+    margin-bottom: 5px;
+    font-size: $para4;
+}
+
+.routeHeader {
+    font-weight: bold;
+}
+
+.groupActionBtn {
+    background-color: transparent;
+    color: black;
+    padding: 0px;
+    font-size: 20px;
+    margin-right: 20px;
+}

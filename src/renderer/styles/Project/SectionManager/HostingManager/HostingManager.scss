@@ -1,0 +1,68 @@
+@import '../../projectConfig';
+@import '../../../config';
+
+.hostingManager {
+    height: 100%;
+    width: 100%;
+    padding: 20px $sectionHorizPadding;
+
+    .title {
+        font-size: $para2;
+    }
+}
+
+.hostingManager .row1 {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0px;
+
+    .actionBtn {
+        height: 30px;
+        width: fit-content;
+        font-size: $para5;
+        color: #333;
+        font-weight: 400;
+        margin: 0px;
+    }
+}
+
+.sectionTitle {
+    font-weight: bold;
+    font-size: $para3;
+}
+
+.noBuildsTxt {
+    color: $textGrey;
+    font-size: $para3;
+    margin-top: 8px;
+}
+
+.buildRow {
+    display: flex;
+    align-items: center;
+    height: 30px;
+
+    .statusIcon {
+        font-size: $para6;
+        margin-right: 10px;
+    }
+
+    .successIcon {
+        color: rgb(0, 190, 95)
+    }
+
+    .failIcon {
+        color: $errColor;
+    }
+
+    .buildId {
+        font-size: $para4;  
+        width: 100px;
+    }
+
+    .buildTime {
+        font-size: $para5;
+        color: $textGrey;
+    }
+}

@@ -1,0 +1,81 @@
+import { RootState } from '@/renderer/redux/store';
+import { BModuleType } from '@/shared/models/BModule';
+import { RenFuncs } from '@/shared/utils/RenFuncs';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import CreateModalHeader from '../General/CreateModalHeader';
+import { Button, Input } from 'antd';
+import Margin from '@/renderer/components/general/Margin';
+import { envConsts } from '@/renderer/misc/constants';
+
+function CreateStripe({ setSelection, selection }: any) {
+  const dispatch = useDispatch();
+  const curProject = useSelector(
+    (state: RootState) => state.app.currentProject
+  );
+
+  const [errText, setErrText] = useState('');
+  const [createLoading, setCreateLoading] = useState(false);
+  const [details, setDetails] = useState({
+    testKey: '',
+    liveKey: '',
+  });
+
+  const onCreate = async () => {
+    setCreateLoading(true);
+
+    let envData: any = {};
+    envData[envConsts.STRIPE_TEST_KEY] = details.testKey;
+    envData[envConsts.STRIPE_LIVE_KEY] = details.liveKey;
+    let { newModule, newFuncs, error } = await window.electron.createModule({
+      key: selection,
+      projId: curProject?._id,
+      projKey: curProject?.key,
+      ...envData,
+    });
+
+    if (error) {
+      setCreateLoading(false);
+      return;
+    }
+
+    setCreateLoading(false);
+    RenFuncs.createModuleSuccess(dispatch, newModule, newFuncs);
+  };
+
+  const disabled = () => {
+    return details.testKey == '' || details.liveKey == '';
+  };
+  return (
+    <div className="createModule">
+      <CreateModalHeader setSelection={setSelection} title="stripe" />
+      <div className="middleBar">
+        <p className="inputTitle">Test Key</p>
+        <Input
+          onChange={(e) => setDetails({ ...details, testKey: e.target.value })}
+          value={details.testKey}
+          className="createInput"
+          placeholder="Test API Key"
+        />
+
+        <Margin height={20} />
+        <p className="inputTitle">Live Key</p>
+        <p className="inputDescription">
+          You may use your test key in this field first, and change it later on.
+        </p>
+        <Input
+          onChange={(e) => setDetails({ ...details, liveKey: e.target.value })}
+          value={details.liveKey}
+          className="createInput"
+          placeholder="Production API Key"
+        />
+      </div>
+      <Margin height={20} />
+      <Button loading={createLoading} onClick={onCreate} disabled={disabled()}>
+        Create
+      </Button>
+    </div>
+  );
+}
+
+export default CreateStripe;

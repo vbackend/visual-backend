@@ -1,0 +1,22 @@
+import { stripeCli } from "@/modules/stripe/init.js";
+
+export const stripeWebhookHandler = (req, res) => {
+	let event = req.body;
+	console.log("Received webhook:", event.type);
+
+	switch (event.type) {
+		case "checkout.session.expired":
+			// When checkout session created, but not completed
+			let checkoutSess = event.data.object;
+
+		case "invoice.paid":
+			// when checkout or subscription successfully completes
+			let paidInvoice = event.data.object;
+
+		case "invoice.payment_failed":
+			// when checkout or subscription successfully fails
+			let failedInvoice = event.data.object;
+	}
+
+	res.status(200).send();
+};

@@ -1,0 +1,15 @@
+@import '../../projectConfig';
+@import '../../../config';
+
+.createMongoDb .headerBar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+
+    .header {
+        font-weight: bold;
+        margin-left: 10px;
+    }
+}
+

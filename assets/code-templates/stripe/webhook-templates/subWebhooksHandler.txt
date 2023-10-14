@@ -1,0 +1,35 @@
+import { stripeCli } from '@/modules/stripe/init.js';
+import { subInvoicePaid } from '@/modules/stripe/subInvoicePaid.js'
+import { subInvoicePaymentFailed } from '@/modules/stripe/subInvoicePaymentFailed.js'
+import { subUpdated } from '@/modules/stripe/subUpdated.js'
+import { subDeleted } from '@/modules/stripe/subDeleted.js'
+
+export const subWebhooksHandler = async (req, res) => {
+	let event = req.body;
+
+	switch (event.type) {
+		
+		// subscription payment success
+		case "invoice.paid":
+			await subInvoicePaid(event.data.object);
+			break;
+
+		// subscription payment failed
+		case "invoice.payment_failed":
+			await subInvoicePaymentFailed(event.data.object);
+			break;
+
+		// subscription cancelled
+		case "customer.subscription.updated":
+			await subUpdated(event.data.object);
+			break;
+
+		// subscription deleted, set status to deleted
+		case "customer.subscription.deleted":
+			await subDeleted(event.data.object);
+			break;
+
+	}
+
+	res.status(200).send();
+};

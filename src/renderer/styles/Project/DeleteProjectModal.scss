@@ -1,0 +1,34 @@
+@import '../config';
+@import './projectConfig';
+
+.deleteProject .contentContainer {
+    min-width: none;
+    max-width: none;
+    width: 350px;
+}
+
+.deleteProject .contentContainer .middleBar {
+    
+    .description {
+        color: $textGrey;
+        font-size: $para5;
+        ;
+    }
+
+    .projectKeyTxt {
+        width: fit-content;
+        margin: 15px 0px;
+        padding: 5px 10px;
+        font-size: $para5;
+        background-color: #eee;
+        border-radius: 5px;
+        font-weight: 600;
+
+    }
+}
+
+.btnText {
+    margin-top: 5px;
+    font-size: $para5;
+    color: $textGrey;
+}

@@ -1,0 +1,67 @@
+@import '../projectConfig';
+@import '../../config';
+
+.packageManager .headerContainer {
+    padding: $sectionHeaderPadding;
+
+    .header {
+        font-size: $para2;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .installHeader {
+        font-weight: 600;
+        margin-bottom: 5px;
+        font-size: $para3;
+    }
+}
+
+.packageManager .middleContainer {
+    margin-top: 20px;
+
+    .header {
+        margin-bottom: 10px;
+        font-size: $para3;
+        font-weight: 600;
+        padding: 0px $sectionHorizPadding;
+    }
+
+    .pkgRow {
+        padding: 0px $sectionHorizPadding;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 35px;
+        font-size: $para4;
+        transition: 0.2s;
+
+        &:hover {
+            background-color: #fafafa;
+        }
+    }
+
+    .pkgRow .left {
+        display: flex;
+        
+        .pkgName {
+            width: 100px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .pkgVersion {
+            width: 80px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
+
+    .delBtn {
+        height: 80%;
+        @include flexCenter(row);
+        color: grey;
+    }
+}

@@ -1,0 +1,5 @@
+import { openaiCli } from '@/modules/gpt/init.js'
+
+export const ${funcName} = () => {
+	
+};

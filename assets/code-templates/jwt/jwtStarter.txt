@@ -1,0 +1,5 @@
+import jwt from 'jsonwebtoken'
+
+export const ${funcName} = async () => {
+    
+}

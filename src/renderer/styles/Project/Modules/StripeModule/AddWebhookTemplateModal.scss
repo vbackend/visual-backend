@@ -1,0 +1,42 @@
+@import '../../projectConfig';
+@import '../../../config';
+
+.addWebhookTemplateModal .contentContainer{
+    min-width: none;
+    max-width: none;
+    width: 350px;
+}
+
+.webhookTemplateContainer {
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+    padding: 15px 12px;
+    border-radius: 6px;
+    font-weight: 500;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    transition: 0.2s;
+
+    &:hover {
+        transform: translateY(-2px);
+    }
+}
+
+.webhookTemplateContainer .row1 {
+    display: flex;
+    align-items: center;
+
+    .icon {
+        margin-right: 12px;
+        width: 25px;
+    }
+
+    .name {
+        font-size: $para3;
+        color: $textSecondary;
+        padding-bottom: 1px;
+        font-weight: 600;
+    }
+}

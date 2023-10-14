@@ -1,0 +1,6 @@
+import { mongoCli, defaultDb } from '@/modules/mongo/init.js'
+
+export const ${funcName} = async () => {
+    
+}
+    

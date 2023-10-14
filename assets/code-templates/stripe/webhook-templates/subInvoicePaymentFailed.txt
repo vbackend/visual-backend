@@ -1,0 +1,22 @@
+import { stripeCli } from '@/modules/stripe/init.js';
+
+export const subInvoicePaymentFailed = async (data) => {
+	let {
+		id, // stripe invoice id
+		customer, // stripe customer id
+		customer_email, // customer email
+		subscription, // stripe subscription id
+		status, // invoice status,
+		billing_reason, // 
+		lines, // array of items
+		attempt_count, // number of attempts
+	} = data;
+
+	let firstItem = lines.data[0];
+	let priceId = firstItem.price.id;
+
+	if (billing_reason != 'subscription_cycle') return;
+
+	// handle sub invoice payment failed
+	
+};

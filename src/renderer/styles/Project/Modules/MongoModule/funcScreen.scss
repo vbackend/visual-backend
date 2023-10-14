@@ -1,0 +1,21 @@
+@import '../../config';
+@import '../projectConfig';
+
+
+$topbarHeight: 40px;
+.mongoScreen {
+    width: 100%;
+    height: calc(100% - 40px);
+}
+
+.mongoScreen .topBar {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    padding: 0px 10px;
+    justify-content: space-between;
+}
+
+.my-ace-editor .ace_gutter, .ace_scroller{
+    background-color: #FAFAFA;
+}

@@ -1,0 +1,24 @@
+import { parseToken } from '@/modules/jwt/parseToken.js'
+
+export const jwtAuthMiddleware = async (req, res, next) => {
+  let authHeader = req.headers.authorization;
+
+  if (!authHeader) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
+
+  const token = authHeader.split(' ')[1];
+
+  try {
+    const decodeValue = await parseToken(token, 'access');
+
+    if (decodeValue) {
+      console.log(decodeValue);
+      return next();
+    }
+
+    return res.status(401).json({ message: 'Unauthorized' });
+  } catch (e) {
+    return res.status(500).json({ message: 'Internal Error' });
+  }
+};

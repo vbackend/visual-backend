@@ -1,0 +1,15 @@
+import Stripe from "stripe";
+
+export let stripeCli: Stripe;
+
+export const initStripe = async () => {
+	let key: string;
+	if (process.env.NODE_ENV == "production") {
+		key = process.env.STRIPE_LIVE_KEY;
+	} else {
+		key = process.env.STRIPE_TEST_KEY;
+	}
+
+	stripeCli = new Stripe(key, null);
+	console.log("Stripe module initialised");
+};

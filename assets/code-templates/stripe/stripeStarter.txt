@@ -1,0 +1,5 @@
+import { stripeCli } from "@/modules/stripe/init.js";
+
+export const ${funcName} = async () => {
+    
+}

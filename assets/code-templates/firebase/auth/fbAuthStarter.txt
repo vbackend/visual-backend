@@ -1,0 +1,6 @@
+import { auth } from "@/modules/firebase/init.js";
+
+export const ${funcName} = async () => {
+    
+    
+}

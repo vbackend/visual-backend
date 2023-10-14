@@ -1,0 +1,11 @@
+@import '../projectConfig';
+@import '../../config';
+
+.sectionManager {
+    max-width: $sectionManagerWidth;
+    min-width: $sectionManagerWidth;
+    height: 100vh;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.05) 3px 0px 3px;
+    z-index: 10;
+}

@@ -1,0 +1,16 @@
+@import '../../config';
+
+.endpointContainer {
+    width: 100%;
+}
+
+$topBarHeight: 40px;
+.topBar {
+    height: $topBarHeight;
+    display: flex;
+}
+
+.middleBar {
+    width: 100%;
+    height: calc(100% - $topBarHeight);
+}

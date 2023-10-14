@@ -1,0 +1,21 @@
+
+steps:
+    # Build the Docker image
+    - name: 'gcr.io/cloud-builders/docker'
+      args: ['build', '-t', 'asia-southeast1-docker.pkg.dev/$PROJECT_ID/visual-backend/64e783dd0aef5509c408938a', '.']
+
+    # Push the Docker image to Container Registry
+    - name: 'gcr.io/cloud-builders/docker'
+      args: ['push', 'asia-southeast1-docker.pkg.dev/$PROJECT_ID/visual-backend/64e783dd0aef5509c408938a']
+
+    # Deploy the Docker image to Cloud Run
+    - name: 'gcr.io/cloud-builders/gcloud'
+      args: ['run', 'deploy', 'id-64e783dd0aef5509c408938a', 
+          '--image', 'asia-southeast1-docker.pkg.dev/$PROJECT_ID/visual-backend/64e783dd0aef5509c408938a', 
+          '--platform', 'managed', 
+          '--region', 'asia-east1',
+          '--allow-unauthenticated'
+          ]
+        
+images:
+    - 'asia-southeast1-docker.pkg.dev/$PROJECT_ID/visual-backend/64e783dd0aef5509c408938a'    

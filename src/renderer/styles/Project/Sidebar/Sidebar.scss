@@ -1,0 +1,172 @@
+@import '../../config';
+
+.sidebarContainer {
+    height: 100vh;
+    background-color: #FAFAFA;
+
+    min-width: $sidebarWidth;
+    max-width: $sidebarWidth;
+    display: flex;
+    flex-direction: column;
+    // justify-content: space-between;
+
+    padding: 20px 10px;
+    font-size: 16px;
+
+    .projectName {
+        font-size: $para2;
+        font-weight: bold;
+        margin-bottom: 10px;
+        padding-left: 8px;
+    }
+}
+
+
+.homeBtn {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+
+    .icon {
+        font-size: $para3;
+        padding-left: 8px;
+    }
+}
+
+$sidebarSecondary: #6e6f7f;
+.sidebarContainer .sidebarBtn {
+    padding: 0px 8px;
+    border-radius: 5px;
+    width: 100%;
+    text-align: start;
+    font-size: 14px;
+    font-weight: 500;
+    height: 35px;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    user-select: none;
+    cursor: pointer;
+    
+
+    .left {
+        display: flex;
+        align-items: center;
+    }
+
+    .iconContainer {
+        font-size: $para4;
+        width: 30px;
+        display: flex;
+        justify-content: flex-start;
+        color: $sidebarSecondary;
+    }
+
+    .iconContainer .icon {
+        transform-origin: 0;
+    }
+
+    .name {
+        width: 80px;
+        font-size: $para3;
+        color: #6e6f7f
+    }
+
+    .right {
+        padding-right: 5px;
+    }
+}
+
+.addIcon {
+    color: darken($sidebarSecondary, 10%);
+    margin-top: 2px;
+}
+
+$sidebarActive: rgb(0, 115, 255);
+$activeBgColor: #DAE4FF;
+.sidebarContainer .curSidebarBtn {
+    background-color: #DAE4FF;
+    .iconContainer {
+        color: $sidebarActive
+    }
+
+    .name {
+        color: $sidebarActive
+    }
+}
+
+.newModuleIcon {
+    font-size: 15px;
+    color: darken($sidebarSecondary, 10%);
+}
+
+.moduleBtnsContainer {
+    padding: 0px 15px;
+    padding-right: 0px;
+    margin-bottom: 10px;
+
+    .moduleBtn {
+        border-left: 1px solid grey;
+        width: 100%;
+        display: flex;
+        padding: 5px 10px;
+        border-radius: 5px;
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+        font-size: $para3;
+        font-weight: 500;
+        color: $sidebarSecondary;
+        justify-content: space-between; 
+        padding-right: calc(8px);
+
+        .right {
+            padding-right: 5px;
+            color: black;
+        }
+
+        &:hover {
+            background-color: #eee;
+        }
+    }
+
+    .moduleBtnActive {
+        background-color: $activeBgColor !important;
+        color: $sidebarActive;
+        border-left: 2px solid $sidebarActive;
+    }
+}
+
+.sidebarContainer .hintsContainer {
+    padding: 8px;
+    font-size: $para5;
+
+    .title {
+        font-weight: bold;
+    }
+
+    .infoText {
+        color: $sidebarSecondary;
+    }
+
+    .shortcutText {
+        margin-bottom: 5px;
+        span {
+            font-weight: bold;
+        }
+    }
+}
+
+.sidebarContainer .deleteBtn {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    position: absolute;
+    bottom: 20px;
+    font-size: $para3;
+    color: $errColor;
+
+    .icon {
+        font-size: $para4;
+    }
+}

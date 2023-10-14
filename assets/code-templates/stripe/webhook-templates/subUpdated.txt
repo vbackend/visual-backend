@@ -1,0 +1,14 @@
+import { stripeCli } from '@/modules/stripe/init.js';
+
+export const subUpdated = async (data) => {
+	let { 
+        id, // stripe sub id
+        cancel_at, // when sub will expire
+        cancel_at_period_end, // sub will cancel at end of cycle
+        customer // stripe customer id
+    } = data;
+
+	if (cancel_at_period_end) {
+        // customer cancelled subscription
+	}
+};

@@ -1,0 +1,23 @@
+import jwt from 'jsonwebtoken'
+
+export const parseToken = (accessToken, type) => {
+
+    let secretKey;
+    if (type == 'access') {
+        secretKey = process.env.JWT_ACCESS_SECRET
+    } else {
+        secretKey = process.env.JWT_REFRESH_SECRET
+    }
+
+    try {
+        // Verify and decode the token using the secret key
+        const decoded = jwt.verify(accessToken, secretKey);
+
+        // Return the decoded payload
+        return decoded;
+    } catch (error) {
+        // Handle errors if token verification fails
+        console.error('Error verifying access token:', error);
+        return null;
+    }
+};

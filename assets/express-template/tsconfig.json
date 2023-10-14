@@ -1,0 +1,29 @@
+{
+  "ts-node": {
+    "compiler": "ts-patch/compiler"
+  },
+  "ts-node-esm": {
+    "compiler": "ts-patch/compiler"
+  },
+  "compilerOptions": {
+    "skipLibCheck": true,
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "target": "ES2020",
+    "sourceMap": true,
+    "outDir": "dist",
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["*"]
+    },
+    "plugins": [
+      // Transform paths in output .js files
+      { "transform": "typescript-transform-paths" },
+
+      // Transform paths in output .d.ts files (Include this line if you output declarations files)
+      { "transform": "typescript-transform-paths", "afterDeclarations": true }
+    ],
+    "typeRoots": ["node_modules/@types"]
+  },
+  "include": ["src/**/*"]
+}

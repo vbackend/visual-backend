@@ -1,0 +1,97 @@
+@import '../../../config';
+@import '../../projectConfig';
+
+
+.fbAuthScreen .mainContainer{
+    .description {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .description .addBtn {
+        margin-right: 10px;
+        .icon {
+            margin-right: 5px;
+        }
+    }
+}
+
+.fbAuthScreen .infoContainer {
+    .variableContainer {
+        display: flex;
+
+        .varName {
+            font-weight: bold;
+        }
+    }
+}
+
+// .mongoScreen .mainContainer {
+//     width: 100%;
+//     padding: 0px $sectionHorizPadding;
+//     font-weight: bold;
+//     font-size: $para4;
+//     box-shadow: none;
+
+//     .description .title {
+//         margin-bottom: 5px;
+//     }
+
+//     .description .info {
+//         font-weight: 500;
+//         font-size: $para5;
+//     }
+// }
+
+// .mongoScreen .mainContainer {
+//     justify-content: flex-start;
+// }
+
+// .mongoScreen .mainContainer .colContainer {
+
+//     background-color: white;
+//     border-radius: 5px;
+//     padding: 10px 10px;
+//     width: 100%;
+//     box-shadow: rgba(0, 0, 0, 0.02) 0px 6px 20px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+//     margin-bottom: 20px;
+
+//     .colHeader {
+//         display: flex;
+//         align-items: center;
+//         justify-content: space-between;
+//         width: 100%;
+//         height: 30px;
+
+//         .colTitle {
+//             margin-right: 10px;
+//         }
+
+//         .createBtn {
+//             display: flex;
+//             align-items: center;
+//             height: 100%;
+//             font-size: $para5;
+//             width: 100px;
+//             color: #555;
+//             font-family: $primary-font;
+//         }
+//     }
+
+//     .funcContainer {
+//         padding: 0px 10px;
+//         margin: 0px 10px;
+//         height: 30px;
+//         display: flex;
+//         align-items: center;
+//         border-left: 1px solid #222;
+//         font-size: $para5;
+//         font-weight: 500;
+//         transition: 0.2s    ;
+//         &:hover {
+//             background-color: #EEE;
+//         }
+//     }
+// }

@@ -1,0 +1,49 @@
+$primary-font: 'Figtree';
+$font2: 'Inter';
+
+$primaryColor: #007bff;
+$errColor:  rgb(255, 31, 87);
+$successColor: rgb(0, 190, 95);
+$textSecondary: #444;
+$textGrey: #666;
+
+$sidebarWidth: 180px;
+$sectionManagerWidth: 250px;
+$bgColor1: white;
+$bgColor2: #FAFAFA;
+
+@mixin flexCenter($flex-direction) {
+    display: flex;
+    flex-direction: $flex-direction;
+    justify-content: center;
+    align-items: center;
+}
+
+
+$header1: 24px;
+$header2: 22px;
+$header3: 20px;
+$header4: 19px;
+$header5: 18px;
+$para1: 17px;
+$para2: 16px;
+$para3: 15px;
+$para4: 14px;
+$para5: 13px;
+$para6: 12px;
+$antdRadius: 6px;
+
+@mixin primaryGradient() {
+    background: #4776E6;  
+    background: -webkit-linear-gradient(to right, #8E54E9, #4776E6); 
+    background: linear-gradient(to right, #8E54E9, #3d55f6);
+}
+
+@mixin primaryGradientText() {
+    background: #4776E6;
+    background: -webkit-linear-gradient(to bottom, #8E54E9, #4776E6); 
+    background: linear-gradient(to right, #8E54E9, #3d55f6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}

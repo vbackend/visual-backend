@@ -1,0 +1,37 @@
+@import '../config';
+
+.newPremiumModal .contentContainer{
+    width: 370px;
+    max-width: none;
+    min-width: none;
+    padding: 10px 25px;
+}
+
+.newPremiumModal .contentContainer .topBar {
+    justify-content: flex-end;
+    margin-bottom: 0px;
+
+    button .icon {
+        color: $textGrey
+    }
+}
+
+.newPremiumModal .contentContainer .middleContainer {
+    .title {
+        font-size: $header3;
+        
+        .icon {
+            margin-right: 10px;
+        }
+
+        span {
+            @include primaryGradientText();
+        }
+    }
+
+    .thankYouTxt {
+        font-size: $para3;
+        color: $textSecondary;
+
+    }
+}

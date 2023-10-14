@@ -1,0 +1,12 @@
+@import '../../../config';
+@import '../../projectConfig';
+
+.fbFirestoreScreen .infoContainer {
+    .variableContainer {
+        display: flex;
+
+        .varName {
+            font-weight: bold;
+        }
+    }
+}

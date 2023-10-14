@@ -1,0 +1,60 @@
+@import '../config';
+
+.upgradeModal .contentContainer {
+    max-width: none;
+    width: 380px;
+    padding: 30px;
+}
+
+.upgradeModal .contentContainer .topBar {
+    .title {
+        font-size: $header2;
+        span {
+            @include primaryGradientText();
+        }
+    }
+
+    .icon {
+        font-size: $header3;
+        color: $textGrey;
+    }
+}
+
+.benefitsContainer {
+    display: flex;
+    flex-direction: column;
+
+    .row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+
+        .icon {
+            margin-right: 10px;
+            font-size: $para3;
+        }
+
+        .text {
+            font-size: $para2;
+            font-weight: 600;
+        }
+    }
+}
+
+.upgradeBtn {
+    font-size: $para1;
+    @include flexCenter(row);
+    width: 100%;
+    @include primaryGradient();
+    color: white;
+    height: 40px;
+    border-radius: 10px;
+
+    &:hover {
+        background: linear-gradient(to right, #7834e6, #1632e8);
+    }
+
+    .icon {
+        margin-right: 10px;
+    }
+}

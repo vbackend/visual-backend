@@ -1,0 +1,62 @@
+@import '../config';
+@import './projectConfig';
+
+.modalBackground {
+    @include modalBg;
+    z-index: 1000;
+}
+
+.modalBackground .searchContainer {
+    width: 350px;
+    background-color: white;
+    padding: 10px;
+
+    .ant-input-affix-wrapper  {
+       .ant-input-prefix {
+            margin-right: 10px;
+            font-size: 13px;
+            color: grey;
+       }
+    }
+}
+
+.funcSearchInput {
+    box-shadow: none;
+    border: 1px solid #ccc;
+    border-radius: 5px !important;
+    margin-bottom: 10px;
+
+    .ant-input-prefix {
+        font-size: 12px !important;
+    }
+
+    &:hover {
+        border-color: #ccc !important;
+    }
+}
+
+.searchContainer .funcsContainer .funcContainer {
+    width: 100%;
+    height: 20px;
+    padding: 14px 10px;
+    font-weight: 0px;
+    display: flex;
+    align-items: center;
+    font-size: $para4;
+    font-weight: 500;
+    color: #555;
+    border-radius: 2px;
+
+    &:hover {
+        background-color: #fafafa;
+    }
+}
+
+.activeFuncSelection {
+    background-color: #d8d8d8;
+    color: black !important;
+
+    &:hover {
+        background-color: #d8d8d8 !important;
+    }
+}

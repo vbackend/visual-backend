@@ -1,0 +1,21 @@
+@import '../../config';
+@import '../projectConfig';
+
+
+$topbarHeight: 40px;
+.funcScreen {
+    width: 100%;
+    height: calc(100vh - 40px);
+}
+
+.funcScreen .topBar {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    padding: 0px 10px;
+    justify-content: space-between;
+}
+
+.my-ace-editor .ace_gutter, .ace_scroller{
+    background-color: white;
+}

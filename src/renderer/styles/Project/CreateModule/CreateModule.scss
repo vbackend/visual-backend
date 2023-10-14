@@ -1,0 +1,11 @@
+@import '../../config';
+@import '../projectConfig';
+
+.createModule .headerBar {
+    @include createModuleHeaderBar();
+}
+
+.inputDescription {
+    margin-bottom: 20px;
+    font-size: $para5;
+}

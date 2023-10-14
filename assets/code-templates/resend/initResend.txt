@@ -1,0 +1,7 @@
+import { Resend } from "resend";
+export let resendCli: Resend;
+
+export const initResend = () => {
+	resendCli = new Resend(process.env.RESEND_API_KEY);
+	console.log("Resend module initialised");
+};

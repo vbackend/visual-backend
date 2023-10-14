@@ -1,0 +1,5 @@
+import { firestore } from "@/modules/firebase/init.js";
+
+export const ${funcName} = async () => {
+    
+}

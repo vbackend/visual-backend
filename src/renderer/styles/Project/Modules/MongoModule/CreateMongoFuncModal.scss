@@ -1,0 +1,26 @@
+@import '../../projectConfig';
+@import '../../../config';
+
+
+.createDbFuncModal .contentContainer {
+    width: 300px;
+    background-color: white;
+    padding: 20px;
+}
+
+.contentContainer .topBar {
+    height: 30px;
+}
+
+.inputTitle {
+    margin-bottom: 10px;
+    font-size: $para4;
+    font-weight: 600;
+}
+
+.contentContainer .middleContainer {
+
+    .input {
+        font-size: 13px;
+    }
+}

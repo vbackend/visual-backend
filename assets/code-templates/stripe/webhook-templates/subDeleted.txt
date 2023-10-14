@@ -1,0 +1,15 @@
+import { stripeCli } from '@/modules/stripe/init.js';
+
+export const subDeleted = async (data) => {
+    let { 
+        id, // stripe sub id
+        customer, // stripe customer id
+        cancel_at_period_end
+    } = data;
+
+    if (cancel_at_period_end) {
+	  // expired after being cancelled by user
+	} 
+
+	// handle sub expired completely
+};

@@ -1,0 +1,5 @@
+import { resendCli } from "@/modules/resend/init.js";
+
+export const ${funcName} = async () => {
+	
+};

@@ -1,0 +1,59 @@
+import { MongoClient } from 'mongodb';
+import { GenFuncs } from '@/shared/utils/GenFuncs';
+import { removeEnvVar, writeIndexFile } from '../../project/templateGenerate';
+import { createModuleQuery } from '../../../db/modules/moduleQueries';
+import { writeMongoDbInit } from '@/main/generate/modules/mongo';
+import { FileFuncs } from '@/main/helpers/fileFuncs';
+import { PathFuncs } from '@/shared/utils/MainFuncs';
+import path from 'path';
+
+export const getMongoDbs = async (
+  event: Electron.IpcMainInvokeEvent,
+  payload: string
+) => {
+  await GenFuncs.timeout(500);
+  try {
+    let client = new MongoClient(payload);
+    await client.connect();
+    const admin = client.db('admin');
+
+    const result = await admin.command({ listDatabases: 1, nameOnly: true });
+    return result.databases;
+  } catch {
+    console.log('Failed to get mongo client');
+    return undefined;
+  }
+};
+
+export const getDbCols = async (connString: string, dbName: string) => {
+  const client = new MongoClient(connString);
+  try {
+    await client.connect();
+    const database = client.db(dbName);
+    const collectionNames = await database.listCollections().toArray();
+    const collectionNamesArray = collectionNames.map(
+      (collection) => collection.name
+    );
+    return collectionNamesArray;
+  } catch (err) {
+    console.error('Error getting collections:', err);
+    throw err;
+  } finally {
+    client.close();
+  }
+};
+
+export const getMongoCols = async (
+  event: Electron.IpcMainInvokeEvent,
+  payload: any
+) => {
+  // 1. get cols
+  const { connString, dbName } = payload;
+  console.log('Getting monogodb funcs');
+  try {
+    let cols = await getDbCols(connString, dbName);
+    return { cols };
+  } catch (error) {
+    return { error: 'Failed to connect to mongodb' };
+  }
+};

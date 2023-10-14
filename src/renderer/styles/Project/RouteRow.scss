@@ -1,0 +1,42 @@
+@import '../config';
+
+.routeRow {
+    max-width: 100%;
+    @include flexCenter(row);
+    justify-content: flex-start;
+    height: 35px;
+    padding: 0px 15px;
+    transition: 0.2s;
+    user-select: none;
+    font-size: 14px;
+    cursor: pointer;
+
+    .type {
+        font-weight: bold;
+        width: 70px;
+    }
+
+    .path {
+        width: 140px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .chevronIcon {
+        font-size: 12px;
+        margin-right: 10px;
+        transition: 0.2s;
+    }
+
+    .chevronIconOpened {
+        transform: rotateZ(90deg);
+    }
+
+    .chevronIconHidden {
+        color: transparent !important;
+    }
+
+    &:hover {
+        background-color: #EFEFEF;
+    }
+}

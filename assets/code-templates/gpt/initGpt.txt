@@ -1,0 +1,8 @@
+import OpenAI from "openai";
+
+export let openaiCli: OpenAI;
+export const initGpt = () => {
+	openaiCli = new OpenAI({
+		apiKey: process.env.OPENAI_API_KEY,
+	});
+};
