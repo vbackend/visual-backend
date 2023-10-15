@@ -6,7 +6,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import '../../styles/Project/RouteRow.scss';
+import '@/renderer/styles/Project/RouteRow.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faChevronLeft,

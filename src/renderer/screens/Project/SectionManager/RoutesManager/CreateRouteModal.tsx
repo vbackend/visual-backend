@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useState } from 'react';
-import '../../styles/Project/CreateRouteModal.scss';
+import '@/renderer/styles/Project/CreateRouteModal.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/pro-solid-svg-icons';
 import { Button, Dropdown, Input, Menu, MenuProps, Select } from 'antd';

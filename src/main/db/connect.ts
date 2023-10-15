@@ -19,18 +19,6 @@ export const createTables = async () => {
         type STRING
       );
   `;
-
-  // 2. db_conn
-  const createDbConnTable = `
-      CREATE TABLE IF NOT EXISTS db_conn (
-				conn_id INTEGER PRIMARY KEY AUTOINCREMENT,
-				project_id STRING,
-				db_type STRING,
-				conn_string STRING,				
-				db_name STRING				
-      );
-  `;
-
   // 3. table params
   const createFuncTable = `
 			CREATE TABLE IF NOT EXISTS func (

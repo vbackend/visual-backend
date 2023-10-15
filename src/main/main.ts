@@ -26,12 +26,12 @@ import {
   createModule,
   deleteModule,
   showModuleContextMenu,
-} from './ipc/modules/moduleFuncs';
+} from './ipc/project/modules/moduleFuncs';
 import {
   getDbCols,
   getMongoCols,
   getMongoDbs,
-} from './ipc/modules/mongodb/mongoFuncs';
+} from './ipc/project/modules/mongodb/mongoFuncs';
 import {
   createProject,
   deleteProject,
@@ -384,16 +384,16 @@ import {
   checkFirebaseCredentials,
   getCurrentFirebase,
   setFirestoreMetadata,
-} from './ipc/modules/firebase/firebaseFuncs';
+} from './ipc/project/modules/firebase/firebaseFuncs';
 import {
   createEnvVar,
   deleteEnvVar,
   editEnvVars,
   getEnvVars,
 } from './ipc/project/envFuncs';
-import { createEmailTemplate } from './ipc/modules/resend/resendFuncs';
-import { createFunc, deleteFunc } from './ipc/modules/funcFuncs';
-import { addWebhookTemplates } from './ipc/modules/stripe/stripeFuncs';
+import { createEmailTemplate } from './ipc/project/modules/resend/resendFuncs';
+import { createFunc, deleteFunc } from './ipc/project/modules/funcFuncs';
+import { addWebhookTemplates } from './ipc/project/modules/stripe/stripeFuncs';
 import {
   openCheckoutPage,
   openCustomerPortal,

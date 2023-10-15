@@ -1,6 +1,5 @@
 import { insertFuncQuery } from '@/main/db/funcs/funcQueries';
-import { envConsts } from '@/renderer/misc/constants';
-import { BModuleType, modConfig } from '@/shared/models/BModule';
+import { modConfig } from '@/shared/models/BModule';
 import { FileFuncs } from '@/main/helpers/fileFuncs';
 import { PathFuncs } from '@/shared/utils/MainFuncs';
 import path from 'path';

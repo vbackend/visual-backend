@@ -1,23 +1,14 @@
 import path from 'path';
-import { app } from 'electron';
-import {
-  simpleGit,
-  SimpleGit,
-  CleanOptions,
-  SimpleGitOptions,
-} from 'simple-git';
+import fs from 'fs-extra';
+import { simpleGit, SimpleGit, SimpleGitOptions } from 'simple-git';
 import { connectDb, db, disconnectDb } from '../../db/connect';
-import { getProjectRoutes } from '../../db/projects/projectQueries';
-import { createRouterGroupFolder, writeRouterFile } from './templateGenerate';
-import { insertRoute } from '../../db/route/routeQueries';
-import { MongoClient } from 'mongodb';
+import { ProjectService } from '@/main/services/ProjectService';
+import { getRoutes, insertRoute } from '../../db/route/routeQueries';
 import { getModuleFuncs, getModules } from '@/main/db/modules/moduleQueries';
-import { GenFuncs } from '@/shared/utils/GenFuncs';
-import { Route, RouteType } from '@/shared/models/route';
+import { RouteType } from '@/shared/models/route';
 import { FileFuncs } from '@/main/helpers/fileFuncs';
 import { installPackages } from '@/main/generate/install';
 import { MainFuncs, PathFuncs } from '@/shared/utils/MainFuncs';
-import axios from 'axios';
 
 import {
   generateCloudBuildYaml,
@@ -77,7 +68,7 @@ export const initProject = async (
   await connectDb(projKey);
 
   // make db
-  let routes = await getProjectRoutes();
+  let routes = await getRoutes();
 
   // Get project modules & funcs
   let modules = await getModules();
@@ -90,6 +81,7 @@ export const initProject = async (
   };
 };
 
+// Called before project is deployed
 export const updateYamlAndGitPush = async (
   event: Electron.IpcMainInvokeEvent,
   payload: any
@@ -145,8 +137,6 @@ export const updateYamlAndGitPush = async (
   return true;
 };
 
-import fs from 'fs-extra';
-import { ProjectService } from '@/main/services/ProjectService';
 export const deleteProject = async (
   event: Electron.IpcMainInvokeEvent,
   payload: any

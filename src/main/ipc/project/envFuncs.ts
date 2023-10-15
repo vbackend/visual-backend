@@ -1,7 +1,7 @@
+import { removeEnvVar, updateEnvVars, writeEnvVars } from '@/main/generate/env';
 import { PathFuncs } from '@/shared/utils/MainFuncs';
 import fs from 'fs';
 import path from 'path';
-import { removeEnvVar, updateEnvVars, writeEnvVars } from './templateGenerate';
 
 function parseEnvFile(filePath: string) {
   try {

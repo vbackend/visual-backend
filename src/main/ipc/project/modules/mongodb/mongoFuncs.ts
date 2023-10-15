@@ -1,11 +1,5 @@
 import { MongoClient } from 'mongodb';
 import { GenFuncs } from '@/shared/utils/GenFuncs';
-import { removeEnvVar, writeIndexFile } from '../../project/templateGenerate';
-import { createModuleQuery } from '../../../db/modules/moduleQueries';
-import { writeMongoDbInit } from '@/main/generate/modules/mongo';
-import { FileFuncs } from '@/main/helpers/fileFuncs';
-import { PathFuncs } from '@/shared/utils/MainFuncs';
-import path from 'path';
 
 export const getMongoDbs = async (
   event: Electron.IpcMainInvokeEvent,

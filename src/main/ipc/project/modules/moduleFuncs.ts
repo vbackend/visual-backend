@@ -19,13 +19,11 @@ import {
   createModuleQuery,
   deleteModuleQuery,
 } from '@/main/db/modules/moduleQueries';
-import {
-  removeEnvVar,
-  writeEnvVars,
-  writeIndexFile,
-} from '../project/templateGenerate';
+
 import { deletePackages, installPackages } from '@/main/generate/install';
 import { writeModuleStarterFuncs, writeModuleTemplate } from './helpers';
+import { removeEnvVar, writeEnvVars } from '@/main/generate/env';
+import { writeIndexFile } from '@/main/generate/general';
 
 export const getModuleFromConfig = (mConfig: any) => {
   return {
@@ -75,9 +73,6 @@ export const createModuleFiles = async (payload: any) => {
   let { projId, projKey, key } = payload;
   let bConfig = modConfig[key];
 
-  // 1. write env variables
-  // console.log('Payload:', payload);
-  // console.log('bConfig env:', bConfig.envVars);
   let envs: Array<{ key: string; val: string }> = [];
   for (let i = 0; i < bConfig.envVars.length; i++) {
     let key = bConfig.envVars[i];
@@ -85,13 +80,8 @@ export const createModuleFiles = async (payload: any) => {
     envs.push({ key, val });
   }
 
-  // console.log('Writing envs:', envs);
-
   let promises = [];
-  // 1. write env variables
   promises.push(writeEnvVars(projId, projKey, envs));
-
-  // 2. install dependencies
   promises.push(installPackages(bConfig.dependencies, projKey));
 
   // 3. create init file

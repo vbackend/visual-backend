@@ -6,20 +6,6 @@ import { FileFuncs } from '../helpers/fileFuncs';
 import { MainFuncs } from '@/shared/utils/MainFuncs';
 import path from 'path';
 
-export const createMongoDbFuncFile = async (
-  projKey: string,
-  newFunc: BFunc
-) => {
-  let funcName = BFuncHelpers.getFuncName(newFunc);
-  let contents = `import { mongoCli, defaultDb } from '@/modules/mongo/init.js'
-export const ${funcName} = () => {
-  // Start writing code here
-}
-    `;
-
-  await createFuncFile(projKey, newFunc, contents);
-};
-
 export const createFuncFile = async (
   projKey: string,
   newFunc: BFunc,

@@ -1,9 +1,9 @@
-import CreateResend from '@/renderer/screens/Project/Modules/ResendModule/CreateResend';
+import CreateResend from '@/renderer/screens/Project/SectionManager/Modules/ResendModule/CreateResend';
 import { GenFuncs } from '../utils/GenFuncs';
 import { envConsts } from '@/renderer/misc/constants';
-import CreateStripe from '@/renderer/screens/Project/Modules/StripeModule/CreateStripe';
-import CreateGpt from '@/renderer/screens/Project/Modules/GptModule/CreateGpt';
-import CreateJwt from '@/renderer/screens/Project/Modules/JwtModule/CreateJwt';
+import CreateStripe from '@/renderer/screens/Project/SectionManager/Modules/StripeModule/CreateStripe';
+import CreateGpt from '@/renderer/screens/Project/SectionManager/Modules/GptModule/CreateGpt';
+import CreateJwt from '@/renderer/screens/Project/SectionManager/Modules/JwtModule/CreateJwt';
 import {
   faMoneyBillsSimple,
   faRotate,
@@ -49,8 +49,10 @@ export const modConfig: {
     init: 'firebase',
     path: 'firebase/auth',
     metadata: {},
-    starterFile: 'fbAuthStarter.txt',
+    type: 'basic',
     title: 'Firebase (Auth)',
+    gptDetails: '',
+    starterFile: 'fbAuthStarter.txt',
     starterFuncs: ['firebaseAuthMiddleware'],
   },
 
@@ -140,15 +142,6 @@ export const modConfig: {
           { key: 'subDeleted', funcGroup: '*', extension: 'ts' },
         ],
       },
-      // {
-      //   icon: faMoneyBillsSimple,
-      //   name: 'One-off Payment Template',
-      //   functions: [
-      //     // 'invoicePaidHandler',
-      //     // 'invoicePaymentFailedHandler',
-      //     // 'checkoutCompletedHandler',
-      //   ],
-      // },
     ],
   },
 

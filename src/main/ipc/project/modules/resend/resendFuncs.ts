@@ -1,7 +1,6 @@
 import { insertFuncQuery } from '@/main/db/funcs/funcQueries';
 import { FileFuncs } from '@/main/helpers/fileFuncs';
 import { BFuncHelpers } from '@/shared/models/BFunc';
-import { GenFuncs } from '@/shared/utils/GenFuncs';
 import { PathFuncs } from '@/shared/utils/MainFuncs';
 import path from 'path';
 

@@ -30,7 +30,7 @@ import {
 import useShortcut from '@/renderer/hooks/useShortcut';
 import DeleteProjectModal from '../DeleteProjectModal';
 import { RenFuncs } from '@/shared/utils/RenFuncs';
-import DeleteModuleModal from '../Modules/General/DeleteModuleModal';
+import DeleteModuleModal from '../SectionManager/Modules/General/DeleteModuleModal';
 import { Divider } from 'antd';
 
 let moduleIndex = 2;

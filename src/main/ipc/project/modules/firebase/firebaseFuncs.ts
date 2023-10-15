@@ -10,7 +10,6 @@ import {
 import { FileFuncs } from '@/main/helpers/fileFuncs';
 import { BModule, BModuleType, modConfig } from '@/shared/models/BModule';
 import admin from 'firebase-admin';
-import { writeIndexFile } from '../../project/templateGenerate';
 import { installPackages } from '@/main/generate/install';
 import { insertFuncQuery } from '@/main/db/funcs/funcQueries';
 import { PathFuncs } from '@/shared/utils/MainFuncs';
@@ -19,6 +18,7 @@ import { writeModuleStarterFuncs, writeModuleTemplate } from '../helpers';
 import { envConsts } from '@/renderer/misc/constants';
 import { ProjectService } from '@/main/services/ProjectService';
 import { getModuleFromConfig } from '../moduleFuncs';
+import { writeIndexFile } from '@/main/generate/general';
 
 export const getCurrentFirebase = async (
   e: Electron.IpcMainInvokeEvent,

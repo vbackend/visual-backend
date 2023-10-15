@@ -15,13 +15,11 @@ export const installPackages = async (
   installProcess.stdout.on('data', (data) => {
     const decoder = new TextDecoder('utf-8');
     const text = decoder.decode(data);
-    // console.log('Install stdout:', text);
   });
 
   installProcess.stderr.on('data', (data) => {
     const decoder = new TextDecoder('utf-8');
     const text = decoder.decode(data);
-    // console.log('Install stderr:', text);
   });
 
   return new Promise((res, rej) => {
@@ -50,13 +48,11 @@ export const deletePackages = async (
   deleteProcess.stdout.on('data', (data) => {
     const decoder = new TextDecoder('utf-8');
     const text = decoder.decode(data);
-    // console.log('Delete stdout:', text);
   });
 
   deleteProcess.stderr.on('data', (data) => {
     const decoder = new TextDecoder('utf-8');
     const text = decoder.decode(data);
-    // console.log('Delete stderr:', text);
   });
 
   return new Promise((res, rej) => {

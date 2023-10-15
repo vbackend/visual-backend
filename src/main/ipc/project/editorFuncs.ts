@@ -21,8 +21,6 @@ export const saveFileContents = async (
   const { path, projKey, contents } = payload;
   let filePath = `${PathFuncs.getProjectPath(projKey)}${path}`;
   await FileFuncs.writeFile(filePath, contents);
-  console.log('Successfully saved file');
-  // console.log('File path:', filePath);
 
   return true;
 };

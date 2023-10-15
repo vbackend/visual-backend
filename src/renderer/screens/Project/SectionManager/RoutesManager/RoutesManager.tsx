@@ -1,14 +1,20 @@
+import React, { useEffect, useState } from 'react';
 import { Route, RouteNode } from '@/shared/models/route';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'renderer/redux/store';
-
-import '@/renderer/styles/Project/Routes/RoutesScreen.scss';
-import ManageRoutesScreen from './ManageRoutesScreen';
-import { deleteRoute } from '@/renderer/redux/routes/routesSlice';
+import CreateRouteModal from './CreateRouteModal';
+import RouteRow from './RouteRow';
 import { EditorType, setCurFile } from '@/renderer/redux/editor/editorSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/renderer/redux/store';
+import { deleteRoute } from '@/renderer/redux/routes/routesSlice';
+import '@/renderer/styles/Project/Routes/RoutesScreen.scss';
 
-function RoutesScreen() {
+type ManageRoutesScreenProps = {
+  rootNode: RouteNode;
+};
+function RoutesManager() {
+  const [selectedRoute, setSelectedRoute] = useState<Route | null>(null);
+  const [createModalOpen, setCreateOpenModal] = useState(false);
+
   const dispatch = useDispatch();
   const rootNode = useSelector((state: RootState) => state.routes.rootNode);
   const curFile = useSelector((state: RootState) => state.editor.currentFile);
@@ -55,7 +61,32 @@ function RoutesScreen() {
   }, [curFile]);
 
   if (rootNode === null) return <></>;
-  return <ManageRoutesScreen rootNode={rootNode!} />;
+
+  return (
+    <>
+      {createModalOpen && (
+        <CreateRouteModal
+          setCreateModalOpen={setCreateOpenModal}
+          selectedRoute={selectedRoute!}
+        />
+      )}
+
+      <div className="routesContainer">
+        <div className="headerContainer">
+          <h3>Routes</h3>
+        </div>
+        <div className="routesContainer">
+          <RouteRow
+            parent={null}
+            node={rootNode!}
+            level={0}
+            setCreateModalOpen={setCreateOpenModal}
+            setSelectedRoute={setSelectedRoute}
+          />
+        </div>
+      </div>
+    </>
+  );
 }
 
-export default RoutesScreen;
+export default RoutesManager;

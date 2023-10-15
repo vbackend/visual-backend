@@ -8,14 +8,15 @@ import {
 import { Route, RouteFuncs, RouteNode, RouteType } from '@/shared/models/route';
 import { GenFuncs } from '@/shared/utils/GenFuncs';
 import { BrowserWindow, Menu, app } from 'electron';
+
+import { Actions } from '@/main/actions';
+import { FileFuncs } from '@/main/helpers/fileFuncs';
+import { PathFuncs } from '@/shared/utils/MainFuncs';
 import {
   createRouteFile,
   createRouterGroupFolder,
   writeRouterFile,
-} from './templateGenerate';
-import { Actions } from '@/main/actions';
-import { FileFuncs } from '@/main/helpers/fileFuncs';
-import { PathFuncs } from '@/shared/utils/MainFuncs';
+} from '@/main/generate/endpoints';
 
 const checkForDuplicateRoute = async (
   curRoute: Route,

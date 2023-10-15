@@ -4,7 +4,7 @@ import { RootState } from 'renderer/redux/store';
 import '../../styles/Project/ProjectScreen.scss';
 import { initialiseProject } from 'renderer/redux/project/projectSlice';
 import Sidebar from './Sidebar/Sidebar';
-import CreateModuleModal from './Modules/CreateModule/CreateModuleModal';
+import CreateModuleModal from './SectionManager/Modules/CreateModule/CreateModuleModal';
 import { initModules } from '@/renderer/redux/module/moduleSlice';
 import SectionManager from './SectionManager/SectionManager';
 import EditorScreen from './EditorScreen/EditorScreen';

@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import '../styles/Home/Home.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   AppPage,
@@ -7,19 +6,19 @@ import {
   setCurrentProject,
   setProjects,
   setUser,
-} from '../redux/app/appSlice';
+} from '../../redux/app/appSlice';
 import { Project } from '@/shared/models/project';
-import { RootState } from '../redux/store';
+import { RootState } from '../../redux/store';
 import { Button, Input, Spin } from 'antd';
-import Margin from '../components/general/Margin';
-import { UserService } from '../services/UserService';
+import Margin from '../../components/general/Margin';
+import { UserService } from '../../services/UserService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faUser } from '@fortawesome/pro-duotone-svg-icons';
-import CreateProjectModal from './Home/CreateProjectModal';
-import { projWindowSize } from '../misc/constants';
-import UpgradeModal from './Home/UpgradeModal';
+import CreateProjectModal from './CreateProjectModal';
+import { projWindowSize } from '../../misc/constants';
+import UpgradeModal from './UpgradeModal';
 import { AccountTier, SubStatus } from '@/shared/models/User';
-import NewPremiumModal from './Home/NewPremiumModal';
+import NewPremiumModal from './NewPremiumModal';
 import LogoImg from '@/shared/assets/images/logo.png';
 import {
   faBadge,
@@ -29,7 +28,9 @@ import {
   faFileInvoice,
 } from '@fortawesome/pro-solid-svg-icons';
 import { format } from 'date-fns';
-import RequireUpgradeModal from './Home/RequireUpgradeModal';
+import RequireUpgradeModal from './RequireUpgradeModal';
+
+import '@/renderer/styles/Home/Home.scss';
 
 function HomeScreen() {
   const dispatch = useDispatch();

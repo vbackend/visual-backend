@@ -8,7 +8,6 @@ import { useEffect } from 'react';
 import { EditorType, setCurFile } from '@/renderer/redux/editor/editorSlice';
 import { deleteFunc } from '@/renderer/redux/module/moduleSlice';
 import FirestoreManager from './FirebaseModule/FirebaseFirestore/FirestoreManager';
-import JwtManager from './JwtModule/JwtManager';
 import BasicModuleManager from './General/BasicModuleManager';
 import ResendManager from './ResendModule/ResendManager';
 import StripeManager from './StripeModule/StripeManager';
@@ -41,9 +40,8 @@ function ModuleScreen() {
     if (!curModule) return <></>;
     let key = curModule.key;
     if (key === BModuleType.Mongo) return <ManageMongo />;
-    if (key === BModuleType.FirebaseAuth) return <FirebaseAuthManager />;
+    // if (key === BModuleType.FirebaseAuth) return <FirebaseAuthManager />;
     if (key === BModuleType.FirebaseFirestore) return <FirestoreManager />;
-    if (key === BModuleType.JwtAuth) return <JwtManager />;
     if (key === BModuleType.Resend) return <ResendManager />;
     if (key === BModuleType.Stripe) return <StripeManager />;
     else {
