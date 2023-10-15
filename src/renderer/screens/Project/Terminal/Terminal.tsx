@@ -9,6 +9,7 @@ import {
   addTermMsg,
   resetTermData,
   setServerRunning,
+  setShowTerm,
 } from '@/renderer/redux/project/projectSlice';
 import { RenFuncs } from '@/shared/utils/RenFuncs';
 import 'xterm/css/xterm.css';
@@ -53,7 +54,7 @@ function TerminalComponent() {
 
   useEffect(() => {
     const terminal = new Terminal({
-      disableStdin: true,
+      disableStdin: false,
       fontFamily: 'CascadiaMono',
       letterSpacing: -0.5,
       fontSize: 14,
@@ -73,7 +74,14 @@ function TerminalComponent() {
       terminalRef.current._xterm.writeln(line)
     );
 
-    // Initialize the fit addon
+    const handleKey = (e: any) => {
+      if (e.domEvent.ctrlKey && e.domEvent.key === 't') {
+        dispatch(setShowTerm(false));
+      }
+    };
+
+    terminalRef.current._xterm.onKey(handleKey);
+
     fitAddon.fit();
 
     // Handle cleanup when the component unmounts
@@ -103,6 +111,10 @@ function TerminalComponent() {
 
     window.electron.onUpdateTerminal(handleMessage);
   }, []);
+
+  useShortcut('t', () => {
+    dispatch(setShowTerm(false));
+  });
 
   useShortcut('k', () => {
     dispatch(resetTermData(null));

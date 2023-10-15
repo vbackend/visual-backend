@@ -28,6 +28,7 @@ export type ProjectState = {
   curRoute: Route | null;
   termData: Array<any>;
   serverRunning: boolean;
+  showTerm: boolean;
 };
 
 const getInitialState = (): ProjectState => {
@@ -38,6 +39,7 @@ const getInitialState = (): ProjectState => {
     curRoute: null,
     termData: [],
     serverRunning: false,
+    showTerm: false,
   };
 };
 // create a slice
@@ -48,6 +50,10 @@ export const projectSlice = createSlice({
   reducers: {
     initialiseProject(state, action) {
       initialiseProjectReducer(state, action);
+    },
+
+    setShowTerm(state, action) {
+      state.showTerm = action.payload;
     },
 
     setCreateModuleOpen(state, action) {
@@ -76,6 +82,7 @@ export const projectSlice = createSlice({
 });
 
 export const {
+  setShowTerm,
   initialiseProject,
   setCreateModuleOpen,
   setCurrentTab,

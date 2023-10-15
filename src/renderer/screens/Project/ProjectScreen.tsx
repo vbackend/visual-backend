@@ -2,7 +2,10 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'renderer/redux/store';
 import '../../styles/Project/ProjectScreen.scss';
-import { initialiseProject } from 'renderer/redux/project/projectSlice';
+import {
+  initialiseProject,
+  setShowTerm,
+} from 'renderer/redux/project/projectSlice';
 import Sidebar from './Sidebar/Sidebar';
 import CreateModuleModal from './SectionManager/Modules/CreateModule/CreateModuleModal';
 import { initModules } from '@/renderer/redux/module/moduleSlice';
@@ -23,8 +26,7 @@ function ProjectScreen() {
   const project = useSelector((state: RootState) => state.project);
   const [loading, setLoading] = useState(true);
   const [loadingErr, setLoadingErr] = useState(false);
-
-  const [showTerm, setShowTerm] = useState(false);
+  const showTerm = useSelector((state: RootState) => state.project.showTerm);
 
   let initProject = async () => {
     let project = app.currentProject;
@@ -46,7 +48,11 @@ function ProjectScreen() {
     setLoading(false);
   };
 
-  useShortcut('t', () => setShowTerm(!showTerm));
+  useShortcut('t', () => {
+    if (!showTerm) {
+      dispatch(setShowTerm(true));
+    }
+  });
 
   useEffect(() => {
     initProject();
