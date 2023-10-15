@@ -20,6 +20,8 @@ let hidePackages: any = {
   express: 'show',
   axios: 'show',
   dotenv: 'show',
+  cors: 'show',
+  ngrok: 'show'
   // mongodb: 'show',
 };
 
