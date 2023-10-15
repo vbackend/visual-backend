@@ -1,5 +1,4 @@
 ![Image Alt Text](assets/github-images/github_banner.png)
-
 ## Visual Backend
 
 Visual Backend is a low code wrapper around NodeJS which helps you rapidly build APIs by offering an intuitive interface that automates boilerplate actions (e.g. configuring your project router, managing your project directory), allowing you to write the functions that truly matter to your app immediately.
@@ -28,7 +27,7 @@ There are 3 primary features of Visual Backend:
 	- Environment variables are automatically transferred to the cloud for you (and securely using GCloud Secret Manager)
 
 
-![[Screenshot 2023-10-15 at 11.48.29 AM.png]]
+![Demo screenshot](assets/github-images/demo_screenshot.png)
 
 
 ## Install
