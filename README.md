@@ -1,7 +1,7 @@
 ![Image Alt Text](assets/github-images/github_banner.png)
 
 ## Visual Backend
----
+
 Visual Backend is a low code wrapper around NodeJS which helps you rapidly build APIs by offering an intuitive interface that automates boilerplate actions (e.g. configuring your project router, managing your project directory), allowing you to write the functions that truly matter to your app immediately.
 
 There are 3 primary features of Visual Backend:
@@ -30,8 +30,8 @@ There are 3 primary features of Visual Backend:
 
 ![[Screenshot 2023-10-15 at 11.48.29 AM.png]]
 
+
 ## Install
----
 
 **Clone project**
 
@@ -55,19 +55,22 @@ npm start
 
 **GPT Usage**: We are currently working on adding support for using your own OpenAI API key, however, at this stage, it is not currently available
 
+
 ## Documentation
----
+
 We are working on developing a proper website for Visual Backend documentation. At the moment however, you may find the appropriate guides for understanding Visual Backend and the codebase over [here](https://github.com/vbackend/visual-backend/tree/main/docs/01_How_It_Works.md)
 
+
 ## Contributing
----
+
 - [Contribution Guide](https://react.email/docs/contributing)
 
+
 ## Authors
----
+
 **John Yeo (@johnyeocx)**
 - Email: john@visual-backend.com
 
 ## License
----
+
 MIT License
