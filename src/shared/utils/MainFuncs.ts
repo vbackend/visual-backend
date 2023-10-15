@@ -6,7 +6,14 @@ import { modConfig } from '../models/BModule';
 
 export class MainFuncs {
   static getDataPath = () => {
-    return app.getPath('userData');
+    if (process.env.NODE_ENV != 'production') {
+      return path.join(
+        app.getPath('userData'),
+        '..',
+        'visual-backend'
+      );
+    }
+    return path.join(app.getPath('userData'));
   };
 
   static getProjectPath = (projKey: string) => {
@@ -52,22 +59,6 @@ export class MainFuncs {
     const modifiedPath = modifiedPathSegments.join(path.sep);
 
     return modifiedPath;
-    // const pathSegments = inputPath.split(path.sep);
-
-    // // Process each path segment
-    // const quotedPathSegments = pathSegments.map((segment) => {
-    //   // Check if the segment contains a space
-    //   if (segment.includes(' ')) {
-    //     return `${segment}`; // Add quotes around the segment
-    //   } else {
-    //     return segment; // Keep the segment as is
-    //   }
-    // });
-
-    // // Join the segments back together to form the modified path
-    // const modifiedPath = quotedPathSegments.join(path.sep);
-
-    // return modifiedPath;
   }
 }
 
@@ -140,6 +131,10 @@ export class BinFuncs {
 
   static getNpmPath = () => {
     this.appendNodePath();
-    return path.join(this.getNodeBinPath(), 'npm');
+    if (process.platform == 'darwin') {
+      return path.join(this.getNodeBinPath(), 'npm');
+    } else {
+      return path.join(this.getNodeBinPath(), 'npm.cmd');
+    }
   };
 }
