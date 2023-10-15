@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'renderer/redux/store';
 import '../../styles/Project/ProjectScreen.scss';
@@ -11,14 +11,11 @@ import EditorScreen from './EditorScreen/EditorScreen';
 import { initRoutes } from '@/renderer/redux/routes/routesSlice';
 import TerminalComponent from './Terminal/Terminal';
 import useShortcut from '@/renderer/hooks/useShortcut';
-import { ProjectService } from '@/renderer/services/ProjectService';
 import { Spin } from 'antd';
-import {
-  initCloudState,
-  resetCloudState,
-} from '@/renderer/redux/cloud/cloudSlice';
+import { resetCloudState } from '@/renderer/redux/cloud/cloudSlice';
 import { setCurFile } from '@/renderer/redux/editor/editorSlice';
 import { AppPage, setCurPage } from '@/renderer/redux/app/appSlice';
+import { useHotkeys } from 'react-hotkeys-hook';
 
 function ProjectScreen() {
   const dispatch = useDispatch();
@@ -49,9 +46,7 @@ function ProjectScreen() {
     setLoading(false);
   };
 
-  useShortcut('t', () => {
-    setShowTerm(!showTerm);
-  });
+  useShortcut('t', () => setShowTerm(!showTerm));
 
   useEffect(() => {
     initProject();

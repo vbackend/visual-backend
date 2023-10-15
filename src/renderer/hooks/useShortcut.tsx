@@ -1,27 +1,38 @@
 import { useEffect } from 'react';
-import detectIt from 'detect-it';
 
 function useShortcut(key: string, callback: any) {
+  // let deps = dependencies ? dependencies : [];
+  let listener = (e: any, payload: string) => {
+    if (payload === key) {
+      callback();
+    }
+  };
+
   useEffect(() => {
     const handleKeyPress = async (event: any) => {
       let deviceType = await window.electron.getDeviceType();
 
-      if (
-        (event.ctrlKey &&
-          deviceType === 'win32' &&
-          (event.key === key.toLowerCase() ||
-            event.key === key.toUpperCase())) ||
-        (event.metaKey &&
-          deviceType === 'darwin' &&
-          (event.key === key.toLowerCase() || event.key === key.toUpperCase()))
+      let keyMatch = false;
+      if (deviceType == 'darwin') {
+        if (
+          event.metaKey &&
+          (event.key === key.toLowerCase() || event.key === key.toUpperCase())
+        )
+          keyMatch = true;
+      } else if (
+        event.ctrlKey &&
+        (event.key === key.toLowerCase() || event.key === key.toUpperCase())
       ) {
+        keyMatch = true;
+      }
+
+      if (keyMatch) {
         event.preventDefault();
         callback();
       }
     };
 
     window.addEventListener('keydown', handleKeyPress);
-
     return () => {
       window.removeEventListener('keydown', handleKeyPress);
     };

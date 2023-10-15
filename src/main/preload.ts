@@ -137,8 +137,9 @@ const electronHandler = {
   showRouteContextMenu: (payload: any) =>
     ipcRenderer.invoke(Actions.SHOW_ROUTE_CONTEXT_MENU, payload),
 
-  onRouteDeleted: (payload: any) =>
-    ipcRenderer.on(Actions.UPDATE_ROUTE_DELETED, payload),
+  onRouteDeleted: (listener: any) =>
+    ipcRenderer.on(Actions.UPDATE_ROUTE_DELETED, listener),
+
   removeRouteListener: () =>
     ipcRenderer.removeAllListeners(Actions.UPDATE_ROUTE_DELETED),
 

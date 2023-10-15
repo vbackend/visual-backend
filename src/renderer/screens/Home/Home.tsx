@@ -147,11 +147,11 @@ function HomeScreen() {
   };
 
   const createBtnClicked = () => {
-    if (user.accountTier == AccountTier.Starter && projects.length > 0) {
-      setRequireUpgradeModalOpen(true);
-    } else {
-      setCreateModalOpen(true);
-    }
+    setCreateModalOpen(true);
+    // if (user.accountTier == AccountTier.Starter && projects.length > 0) {
+    //   setRequireUpgradeModalOpen(true);
+    // } else {
+    // }
   };
 
   if (loading)
@@ -256,9 +256,6 @@ function HomeScreen() {
                     <p className="projKey">/{project.key}</p>
                   </button>
                 ))}
-              {/* <button className="projectBtn" onClick={() => projectClicked()}>
-                {project.name}
-              </button> */}
             </div>
 
             <div className="bottomBar">

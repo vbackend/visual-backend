@@ -1,4 +1,6 @@
 export class Actions {
+  static SHORTCUT_DETECTED = 'shortcut-detected';
+
   // WINDOW
   static SET_WINDOW_SIZE = 'set-window-size';
   static GET_DEVICE_TYPE = 'get-device-type';

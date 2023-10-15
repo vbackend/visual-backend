@@ -1,6 +1,8 @@
-// local endpoint: http://localhost:8081
-// public endpoint: https://visual-backend-tsne2r6uva-nw.a.run.app
-export const endpoint = 'https://visual-backend-tsne2r6uva-nw.a.run.app';
+let localEndpoint = 'http://localhost:8081';
+let publicEndpoint = 'https://visual-backend-tsne2r6uva-nw.a.run.app';
+
+export const endpoint = publicEndpoint;
+// export const endpoint = localEndpoint;
 
 export const accessTokenKey = 'access_token';
 export const refreshTokenKey = 'refresh_token';

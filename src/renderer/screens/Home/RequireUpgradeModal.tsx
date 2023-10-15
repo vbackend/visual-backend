@@ -29,7 +29,7 @@ function RequireUpgradeModal({ setModalOpen }: any) {
         <Margin height={5} />
         <div className="middleContainer">
           <p>
-            To create more than 1 project, you need to have a premium account.
+            To create more than 5 projects, you need to have a premium account.
           </p>
           <Margin height={20} />
           <button onClick={onUpgradeClicked} className="upgradeBtn">

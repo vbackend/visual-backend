@@ -62,12 +62,7 @@ function UpgradeModal({ setModalOpen }: any) {
 
             <div className="row">
               <FontAwesomeIcon icon={faCheck} className="icon" />
-              <p className="text">Unlimited kickstart with AI uses</p>
-            </div>
-
-            <div className="row">
-              <FontAwesomeIcon icon={faCheck} className="icon" />
-              <p className="text">Create unlimited projects</p>
+              <p className="text">Access to kickstart with AI</p>
             </div>
           </div>
           <Margin height={20} />

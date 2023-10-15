@@ -9,7 +9,14 @@
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 import path from 'path';
-import { app, BrowserWindow, shell, ipcMain, Menu } from 'electron';
+import {
+  app,
+  BrowserWindow,
+  shell,
+  ipcMain,
+  Menu,
+  globalShortcut,
+} from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
@@ -103,7 +110,7 @@ const createWindow = async () => {
     height: 550,
     icon: getAssetPath('icon.png'),
     webPreferences: {
-      devTools: false,
+      // devTools: false,
       preload: app.isPackaged
         ? path.join(__dirname, 'preload.js')
         : path.join(__dirname, '../../.erb/dll/preload.js'),
@@ -379,7 +386,6 @@ app.on('before-quit', async (e) => {
 
 import treeKill from 'tree-kill';
 import { BinFuncs, MainFuncs } from '@/shared/utils/MainFuncs';
-import { GenFuncs } from '@/shared/utils/GenFuncs';
 import {
   checkFirebaseCredentials,
   getCurrentFirebase,

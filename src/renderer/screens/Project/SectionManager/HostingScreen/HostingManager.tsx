@@ -17,6 +17,7 @@ function HostingManager() {
   const dispatch = useDispatch();
 
   const cloudState = useSelector((state: RootState) => state.cloud);
+  const user = useSelector((state: RootState) => state.app.user);
   const cloudService = cloudState.cloudRunService;
   const curProject = useSelector(
     (state: RootState) => state.app.currentProject
@@ -118,14 +119,21 @@ function HostingManager() {
       <h3 className="title">Hosting</h3>
       <Margin height={10} />
       <div className="row1">
-        <Button
-          loading={deployLoading}
-          className="actionBtn"
-          onClick={() => deploy()}
+        <Tooltip
+          title={
+            user.accountTier == 'starter' &&
+            'Premium account required to host projects'
+          }
         >
-          Deploy
-        </Button>
-
+          <Button
+            loading={deployLoading}
+            className="actionBtn"
+            onClick={() => deploy()}
+            disabled={user.accountTier == 'starter'}
+          >
+            Deploy
+          </Button>
+        </Tooltip>
         <Margin width={8} />
 
         <Tooltip title={cloudService == null && 'No builds detected'}>
