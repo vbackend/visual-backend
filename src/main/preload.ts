@@ -95,6 +95,12 @@ const electronHandler = {
     },
   },
 
+  // update check result
+  updateCheckResult: (callback: any) =>
+    ipcRenderer.on(Actions.UPDATE_CHECK_RESULT, callback),
+  removeUpdateCheckResultListener: () =>
+    ipcRenderer.removeAllListeners(Actions.UPDATE_CHECK_RESULT),
+
   // SEND ACTIONS
 
   setWindowSize: (payload: any) =>

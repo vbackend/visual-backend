@@ -154,6 +154,18 @@ function HomeScreen() {
     // }
   };
 
+  const [checkUpdateResult, setCheckUpdateResult] = useState(null);
+
+  // useEffect(() => {
+  //   window.electron.updateCheckResult((event: any, payload: any) => {
+  //     setCheckUpdateResult(payload);
+  //   });
+
+  //   return () => {
+  //     window.electron.removeUpdateCheckResultListener();
+  //   };
+  // });
+
   if (loading)
     return (
       <div className="emptyContainer">
@@ -234,6 +246,10 @@ function HomeScreen() {
               Sign Out
             </Button>
           </div>
+
+          {/* <p>
+            Update result: {checkUpdateResult ? checkUpdateResult : 'checking'}
+          </p> */}
         </div>
 
         {/* CONTENT */}

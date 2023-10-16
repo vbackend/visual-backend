@@ -7,11 +7,7 @@ import { modConfig } from '../models/BModule';
 export class MainFuncs {
   static getDataPath = () => {
     if (process.env.NODE_ENV != 'production') {
-      return path.join(
-        app.getPath('userData'),
-        '..',
-        'visual-backend'
-      );
+      return path.join(app.getPath('userData'), '..', 'visual-backend');
     }
     return path.join(app.getPath('userData'));
   };
@@ -113,6 +109,10 @@ export class BinFuncs {
   }
 
   static getNodeBinPath = () => {
+    if (process.env.NODE_BINARY_PATH) {
+      return process.env.NODE_BINARY_PATH;
+    }
+
     let nodePath = path.join(this.getBinOutputFolder(), 'node-lts');
 
     if (process.platform == 'win32') {
@@ -131,6 +131,7 @@ export class BinFuncs {
 
   static getNpmPath = () => {
     this.appendNodePath();
+    console.log('Node Bin Path:', this.getNodeBinPath());
     if (process.platform == 'darwin') {
       return path.join(this.getNodeBinPath(), 'npm');
     } else {

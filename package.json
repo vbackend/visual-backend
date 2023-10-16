@@ -197,6 +197,11 @@
     "webpack-dev-server": "^4.15.0",
     "webpack-merge": "^5.9.0"
   },
+  "repository": "https://github.com/vbackend/visual-backend",
+  "publish": {
+    "provider": "github",
+    "releaseType": "release"
+  },
   "build": {
     "productName": "VisualBackend",
     "appId": "com.visual-backend.client",
@@ -257,7 +262,7 @@
     ],
     "publish": {
       "provider": "github",
-      "owner": "visual-backend",
+      "owner": "vbackend",
       "repo": "visual-backend"
     }
   },

@@ -50,11 +50,54 @@ import {
   createEndpoint,
   deleteRoute,
 } from './ipc/project/routeFuncs';
+import { runServer, killServer } from './ipc/terminal/terminalFuncs';
+
+import fixPath from 'fix-path';
 import {
-  runServer,
-  killServer,
-  stopServer,
-} from './ipc/terminal/terminalFuncs';
+  deleteNpmPackage,
+  getProjectPackages,
+  installNpmPackage,
+} from './ipc/project/packageFuncs';
+
+import fs from 'fs';
+import zlib from 'zlib';
+import tar, { update } from 'tar';
+import AdmZip from 'adm-zip';
+import os from 'os';
+
+import Store from 'electron-store';
+import {
+  deleteTokens,
+  getAccessToken,
+  getRefreshToken,
+  setAuthTokens,
+} from './ipc/auth/authFuncs';
+import { getFileContents, saveFileContents } from './ipc/project/editorFuncs';
+import { FileFuncs } from './helpers/fileFuncs';
+
+import treeKill from 'tree-kill';
+import { BinFuncs, MainFuncs } from '@/shared/utils/MainFuncs';
+import {
+  checkFirebaseCredentials,
+  getCurrentFirebase,
+  setFirestoreMetadata,
+} from './ipc/project/modules/firebase/firebaseFuncs';
+import {
+  createEnvVar,
+  deleteEnvVar,
+  editEnvVars,
+  getEnvVars,
+} from './ipc/project/envFuncs';
+import { createEmailTemplate } from './ipc/project/modules/resend/resendFuncs';
+import { createFunc, deleteFunc } from './ipc/project/modules/funcFuncs';
+import { addWebhookTemplates } from './ipc/project/modules/stripe/stripeFuncs';
+import {
+  openCheckoutPage,
+  openCustomerPortal,
+} from './ipc/auth/subscriptionFuncs';
+import { config } from 'dotenv';
+
+config();
 
 class AppUpdater {
   constructor() {
@@ -65,6 +108,9 @@ class AppUpdater {
 }
 
 let mainWindow: BrowserWindow | null = null;
+
+autoUpdater.autoDownload = false;
+autoUpdater.autoInstallOnAppQuit = false;
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -146,22 +192,10 @@ const createWindow = async () => {
   });
 
   // Remove this if your app does not use auto updates
-  // eslint-disable-next-line
-  new AppUpdater();
+  // new AppUpdater();
 };
 
-/**
- * Add event listeners...
- */
-import Store from 'electron-store';
-import {
-  deleteTokens,
-  getAccessToken,
-  getRefreshToken,
-  setAuthTokens,
-} from './ipc/auth/authFuncs';
-import { getFileContents, saveFileContents } from './ipc/project/editorFuncs';
-import { FileFuncs } from './helpers/fileFuncs';
+// EVENT LISTENERS
 let globalVars: {
   serverProcess: ChildProcess | null;
   store: Store;
@@ -169,19 +203,6 @@ let globalVars: {
   serverProcess: null,
   store: new Store(),
 };
-
-import fixPath from 'fix-path';
-import {
-  deleteNpmPackage,
-  getProjectPackages,
-  installNpmPackage,
-} from './ipc/project/packageFuncs';
-
-import fs from 'fs';
-import zlib from 'zlib';
-import tar from 'tar';
-import AdmZip from 'adm-zip';
-import os from 'os';
 
 function is64Bit() {
   return ['arm64', 'ppc64', 'x64', 's390x'].includes(os.arch());
@@ -191,6 +212,11 @@ const unzipNodeMac = async () => {
   let tarFileName =
     process.arch == 'arm64' ? 'node-lts-arm64.tar.gz' : 'node-lts-x64.tar.gz';
   let inputPath = path.join(MainFuncs.getAssetsPath(), tarFileName);
+
+  if (!fs.existsSync(inputPath)) {
+    return;
+  }
+
   let outputFolder = BinFuncs.getBinOutputFolder();
   const outputPath = path.join(outputFolder, 'node-lts');
 
@@ -229,15 +255,18 @@ const unzipNodeMac = async () => {
 };
 
 const unzipNodeWindows = async () => {
-  let outputFolder = BinFuncs.getBinOutputFolder();
+  let zipFileName = is64Bit() ? 'node-lts-win-x64.zip' : 'node-lts-win-x86.zip';
+  const zipFilePath = path.join(MainFuncs.getAssetsPath(), zipFileName);
 
+  if (!fs.existsSync(zipFilePath)) {
+    return;
+  }
+
+  let outputFolder = BinFuncs.getBinOutputFolder();
   const outputPath = path.join(outputFolder, 'node-lts');
 
   let nodeExists = await FileFuncs.folderExists(outputPath);
   if (nodeExists) return;
-
-  let zipFileName = is64Bit() ? 'node-lts-win-x64.zip' : 'node-lts-win-x86.zip';
-  const zipFilePath = path.join(MainFuncs.getAssetsPath(), zipFileName);
 
   const zip = new AdmZip(zipFilePath);
 
@@ -384,27 +413,6 @@ app.on('before-quit', async (e) => {
   }
 });
 
-import treeKill from 'tree-kill';
-import { BinFuncs, MainFuncs } from '@/shared/utils/MainFuncs';
-import {
-  checkFirebaseCredentials,
-  getCurrentFirebase,
-  setFirestoreMetadata,
-} from './ipc/project/modules/firebase/firebaseFuncs';
-import {
-  createEnvVar,
-  deleteEnvVar,
-  editEnvVars,
-  getEnvVars,
-} from './ipc/project/envFuncs';
-import { createEmailTemplate } from './ipc/project/modules/resend/resendFuncs';
-import { createFunc, deleteFunc } from './ipc/project/modules/funcFuncs';
-import { addWebhookTemplates } from './ipc/project/modules/stripe/stripeFuncs';
-import {
-  openCheckoutPage,
-  openCustomerPortal,
-} from './ipc/auth/subscriptionFuncs';
-
 app.on('window-all-closed', async () => {
   // Respect the OSX convention of having the application in memory even
   // after all windows have been closed
@@ -415,8 +423,6 @@ app.on('window-all-closed', async () => {
 app.on('quit', async () => {});
 
 app.setAsDefaultProtocolClient('visual-backend');
-
-import url from 'node:url';
 
 app.on('open-url', (event, url) => {
   const parsedUrl = new URL(url);
@@ -454,6 +460,8 @@ if (!gotTheLock) {
 app
   .whenReady()
   .then(async () => {
+    // autoUpdater.checkForUpdates();
+
     createWindow();
     fixPath();
 
@@ -483,3 +491,31 @@ app
     });
   })
   .catch(console.log);
+
+autoUpdater.on('update-available', (info) => {
+  mainWindow?.webContents.send(
+    Actions.UPDATE_CHECK_RESULT,
+    `UPDATE AVAILABLE: ${info}`
+  );
+});
+
+autoUpdater.on('update-not-available', (info) => {
+  mainWindow?.webContents.send(
+    Actions.UPDATE_CHECK_RESULT,
+    `UPDATE NOT AVAILABLE ${info}`
+  );
+});
+
+autoUpdater.on('update-downloaded', (info) => {
+  mainWindow?.webContents.send(
+    Actions.UPDATE_CHECK_RESULT,
+    `UPDATE downloaded ${info}`
+  );
+});
+
+autoUpdater.on('error', (info) => {
+  mainWindow?.webContents.send(
+    Actions.UPDATE_CHECK_RESULT,
+    `UPDATE check error ${info}`
+  );
+});

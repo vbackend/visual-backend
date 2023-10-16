@@ -50,6 +50,16 @@ npm install
 npm start
 ```
 
+**Configuring the node binary to use**
+
+Normally, there will be zipped node binaries in the assets folder of the project, which will later be unzipped to the userData folder for regular users of Visual Backend. When you clone this repo however, these zipped binaries won't be included in the assets folder. Thus, you must configure the path to your node binary in a .env file like so, with the path replaced with your one:
+
+```.env
+NODE_BINARY_PATH=/Users/johnyeocx/.nvm/versions/node/v16.20.2/bin
+```
+
+Make sure that the path is not to the node binary itself, but the binary folder containing node, npm & npx
+
 **Note:** Hosting & OpenAI usage is run on the Visual Backend server, and is therefore not available with a self-hosted copy of this tool. To learn how to host your Visual Backend project by yourself, read the following: 
 
 **GPT Usage**: We are currently working on adding support for using your own OpenAI API key, however, at this stage, it is not currently available
