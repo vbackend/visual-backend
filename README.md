@@ -1,7 +1,7 @@
 ![Image Alt Text](assets/github-images/github_banner.png)
 ## Visual Backend
 
-Visual Backend is a low code wrapper around NodeJS which helps you rapidly build APIs by offering an intuitive interface that automates boilerplate actions (e.g. configuring your project router, managing your project directory), allowing you to write the functions that truly matter to your app immediately.
+[Visual Backend](https://visual-backend.com) is a low code wrapper around NodeJS which helps you rapidly build APIs by offering an intuitive interface that automates boilerplate actions (e.g. configuring your project router, managing your project directory), allowing you to write the functions that truly matter to your app immediately.
 
 There are 3 primary features of Visual Backend:
 
