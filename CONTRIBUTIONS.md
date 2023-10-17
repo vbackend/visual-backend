@@ -1,8 +1,8 @@
 ## Improving the docs
 
-We welcome you to improve our documentation. Our current documentation is found [here](https://github.com/vbackend/visual-backend/docs)
+We welcome you to improve our documentation. Our current documentation is found [here](https://github.com/vbackend/visual-backend/tree/main/docs)
 
-Everything is written in Markdown. To contribute to the documentation, simply clone the repo, open a new branch and edit the documentation (under the docs folder), then commit your changes and make a pull request.
+Everything is written in Markdown. To contribute to the documentation, simply fork & clone the repo, open a new branch and edit the documentation (under the docs folder), then commit your changes and make a pull request.
 
 Feel free to add documentation for a new section, but think about opening an issue first to discuss whether the new section will be accepted, before working on it.
 
@@ -33,7 +33,7 @@ To make pull requests, please:
 3. Write robust tests for that particular fix or feature
 4. Commit your changes, push the new code, and open a pull request to the main branch
 
-To understand the code for Visual Backend better, do read our docs [here](https://github.com/vbackend/visual-backend/docs)
+To understand the code for Visual Backend better, do read our docs [here](https://github.com/vbackend/visual-backend/tree/main/docs)
 
 ---
 If you have any questions, do get in touch with me via email at john@visual-backend.com

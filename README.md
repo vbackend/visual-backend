@@ -67,12 +67,12 @@ Make sure that the path is not to the node binary itself, but the binary folder 
 
 ## Documentation
 
-We are working on developing a proper website for Visual Backend documentation. At the moment however, you may find the appropriate guides for understanding Visual Backend and the codebase over [here](https://github.com/vbackend/visual-backend/tree/main/docs/01_How_It_Works.md)
+We are working on developing a proper website for Visual Backend documentation. At the moment however, you may find the appropriate guides for understanding Visual Backend and the codebase over [here](https://github.com/vbackend/visual-backend/tree/main/docs/HOW_IT_WORKS.md)
 
 
 ## Contributing
 
-- [Contribution Guide](https://github.com/vbackend/visual-backend/CONTRIBUTIONS.md)
+- [Contribution Guide](https://github.com/vbackend/visual-backend/tree/main/CONTRIBUTIONS.md)
 
 
 ## Authors
