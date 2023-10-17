@@ -211,3 +211,11 @@ This is what the resend config looks like:
 - Editing a function simply comes down to updating the file content for that function, and happens in the editor screen, which can be found [here](https://github.com/vbackend/visual-backend/tree/main/src/renderer/screens/Project/EditorScreen/EditorScreen.tsx).
 - The AceEditor component from the **react-ace** package is used for this.
 - In main, the functions for getting and writing the file contents can be found [here](https://github.com/vbackend/visual-backend/tree/main/src/main/ipc/project/editorFuncs.ts)
+
+
+## Deploying your project
+
+Every Visual Backend project is ultimately just a NodeJS express app, and so to deploy it, you can do so in the same way you'd deploy a NodeJS app. 
+
+The NodeJS folder for your app can be found in the following directory:
+*userData*/projects/{project_key}
