@@ -72,7 +72,7 @@ We are working on developing a proper website for Visual Backend documentation. 
 
 ## Contributing
 
-- [Contribution Guide](https://react.email/docs/contributing)
+- [Contribution Guide](https://github.com/vbackend/visual-backend/CONTRIBUTIONS.md)
 
 
 ## Authors
