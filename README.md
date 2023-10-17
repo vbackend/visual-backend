@@ -60,7 +60,7 @@ NODE_BINARY_PATH=/Users/johnyeocx/.nvm/versions/node/v16.20.2/bin
 
 Make sure that the path is not to the node binary itself, but the binary folder containing node, npm & npx
 
-**Note:** Hosting & OpenAI usage is run on the Visual Backend server, and is therefore not available with a self-hosted copy of this tool. To learn how to host your Visual Backend project by yourself, (read the following)[https://github.com/vbackend/visual-backend/tree/main/docs/HOW_IT_WORKS.md#L216]
+**Note:** Hosting & OpenAI usage is run on the Visual Backend server, and is therefore not available with a self-hosted copy of this tool. To learn how to host your Visual Backend project by yourself, [read the following](https://github.com/vbackend/visual-backend/blob/main/docs/HOW_IT_WORKS.md#deploying-your-project)
 
 **GPT Usage**: We are currently working on adding support for using your own OpenAI API key, however, at this stage, it is not currently available
 
