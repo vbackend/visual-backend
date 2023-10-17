@@ -17,11 +17,11 @@ app.getPath('userData') returns:
 You can think of Visual Backend as having the following structure:
 ```bash
 |--  Project
-|	|--  Routes
-|	|--  Modules
-|	|--  Hosting
-|	|--  Packages
-|	|--  Env
+|  |--  Routes
+|  |--  Modules
+|  |--  Hosting
+|  |--  Packages
+|  |--  Env
 ```
 
 Most of the **hosting** features are written on the backend server, and simply uses a GCloud pipeline. This won't be covered here. Additionally, understanding the **packages** and **env** sections are relatively straightforward and also won't be covered.
