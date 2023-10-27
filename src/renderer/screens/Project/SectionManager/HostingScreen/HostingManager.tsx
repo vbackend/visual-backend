@@ -7,7 +7,7 @@ import { RootState } from '@/renderer/redux/store';
 import { ProjectService } from '@/renderer/services/ProjectService';
 import { BuildStatus, GBuild } from '@/shared/models/GBuild';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircle } from '@fortawesome/pro-solid-svg-icons';
+import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import { format } from 'date-fns';
 import clipboardCopy from 'clipboard-copy';
 import { LoadingOutlined } from '@ant-design/icons';

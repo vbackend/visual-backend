@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import Margin from '@/renderer/components/general/Margin';
-import { faSparkles, faXmark } from '@fortawesome/pro-solid-svg-icons';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { HiSparkles} from 'react-icons/hi';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, Input, Switch, Tooltip } from 'antd';
 import '@/renderer/styles/Project/Modules/CreateFuncModal.scss';
@@ -35,7 +37,7 @@ function CreateFuncModal({ setModalOpen, onCreateClicked }: any) {
           />
           <Margin height={20} />
           <p className="inputTitle">
-            <FontAwesomeIcon icon={faSparkles} style={{ marginRight: '5px' }} />
+            <HiSparkles style={{ marginRight: '5px' }} />
             Kickstart with AI
           </p>
           <Tooltip

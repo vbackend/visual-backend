@@ -1,4 +1,4 @@
-import { faXmark } from '@fortawesome/pro-solid-svg-icons';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import '@/renderer/styles/Home/CreateProjectModal.scss';
@@ -12,8 +12,6 @@ import {
   setCurPage,
   setCurrentProject,
 } from '@/renderer/redux/app/appSlice';
-import { useNavigate } from 'react-router-dom';
-import { AxiosError } from 'axios';
 import { projWindowSize } from '@/renderer/misc/constants';
 
 type CreateProjectModalProps = {

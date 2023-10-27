@@ -10,11 +10,11 @@ import { BFunc, BFuncHelpers } from '@/shared/models/BFunc';
 import { RootState } from '@/renderer/redux/store';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Margin from '@/renderer/components/general/Margin';
-import { faAdd, faRefresh } from '@fortawesome/pro-solid-svg-icons';
-import CreateMongoFuncModal from './CreateMongoFuncModal';
+import { faAdd, faRefresh } from '@fortawesome/free-solid-svg-icons';
 import 'renderer/styles/Project/Modules/MongoModule/ManageMongo.scss';
 import { EditorType, setCurFile } from '@/renderer/redux/editor/editorSlice';
-import { faFilePlus } from '@fortawesome/pro-duotone-svg-icons';
+import {LuFilePlus2} from 'react-icons/lu';
+
 import CreateFuncModal from '../FirebaseModule/CreateFuncModal';
 import { BModuleType } from '@/shared/models/BModule';
 import { RenFuncs } from '@/shared/utils/RenFuncs';
@@ -178,7 +178,7 @@ function ManageMongo() {
                       setCreateModalOpen(true);
                     }}
                   >
-                    <FontAwesomeIcon icon={faFilePlus} />
+                    <LuFilePlus2/>
                   </Button>
                 </div>
                 {sortedFuncs[col] &&

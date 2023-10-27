@@ -2,7 +2,7 @@ import '@/renderer/styles/Project/CreateModule/SelectModule.scss';
 import { Dispatch, SetStateAction } from 'react';
 import { BModuleType } from '@/shared/models/BModule';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark } from '@fortawesome/pro-solid-svg-icons';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCreateModuleOpen } from '@/renderer/redux/project/projectSlice';
 

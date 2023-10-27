@@ -15,7 +15,7 @@ import {
   faDatabase,
   faServer,
   faTrash,
-} from '@fortawesome/pro-solid-svg-icons';
+} from '@fortawesome/free-solid-svg-icons';
 import { faEnvira } from '@fortawesome/free-brands-svg-icons';
 import Margin from 'renderer/components/general/Margin';
 import '@/renderer/styles/Project/Sidebar/Sidebar.scss';

@@ -1,6 +1,6 @@
 import { useEffect, useReducer, useRef, useState } from 'react';
 import Margin from '@/renderer/components/general/Margin';
-import { faSparkles, faXmark } from '@fortawesome/pro-solid-svg-icons';
+import { faSparkles, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, Input, Select, Switch } from 'antd';
 import { useSelector } from 'react-redux';

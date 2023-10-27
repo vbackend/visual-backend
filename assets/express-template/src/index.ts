@@ -26,8 +26,8 @@ const init = async () => {
     console.log(`Server started at http://localhost:${port}`);
   });
 
-  let url = await ngrok.connect(port);
-  console.log('Public url:', url);
+  // let url = await ngrok.connect(port);
+  // console.log('Public url:', url);
 
   // Handle server shutdown gracefully
   process.on('SIGTERM', () => {

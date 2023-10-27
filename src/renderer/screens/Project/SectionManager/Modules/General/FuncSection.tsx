@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Margin from '@/renderer/components/general/Margin';
-import { faFilePlus } from '@fortawesome/pro-duotone-svg-icons';
+
+import { LuFilePlus2} from 'react-icons/lu';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button } from 'antd';
 import CreateFuncModal from '../FirebaseModule/CreateFuncModal';
@@ -38,7 +39,7 @@ function FuncSection({ createFuncClicked }: any) {
           className="addBtn"
           onClick={() => setCreateModalOpen(true)}
         >
-          <FontAwesomeIcon icon={faFilePlus} className="icon" />
+          <LuFilePlus2 className="icon" />
         </Button>
       </div>
       <Margin height={8} />

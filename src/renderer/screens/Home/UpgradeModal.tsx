@@ -1,9 +1,9 @@
-import { faCheck, faXmark } from '@fortawesome/pro-solid-svg-icons';
+import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import '@/renderer/styles/Home/UpgradeModal.scss';
 import Margin from '@/renderer/components/general/Margin';
-import { faRocket } from '@fortawesome/pro-duotone-svg-icons';
+import { faRocket } from '@fortawesome/free-solid-svg-icons';
 import { LoadingOutlined } from '@ant-design/icons';
 
 function UpgradeModal({ setModalOpen }: any) {

@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft } from '@fortawesome/pro-solid-svg-icons';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import 'renderer/styles/Project/CreateModule/ModuleTypes/CreateMongoDB.scss';
 import { Button, Input, Select } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';

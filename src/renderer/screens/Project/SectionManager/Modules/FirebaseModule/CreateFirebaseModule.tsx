@@ -5,7 +5,7 @@ import {
   faArrowLeft,
   faCircle,
   faCodeBranch,
-} from '@fortawesome/pro-solid-svg-icons';
+} from '@fortawesome/free-solid-svg-icons';
 
 import { Button, Spin, Upload } from 'antd';
 import Margin from '@/renderer/components/general/Margin';

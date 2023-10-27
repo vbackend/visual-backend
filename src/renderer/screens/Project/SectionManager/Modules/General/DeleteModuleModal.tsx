@@ -1,4 +1,4 @@
-import { faXmark } from '@fortawesome/pro-solid-svg-icons';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, Input } from 'antd';
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';

@@ -13,20 +13,23 @@ import { Button, Input, Spin } from 'antd';
 import Margin from '../../components/general/Margin';
 import { UserService } from '../../services/UserService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faUser } from '@fortawesome/pro-duotone-svg-icons';
 import CreateProjectModal from './CreateProjectModal';
 import { projWindowSize } from '../../misc/constants';
 import UpgradeModal from './UpgradeModal';
 import { AccountTier, SubStatus } from '@/shared/models/User';
 import NewPremiumModal from './NewPremiumModal';
 import LogoImg from '@/shared/assets/images/logo.png';
+
+import {LuBadge} from 'react-icons/lu';
+
+
+import { faPlus, faUser } from '@fortawesome/free-solid-svg-icons';
 import {
-  faBadge,
-  faBadgeCheck,
   faCircleUser,
   faExclamationCircle,
   faFileInvoice,
-} from '@fortawesome/pro-solid-svg-icons';
+} from '@fortawesome/free-solid-svg-icons';
+
 import { format } from 'date-fns';
 import RequireUpgradeModal from './RequireUpgradeModal';
 
@@ -196,10 +199,11 @@ function HomeScreen() {
             <p>{user.email}</p>
           </div>
           <div className="profileContainer">
-            <FontAwesomeIcon
+            <LuBadge className='icon'/>
+            {/* <FontAwesomeIcon
               icon={user.accountTier == 'starter' ? faBadge : faBadgeCheck}
               className="icon"
-            />
+            /> */}
             <p>
               {user.accountTier == 'starter'
                 ? 'Starter Account'

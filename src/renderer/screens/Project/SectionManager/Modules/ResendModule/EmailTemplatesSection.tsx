@@ -1,5 +1,6 @@
 import Margin from '@/renderer/components/general/Margin';
-import { faFilePlus } from '@fortawesome/pro-duotone-svg-icons';
+import {LuFilePlus2} from 'react-icons/lu';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button } from 'antd';
 import React, { useEffect, useState } from 'react';
@@ -59,7 +60,7 @@ function EmailTemplatesSection() {
           className="addBtn"
           onClick={() => setCreateModalOpen(true)}
         >
-          <FontAwesomeIcon icon={faFilePlus} className="icon" />
+          <LuFilePlus2 className="icon" />
         </Button>
       </div>
       <Margin height={8} />

@@ -32,11 +32,11 @@ export const writeIndexFile = async (projKey: string) => {
   import bodyParser from 'body-parser';
   import cors from 'cors';
   import ngrok from "ngrok";
-  
+
   ${importStatements}
   const init = async () => {
     config();
-  
+
   ${funcStatements}
     const app = express();
     app.use(cors());
@@ -45,20 +45,17 @@ export const writeIndexFile = async (projKey: string) => {
     app.get('/', (req: any, res: any) => {
       res.send('Hello from visual backend server!');
     });
-  
+
     const args = process.argv.slice(2);
     let port = 8080;
     if (args.length > 0) {
       port = parseInt(args[0]);
     }
-  
+
     const server = app.listen(port, () => {
       console.log(\`Server started at http://localhost:\${port}\`);
     });
-  
-    let url = await ngrok.connect(port);
-      console.log("Public url:", url);
-  
+
     // Handle server shutdown gracefully
     process.on('SIGTERM', () => {
       // console.log('Received SIGTERM. Shutting down gracefully...');
@@ -66,7 +63,7 @@ export const writeIndexFile = async (projKey: string) => {
         process.exit(0); // Terminate the process gracefully after the server is closed
       });
     });
-  
+
     process.on('SIGINT', () => {
       // console.log('Received SIGINT. Shutting down gracefully...');
       server.close(() => {
@@ -74,8 +71,8 @@ export const writeIndexFile = async (projKey: string) => {
       });
     });
   };
-  
-  init();  
+
+  init();
     `;
   await FileFuncs.writeFile(filePath, fileContents);
 };

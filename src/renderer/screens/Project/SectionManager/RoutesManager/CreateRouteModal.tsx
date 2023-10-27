@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import '@/renderer/styles/Project/CreateRouteModal.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark } from '@fortawesome/pro-solid-svg-icons';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { Button, Dropdown, Input, Menu, MenuProps, Select } from 'antd';
 import Margin from 'renderer/components/general/Margin';
 import { useDispatch, useSelector } from 'react-redux';

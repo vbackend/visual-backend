@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import Margin from '@/renderer/components/general/Margin';
-import { faXmark } from '@fortawesome/pro-solid-svg-icons';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, Checkbox, Input, Select, Switch } from 'antd';
 

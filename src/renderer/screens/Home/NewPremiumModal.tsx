@@ -1,10 +1,10 @@
 import Margin from '@/renderer/components/general/Margin';
 import {
   faCheck,
-  faSparkle,
-  faSparkles,
   faXmark,
-} from '@fortawesome/pro-solid-svg-icons';
+} from '@fortawesome/free-solid-svg-icons';
+import {HiSparkles} from 'react-icons/hi';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import '@/renderer/styles/Home/NewPremiumModal.scss';
 
@@ -19,7 +19,7 @@ function NewPremiumModal({ setModalOpen }: any) {
         </div>
         <div className="middleContainer">
           <div className="title">
-            <FontAwesomeIcon icon={faSparkles} className="icon" />
+            <HiSparkles className="icon" />
             Welcome to the <span>premium</span> version of Visual Backend
           </div>
           <Margin height={20} />

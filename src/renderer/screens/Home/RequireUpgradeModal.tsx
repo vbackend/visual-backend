@@ -1,5 +1,5 @@
 import Margin from '@/renderer/components/general/Margin';
-import { faXmark, faRocket } from '@fortawesome/pro-solid-svg-icons';
+import { faXmark, faRocket } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { LoadingOutlined } from '@ant-design/icons';
 

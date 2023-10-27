@@ -18,7 +18,7 @@ import { BFunc, BFuncHelpers } from '@/shared/models/BFunc';
 import useEscHook from '@/renderer/hooks/useEscClicked';
 import { RenFuncs } from '@/shared/utils/RenFuncs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark } from '@fortawesome/pro-solid-svg-icons';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { setCurFile } from '@/renderer/redux/editor/editorSlice';
 import { BModule } from '@/shared/models/BModule';
 

@@ -17,7 +17,7 @@ import 'xterm/css/xterm.css';
 import { Terminal } from 'xterm';
 import { FitAddon } from 'xterm-addon-fit';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay, faRefresh, faStop } from '@fortawesome/pro-solid-svg-icons';
+import { faPlay, faRefresh, faStop } from '@fortawesome/free-solid-svg-icons';
 import { LoadingOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 

@@ -1,11 +1,13 @@
 import Margin from '@/renderer/components/general/Margin';
 import { RootState } from '@/renderer/redux/store';
+
+import { LuFilePlus2} from 'react-icons/lu';
+
 import {
-  faFilePlus,
   faFolderPlus,
   faPlus,
   faTrash,
-} from '@fortawesome/pro-duotone-svg-icons';
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -187,7 +189,7 @@ function FirestoreManager() {
                       setColSelected(col);
                     }}
                   >
-                    <FontAwesomeIcon icon={faFilePlus} />
+                    <LuFilePlus2 />
                   </Button>
                   {/* <div className="deleteContainer"> */}
                   <Tooltip

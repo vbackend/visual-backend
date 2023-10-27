@@ -9,12 +9,11 @@ import React, {
 import '@/renderer/styles/Project/RouteRow.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faChevronLeft,
   faChevronRight,
-  faFilePlus,
-  faFolderPlus,
-  faLocationArrow,
-} from '@fortawesome/pro-solid-svg-icons';
+} from '@fortawesome/free-solid-svg-icons';
+
+import { BiSolidFilePlus } from  'react-icons/bi';
+
 import Margin from 'renderer/components/general/Margin';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurRoute } from '@/renderer/redux/project/projectSlice';
@@ -140,7 +139,7 @@ function RouteRow({
               }}
               onContextMenu={(e) => handleContextMenu(e)}
             >
-              <FontAwesomeIcon icon={faFilePlus} />
+              <BiSolidFilePlus className='icon'/>
             </button>
           </>
         )}

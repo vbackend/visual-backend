@@ -7,7 +7,7 @@ import CreateJwt from '@/renderer/screens/Project/SectionManager/Modules/JwtModu
 import {
   faMoneyBillsSimple,
   faRotate,
-} from '@fortawesome/pro-duotone-svg-icons';
+} from '@fortawesome/free-solid-svg-icons';
 
 export type BModule = {
   id?: number;

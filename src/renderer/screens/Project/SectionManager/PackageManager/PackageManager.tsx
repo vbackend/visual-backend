@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/renderer/redux/store';
 import { Button, Input, Space, Spin } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/pro-solid-svg-icons';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 let hidePackages: any = {
   '@gitbeaker/rest': 'hide',

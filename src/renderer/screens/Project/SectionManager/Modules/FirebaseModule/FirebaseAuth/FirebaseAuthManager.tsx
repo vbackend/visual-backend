@@ -13,7 +13,7 @@ import { addFunc } from '@/renderer/redux/module/moduleSlice';
 import { RenFuncs } from '@/shared/utils/RenFuncs';
 import { setCurFile } from '@/renderer/redux/editor/editorSlice';
 
-import { faFilePlus } from '@fortawesome/pro-duotone-svg-icons';
+import { faFilePlus } from '@fortawesome/free-solid-svg-icons';
 
 function FirebaseAuthManager() {
   const dispatch = useDispatch();

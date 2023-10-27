@@ -10,7 +10,7 @@ import FuncSection from '../General/FuncSection';
 import EmailTemplatesSection from '../ResendModule/EmailTemplatesSection';
 import { Button } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/pro-regular-svg-icons';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import AddWebhookTemplateModal from './AddWebhookTemplate';
 
 function StripeManager() {

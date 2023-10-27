@@ -12,7 +12,7 @@ import { BFunc } from '@/shared/models/BFunc';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/renderer/redux/store';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/pro-solid-svg-icons';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import useKeyPress from '@/renderer/hooks/useKeyPress';
 import { BModule } from '@/shared/models/BModule';
 
