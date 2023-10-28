@@ -1,7 +1,7 @@
 import Margin from '@/renderer/components/general/Margin';
 import { RootState } from '@/renderer/redux/store';
 
-import { LuFilePlus2} from 'react-icons/lu';
+import { LuFilePlus2 } from 'react-icons/lu';
 
 import {
   faFolderPlus,
@@ -24,6 +24,8 @@ import { setCurFile } from '@/renderer/redux/editor/editorSlice';
 import { RenFuncs } from '@/shared/utils/RenFuncs';
 import { BFunc } from '@/shared/models/BFunc';
 import { FuncButton } from '../../General/FuncButton';
+import { MdNoteAdd } from 'react-icons/md';
+import { MdCreateNewFolder } from 'react-icons/md';
 
 function FirestoreManager() {
   const dispatch = useDispatch();
@@ -169,11 +171,11 @@ function FirestoreManager() {
           <div className="colHeader">
             <p className="title">Collections</p>
             <Button
-              className="addBtn"
+              className="folderAddBtn"
               type="text"
               onClick={() => setCreateColOpen(true)}
             >
-              <FontAwesomeIcon icon={faFolderPlus} className="icon" />
+              <MdCreateNewFolder className="icon folderAddIcon" />
             </Button>
           </div>
           {cols.map((col: string, index: number) => {
@@ -182,16 +184,15 @@ function FirestoreManager() {
                 <div className="funcGroupHeader">
                   <p>{col}</p>
                   <Button
-                    className="funcGroupBtn createFuncBtn"
+                    className="funcAddBtn"
                     type="text"
                     onClick={() => {
                       setCreateModalOpen(true);
                       setColSelected(col);
                     }}
                   >
-                    <LuFilePlus2 />
+                    <MdNoteAdd className="icon noteAddIcon" />
                   </Button>
-                  {/* <div className="deleteContainer"> */}
                   <Tooltip
                     title={
                       sortedFuncs[col] &&
@@ -210,7 +211,11 @@ function FirestoreManager() {
                           sortedFuncs[col] && sortedFuncs[col].length > 0
                         }
                       >
-                        <FontAwesomeIcon icon={faTrash} />
+                        <FontAwesomeIcon
+                          icon={faTrash}
+                          size="sm"
+                          className="icon"
+                        />
                       </Button>
                     </span>
                   </Tooltip>

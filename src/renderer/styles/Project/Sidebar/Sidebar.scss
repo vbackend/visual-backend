@@ -1,16 +1,18 @@
 @import '../../config';
 
+$sidebarHorizontalPadding: 10px;
+$sidebarBgColor: #FAFAFA;
 .sidebarContainer {
-    height: 100vh;
-    background-color: #FAFAFA;
+    min-height: 100vh;
+    background-color: $sidebarBgColor;
 
     min-width: $sidebarWidth;
     max-width: $sidebarWidth;
     display: flex;
     flex-direction: column;
-    // justify-content: space-between;
+    justify-content: space-between;
 
-    padding: 20px 10px;
+    // padding: 20px 10px;
     font-size: 16px;
 
     .projectName {
@@ -19,6 +21,11 @@
         margin-bottom: 10px;
         padding-left: 8px;
     }
+}
+
+.btnsContainer {
+  padding: 20px $sidebarHorizontalPadding;
+  padding-bottom: 0px;
 }
 
 
@@ -48,7 +55,7 @@ $sidebarSecondary: #6e6f7f;
     justify-content: space-between;
     user-select: none;
     cursor: pointer;
-    
+
 
     .left {
         display: flex;
@@ -117,7 +124,7 @@ $activeBgColor: #DAE4FF;
         font-size: $para3;
         font-weight: 500;
         color: $sidebarSecondary;
-        justify-content: space-between; 
+        justify-content: space-between;
         padding-right: calc(8px);
 
         .right {
@@ -138,7 +145,7 @@ $activeBgColor: #DAE4FF;
 }
 
 .sidebarContainer .hintsContainer {
-    padding: 8px;
+    padding: 8px $sidebarHorizontalPadding + 5px;
     font-size: $para5;
 
     .title {
@@ -160,11 +167,12 @@ $activeBgColor: #DAE4FF;
 .sidebarContainer .deleteBtn {
     display: flex;
     align-items: center;
-    padding: 8px;
-    position: absolute;
-    bottom: 20px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    width: 100%;
     font-size: $para3;
     color: $errColor;
+    background-color: $sidebarBgColor;
 
     .icon {
         font-size: $para4;

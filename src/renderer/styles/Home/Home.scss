@@ -4,7 +4,7 @@
     width: 100vw;
     height: 100vh;
 
-    @include flexCenter(row); 
+    @include flexCenter(row);
     justify-content: flex-start;
     h1 {
         font-size: 25px;
@@ -44,17 +44,17 @@
     margin-bottom: 12px;
 
     .icon {
-        margin-right: 8px;
-        color: $textGrey;
-        width: 16px;
+      margin-right: 8px;
+      color: $textGrey;
+      width: 20px;
     }
-    
+
     p {
         font-size: $para4;
         color: $textSecondary
     }
 
-    
+
 }
 
 .leftBar {
@@ -67,7 +67,7 @@
 .homeContainer .middleBar {
     @include flexCenter(column);
     background-color: #F9FAFB;
-    
+
     height: 100vh;
     margin: 0px;
     width: 100%;

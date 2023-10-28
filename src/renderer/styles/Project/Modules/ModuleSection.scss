@@ -2,14 +2,14 @@
 @import '../../config';
 
 .moduleSection {
-    width: 100%;   
+    width: 100%;
     height: 100%;
 }
 
 .moduleSection .headerContainer {
     display: flex;
     align-items: center;
-    
+
     .title {
         font-size: $para2;
         margin-right: 10px;
@@ -74,14 +74,37 @@
     width: 100%;
     display: flex;
     align-items: center;
+    height: 30px;
+}
 
-    .addBtn {
-        @include flexCenter(row);
-        padding: 0px 10px;
-        margin-left: 8px;
-        width: 25px;
-        height: 25px;
-    }
+$iconColor: #535469;
+
+.folderAddBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px !important;
+  width: 30px;
+  height: 28px;
+  margin-left: 5px !important;
+
+  .folderAddIcon {
+    transform: scale(1.3);
+    color: $iconColor;
+  }
+}
+
+.funcAddBtn {
+  @include flexCenter(row);
+  padding: 0px 5px;
+  width: 25px;
+  height: 28px;
+  margin-left: 8px !important;
+
+  .noteAddIcon {
+    transform: scale(1.3);
+    color: $iconColor;
+  }
 }
 
 .funcGroupHeader {
@@ -103,13 +126,13 @@
 
 .funcGroupBtn {
     @include flexCenter(row);
-    padding: 0px 15px;
-    width: 30px;
+    padding: 0px 10px;
+    width: 25px !important;
     margin: 0px !important;
-}
 
-.createFuncBtn {
-    margin-left: 8px !important;
+    .icon {
+      color: $iconColor
+    }
 }
 
 .funcContainer {
@@ -142,3 +165,5 @@
         }
     }
 }
+
+

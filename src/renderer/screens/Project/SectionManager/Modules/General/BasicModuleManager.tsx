@@ -10,8 +10,9 @@ import CreateFuncModal from '../FirebaseModule/CreateFuncModal';
 import Margin from '@/renderer/components/general/Margin';
 import { Button } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { LuFilePlus2} from 'react-icons/lu';
+import { LuFilePlus2 } from 'react-icons/lu';
 import { FuncButton } from './FuncButton';
+import { MdNoteAdd } from 'react-icons/md';
 
 function BasicModuleManager() {
   const dispatch = useDispatch();
@@ -83,10 +84,10 @@ function BasicModuleManager() {
             <p>Functions</p>
             <Button
               type="text"
-              className="addBtn"
+              className="funcAddBtn"
               onClick={() => setCreateModalOpen(true)}
             >
-              <LuFilePlus2 className="icon" />
+              <MdNoteAdd className="icon noteAddIcon" />
             </Button>
           </div>
           <Margin height={8} />

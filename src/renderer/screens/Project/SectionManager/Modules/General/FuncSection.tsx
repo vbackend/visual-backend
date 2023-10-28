@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Margin from '@/renderer/components/general/Margin';
 
-import { LuFilePlus2} from 'react-icons/lu';
+import { LuFilePlus2 } from 'react-icons/lu';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button } from 'antd';
 import CreateFuncModal from '../FirebaseModule/CreateFuncModal';
@@ -9,6 +9,7 @@ import { FuncButton } from './FuncButton';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/renderer/redux/store';
 import { BFunc, ExtensionType } from '@/shared/models/BFunc';
+import { MdNoteAdd } from 'react-icons/md';
 
 function FuncSection({ createFuncClicked }: any) {
   const funcs = useSelector((state: RootState) => state.module.funcs);
@@ -36,10 +37,10 @@ function FuncSection({ createFuncClicked }: any) {
         <p>Functions</p>
         <Button
           type="text"
-          className="addBtn"
+          className="funcAddBtn"
           onClick={() => setCreateModalOpen(true)}
         >
-          <LuFilePlus2 className="icon" />
+          <MdNoteAdd className="icon noteAddIcon" />
         </Button>
       </div>
       <Margin height={8} />

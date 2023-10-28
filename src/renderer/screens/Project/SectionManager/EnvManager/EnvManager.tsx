@@ -211,9 +211,9 @@ export const EnvVarComponent = ({ envVar, saveEnvVar, deleteEnv }: any) => {
             <LoadingOutlined />
           ) : editing ? (
             // <p>Save</p>
-            <FontAwesomeIcon icon={faCheck} color="#333" />
+            <FontAwesomeIcon icon={faCheck} className="icon" />
           ) : (
-            <FontAwesomeIcon icon={faPen} color="#333" />
+            <FontAwesomeIcon icon={faPen} className="icon" />
           )}
         </Button>
       </div>

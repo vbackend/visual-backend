@@ -20,8 +20,7 @@ import { AccountTier, SubStatus } from '@/shared/models/User';
 import NewPremiumModal from './NewPremiumModal';
 import LogoImg from '@/shared/assets/images/logo.png';
 
-import {LuBadge} from 'react-icons/lu';
-
+import { LuBadge } from 'react-icons/lu';
 
 import { faPlus, faUser } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -34,6 +33,7 @@ import { format } from 'date-fns';
 import RequireUpgradeModal from './RequireUpgradeModal';
 
 import '@/renderer/styles/Home/Home.scss';
+import HomeSidebar from './HomeSidebar';
 
 function HomeScreen() {
   const dispatch = useDispatch();
@@ -159,16 +159,6 @@ function HomeScreen() {
 
   const [checkUpdateResult, setCheckUpdateResult] = useState(null);
 
-  // useEffect(() => {
-  //   window.electron.updateCheckResult((event: any, payload: any) => {
-  //     setCheckUpdateResult(payload);
-  //   });
-
-  //   return () => {
-  //     window.electron.removeUpdateCheckResultListener();
-  //   };
-  // });
-
   if (loading)
     return (
       <div className="emptyContainer">
@@ -180,7 +170,6 @@ function HomeScreen() {
       {requireUpgradeModalOpen && (
         <RequireUpgradeModal setModalOpen={setRequireUpgradeModalOpen} />
       )}
-      {upgradeModalOpen && <UpgradeModal setModalOpen={setUpgradeModalOpen} />}
       {newPremiumModalOpen && (
         <NewPremiumModal setModalOpen={setNewPremiumModalOpen} />
       )}
@@ -188,73 +177,8 @@ function HomeScreen() {
         <CreateProjectModal setModalOpen={setCreateModalOpen} />
       )}
       <div className="homeContainer">
-        <div className="leftBar">
-          <div className="logoContainer">
-            <img className="logoImg" src={LogoImg} alt="vb-logo" />
-            <div className="logoTxt">Visual Backend</div>
-          </div>
-          <Margin height={15} />
-          <div className="profileContainer">
-            <FontAwesomeIcon icon={faCircleUser} className="icon" />
-            <p>{user.email}</p>
-          </div>
-          <div className="profileContainer">
-            <LuBadge className='icon'/>
-            {/* <FontAwesomeIcon
-              icon={user.accountTier == 'starter' ? faBadge : faBadgeCheck}
-              className="icon"
-            /> */}
-            <p>
-              {user.accountTier == 'starter'
-                ? 'Starter Account'
-                : 'Premium Account'}
-            </p>
-          </div>
-
-          <Margin height={10} />
-
-          <div className="right">
-            {getSubText()}
-
-            {errText && (
-              <p
-                className="errorText"
-                style={{
-                  marginBottom: '10px',
-                  paddingTop: '0px',
-                }}
-              >
-                {errText}
-              </p>
-            )}
-            {user.accountTier == AccountTier.Premium ? (
-              <Button
-                className="homeBtn"
-                type="primary"
-                onClick={() => manageAccountClicked()}
-                loading={portalLoading}
-              >
-                Manage Subscription
-              </Button>
-            ) : (
-              <Button
-                className="homeBtn"
-                type="primary"
-                onClick={() => setUpgradeModalOpen(true)}
-              >
-                Upgrade
-              </Button>
-            )}
-
-            <Button className="homeBtn" type="default" onClick={logout}>
-              Sign Out
-            </Button>
-          </div>
-
-          {/* <p>
-            Update result: {checkUpdateResult ? checkUpdateResult : 'checking'}
-          </p> */}
-        </div>
+        {/* SIDEBAR */}
+        <HomeSidebar />
 
         {/* CONTENT */}
         <div className="middleBar">

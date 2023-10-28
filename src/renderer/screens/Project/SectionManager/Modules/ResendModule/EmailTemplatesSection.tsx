@@ -1,5 +1,5 @@
 import Margin from '@/renderer/components/general/Margin';
-import {LuFilePlus2} from 'react-icons/lu';
+import { LuFilePlus2 } from 'react-icons/lu';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button } from 'antd';
@@ -10,6 +10,7 @@ import { RootState } from '@/renderer/redux/store';
 import { addFunc } from '@/renderer/redux/module/moduleSlice';
 import { BFunc, ExtensionType } from '@/shared/models/BFunc';
 import { FuncButton } from '../General/FuncButton';
+import { MdNoteAdd } from 'react-icons/md';
 
 function EmailTemplatesSection() {
   const [createModalOpen, setCreateModalOpen] = useState(false);
@@ -57,10 +58,10 @@ function EmailTemplatesSection() {
         <p>Email Templates</p>
         <Button
           type="text"
-          className="addBtn"
+          className="funcAddBtn"
           onClick={() => setCreateModalOpen(true)}
         >
-          <LuFilePlus2 className="icon" />
+          <MdNoteAdd className="icon noteAddIcon" />
         </Button>
       </div>
       <Margin height={8} />

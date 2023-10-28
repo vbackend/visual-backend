@@ -13,12 +13,13 @@ import Margin from '@/renderer/components/general/Margin';
 import { faAdd, faRefresh } from '@fortawesome/free-solid-svg-icons';
 import 'renderer/styles/Project/Modules/MongoModule/ManageMongo.scss';
 import { EditorType, setCurFile } from '@/renderer/redux/editor/editorSlice';
-import {LuFilePlus2} from 'react-icons/lu';
+import { LuFilePlus2 } from 'react-icons/lu';
 
 import CreateFuncModal from '../FirebaseModule/CreateFuncModal';
 import { BModuleType } from '@/shared/models/BModule';
 import { RenFuncs } from '@/shared/utils/RenFuncs';
 import { FuncButton } from '../General/FuncButton';
+import { MdNoteAdd } from 'react-icons/md';
 
 function ManageMongo() {
   const dispatch = useDispatch();
@@ -171,14 +172,14 @@ function ManageMongo() {
                 <div className="funcGroupHeader">
                   <p>{col}</p>
                   <Button
-                    className="funcGroupBtn createFuncBtn"
+                    className="funcAddBtn"
                     type="text"
                     onClick={() => {
                       setCol(col);
                       setCreateModalOpen(true);
                     }}
                   >
-                    <LuFilePlus2/>
+                    <MdNoteAdd className="icon noteAddIcon" />
                   </Button>
                 </div>
                 {sortedFuncs[col] &&

@@ -11,6 +11,7 @@ $sidebarWidth: 180px;
 $sectionManagerWidth: 250px;
 $bgColor1: white;
 $bgColor2: #FAFAFA;
+$iconColor: #535469;
 
 @mixin flexCenter($flex-direction) {
     display: flex;
@@ -34,14 +35,14 @@ $para6: 12px;
 $antdRadius: 6px;
 
 @mixin primaryGradient() {
-    background: #4776E6;  
-    background: -webkit-linear-gradient(to right, #8E54E9, #4776E6); 
+    background: #4776E6;
+    background: -webkit-linear-gradient(to right, #8E54E9, #4776E6);
     background: linear-gradient(to right, #8E54E9, #3d55f6);
 }
 
 @mixin primaryGradientText() {
     background: #4776E6;
-    background: -webkit-linear-gradient(to bottom, #8E54E9, #4776E6); 
+    background: -webkit-linear-gradient(to bottom, #8E54E9, #4776E6);
     background: linear-gradient(to right, #8E54E9, #3d55f6);
     -webkit-background-clip: text;
     background-clip: text;

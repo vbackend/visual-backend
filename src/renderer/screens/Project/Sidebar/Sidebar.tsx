@@ -83,7 +83,7 @@ function Sidebar() {
         <DeleteProjectModal setModalOpen={setDeleteModalOpen} />
       )}
       <div className="sidebarContainer">
-        <div>
+        <div className="btnsContainer">
           <div className="row1">
             <button className="homeBtn" onClick={() => homeClicked()}>
               <FontAwesomeIcon icon={faArrowLeft} className="icon" />
@@ -145,13 +145,15 @@ function Sidebar() {
           <p className="shortcutText">
             <span>Shift + E</span>: Stop server
           </p>
+          <button
+            className="deleteBtn"
+            onClick={() => setDeleteModalOpen(true)}
+          >
+            <FontAwesomeIcon className="icon" icon={faTrash} />
+            <Margin width={8} />
+            Delete Project
+          </button>
         </div>
-
-        <button className="deleteBtn" onClick={() => setDeleteModalOpen(true)}>
-          <FontAwesomeIcon className="icon" icon={faTrash} />
-          <Margin width={8} />
-          Delete Project
-        </button>
       </div>
     </>
   );
@@ -182,6 +184,7 @@ const SidebarBtn = ({ tab, name, icon, scale = 1.0, shortcut }: any) => {
   return (
     <>
       <div
+        key={tab}
         className={`sidebarBtn ${
           curTab === tab && tab != ProjectTab.Module && 'curSidebarBtn'
         }`}
@@ -209,7 +212,7 @@ const SidebarBtn = ({ tab, name, icon, scale = 1.0, shortcut }: any) => {
         <div className="moduleBtnsContainer">
           {modules &&
             modules.map((module: BModule, index) => (
-              <ModuleButton key={index} index={index} module={module} />
+              <ModuleButton key={module.key} index={index} module={module} />
             ))}
         </div>
       )}
