@@ -1,7 +1,4 @@
 import { BFunc, BFuncHelpers } from '@/shared/models/BFunc';
-import { GenFuncs } from '@/shared/utils/GenFuncs';
-import { app } from 'electron';
-import fs from 'fs';
 import { FileFuncs } from '../helpers/fileFuncs';
 import { MainFuncs } from '@/shared/utils/MainFuncs';
 import path from 'path';

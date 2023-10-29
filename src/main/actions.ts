@@ -13,6 +13,7 @@ export class Actions {
   static OPEN_CHECKOUT_PAGE = 'open-checkout-page';
   static UPDATE_CHECKOUT_STATUS = 'update-checkout-status';
   static OPEN_CUSTOMER_PORTAL = 'open-customer-portal';
+  static GET_NODE_TYPE = 'get-node-type';
 
   // PROJECT
   static CREATE_PROJECT = 'create-project';

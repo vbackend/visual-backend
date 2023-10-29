@@ -59,12 +59,6 @@ import {
   installNpmPackage,
 } from './ipc/project/packageFuncs';
 
-import fs from 'fs';
-import zlib from 'zlib';
-import tar, { update } from 'tar';
-import AdmZip from 'adm-zip';
-import os from 'os';
-
 import Store from 'electron-store';
 import {
   deleteTokens,
@@ -96,6 +90,9 @@ import {
   openCustomerPortal,
 } from './ipc/auth/subscriptionFuncs';
 import { config } from 'dotenv';
+import { initNodeBinaries, setNodeType } from './helpers/binFuncs';
+import { getDeviceType, getNodeType } from './ipc/home/homeFuncs';
+import { nodeTypeKey } from '@/renderer/misc/constants';
 
 config();
 
@@ -204,85 +201,8 @@ let globalVars: {
   store: new Store(),
 };
 
-function is64Bit() {
-  return ['arm64', 'ppc64', 'x64', 's390x'].includes(os.arch());
-}
-
-const unzipNodeMac = async () => {
-  let tarFileName =
-    process.arch == 'arm64' ? 'node-lts-arm64.tar.gz' : 'node-lts-x64.tar.gz';
-  let inputPath = path.join(MainFuncs.getAssetsPath(), tarFileName);
-
-  if (!fs.existsSync(inputPath)) {
-    return;
-  }
-
-  let outputFolder = BinFuncs.getBinOutputFolder();
-  const outputPath = path.join(outputFolder, 'node-lts');
-
-  let nodeExists = await FileFuncs.folderExists(outputPath);
-  if (nodeExists) return;
-
-  try {
-    const readStream = fs.createReadStream(inputPath);
-    const gunzip = zlib.createGunzip();
-    readStream.pipe(gunzip);
-
-    const extract = tar.extract({
-      cwd: outputFolder, // Set the output directory for extraction
-    });
-    gunzip.pipe(extract);
-
-    await new Promise((resolve, reject) => {
-      extract.on('error', reject);
-      extract.on('end', async () => {
-        let nodeFolderName =
-          process.arch == 'arm64'
-            ? 'node-v18.17.1-darwin-arm64'
-            : 'node-v18.17.1-darwin-x64';
-        let oldDir = path.join(outputFolder, nodeFolderName);
-        let newDir = outputPath;
-
-        await FileFuncs.renameDir(oldDir, newDir);
-        resolve(true);
-      });
-    });
-
-    console.log('Extraction completed successfully.');
-  } catch (err) {
-    console.error('Error extracting the archive:', err);
-  }
-};
-
-const unzipNodeWindows = async () => {
-  let zipFileName = is64Bit() ? 'node-lts-win-x64.zip' : 'node-lts-win-x86.zip';
-  const zipFilePath = path.join(MainFuncs.getAssetsPath(), zipFileName);
-
-  if (!fs.existsSync(zipFilePath)) {
-    return;
-  }
-
-  let outputFolder = BinFuncs.getBinOutputFolder();
-  const outputPath = path.join(outputFolder, 'node-lts');
-
-  let nodeExists = await FileFuncs.folderExists(outputPath);
-  if (nodeExists) return;
-
-  const zip = new AdmZip(zipFilePath);
-
-  try {
-    zip.extractAllTo(outputFolder);
-
-    let zipOutputName = is64Bit()
-      ? 'node-v18.17.1-win-x64'
-      : 'node-v18.17.1-win-x86';
-    FileFuncs.renameDir(path.join(outputFolder, zipOutputName), outputPath);
-  } catch (error: any) {
-    console.error('Error extracting .zip file:', error.message);
-  }
-};
-
 const init = async () => {
+  // Home Funcs
   ipcMain.on(
     Actions.SET_WINDOW_SIZE,
     (e: Electron.IpcMainEvent, payload: any) => {
@@ -290,22 +210,9 @@ const init = async () => {
     }
   );
 
-  ipcMain.handle(
-    Actions.GET_DEVICE_TYPE,
-    (e: Electron.IpcMainInvokeEvent, payload: any) => {
-      return process.platform;
-    }
-  );
+  ipcMain.handle(Actions.GET_DEVICE_TYPE, getDeviceType);
 
-  ipcMain.handle(
-    Actions.GET_APP_PATHS,
-    (e: Electron.IpcMainInvokeEvent, payload: any) => {
-      return {
-        userData: app.getPath('userData'),
-        dirname: __dirname,
-      };
-    }
-  );
+  ipcMain.handle(Actions.GET_NODE_TYPE, getNodeType);
 
   ipcMain.handle(Actions.OPEN_CHECKOUT_PAGE, openCheckoutPage);
   ipcMain.handle(Actions.OPEN_CUSTOMER_PORTAL, openCustomerPortal);
@@ -462,6 +369,9 @@ app
   .then(async () => {
     // autoUpdater.checkForUpdates();
 
+    await initNodeBinaries();
+    await setNodeType();
+
     createWindow();
     fixPath();
 
@@ -471,11 +381,8 @@ app
 
     await FileFuncs.createDirIfNotExists(BinFuncs.getBinOutputFolder());
 
-    if (process.platform == 'darwin') {
-      unzipNodeMac();
-    } else {
-      unzipNodeWindows();
-    }
+    let s = new Store();
+    console.log('Node type:', s.get(nodeTypeKey));
 
     init();
     firebaseInit();

@@ -107,7 +107,7 @@ const electronHandler = {
     ipcRenderer.send(Actions.SET_WINDOW_SIZE, payload),
   getDeviceType: () => ipcRenderer.invoke(Actions.GET_DEVICE_TYPE),
   getAppPaths: () => ipcRenderer.invoke(Actions.GET_APP_PATHS),
-  unzipNode: () => ipcRenderer.invoke(Actions.UNZIP_NODE),
+  getNodeType: () => ipcRenderer.invoke(Actions.GET_NODE_TYPE),
 
   ...firebaseHandler,
   ...moduleHandler,

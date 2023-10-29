@@ -1,10 +1,9 @@
 .env
 
-assets/node-lts-arm64.tar.gz
-assets/node-lts-x64.tar.gz
-assets/node-lts-x64.tar.gz
-assets/node-lts-win-x64.zip
-assets/node-lts-win-x86.zip
+assets/node-v18.18.2-darwin-arm64.tar.gz
+assets/node-v18.18.2-darwin-x64.tar.gz
+assets/node-v18.18.2-win-x64.zip
+assets/node-v18.18.2-win-x86.zip
 assets/node-lts
 
 # Logs

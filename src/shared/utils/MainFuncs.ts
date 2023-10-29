@@ -1,8 +1,9 @@
-import { spawn } from 'child_process';
 import { app } from 'electron';
-import { platform } from 'os';
 import path from 'path';
 import { modConfig } from '../models/BModule';
+import Store from 'electron-store';
+import { nodeTypeKey } from '@/renderer/misc/constants';
+import { NodeType } from '../models/NodeType';
 
 export class MainFuncs {
   static getDataPath = () => {
@@ -130,8 +131,15 @@ export class BinFuncs {
   };
 
   static getNpmPath = () => {
+    let s = new Store();
+    let nodeType = s.get(nodeTypeKey);
+    if (nodeType == NodeType.Default) {
+      console.log("Using system's npm");
+      return process.platform == 'win32' ? 'npm.cmd' : 'npm';
+    }
+
     this.appendNodePath();
-    console.log('Node Bin Path:', this.getNodeBinPath());
+    console.log("Using bin's npm");
     if (process.platform == 'darwin') {
       return path.join(this.getNodeBinPath(), 'npm');
     } else {

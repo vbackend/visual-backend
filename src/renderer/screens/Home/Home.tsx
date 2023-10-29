@@ -7,45 +7,30 @@ import {
   setProjects,
   setUser,
 } from '../../redux/app/appSlice';
+
 import { Project } from '@/shared/models/project';
 import { RootState } from '../../redux/store';
-import { Button, Input, Spin } from 'antd';
+import { Button, Spin } from 'antd';
 import Margin from '../../components/general/Margin';
 import { UserService } from '../../services/UserService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import CreateProjectModal from './CreateProjectModal';
 import { projWindowSize } from '../../misc/constants';
-import UpgradeModal from './UpgradeModal';
-import { AccountTier, SubStatus } from '@/shared/models/User';
+import { AccountTier } from '@/shared/models/User';
 import NewPremiumModal from './NewPremiumModal';
-import LogoImg from '@/shared/assets/images/logo.png';
-
-import { LuBadge } from 'react-icons/lu';
-
-import { faPlus, faUser } from '@fortawesome/free-solid-svg-icons';
-import {
-  faCircleUser,
-  faExclamationCircle,
-  faFileInvoice,
-} from '@fortawesome/free-solid-svg-icons';
-
-import { format } from 'date-fns';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import RequireUpgradeModal from './RequireUpgradeModal';
+import HomeSidebar from './HomeSidebar';
 
 import '@/renderer/styles/Home/Home.scss';
-import HomeSidebar from './HomeSidebar';
+import { NodeType } from '@/shared/models/NodeType';
 
 function HomeScreen() {
   const dispatch = useDispatch();
-  const loggedIn = useSelector((state: RootState) => state.app.loggedIn);
   const projects = useSelector((state: RootState) => state.app.projects);
-
-  const user = useSelector((state: RootState) => state.app.user);
 
   const [createModalOpen, setCreateModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [portalLoading, setPortalLoading] = useState(false);
-  const [errText, setErrText] = useState('');
 
   const projectClicked = (project: Project) => {
     window.electron.setWindowSize(projWindowSize);
@@ -53,24 +38,15 @@ function HomeScreen() {
     dispatch(setCurPage(AppPage.Project));
   };
 
-  const manageAccountClicked = async () => {
-    setErrText('');
-    setPortalLoading(true);
-    try {
-      await window.electron.openPortalPage({});
-    } catch (error) {
-      setErrText('Failed to open page');
-    }
-
-    setPortalLoading(false);
-  };
-
   const [requireUpgradeModalOpen, setRequireUpgradeModalOpen] = useState(false);
   const [upgradeModalOpen, setUpgradeModalOpen] = useState(false);
   const [newPremiumModalOpen, setNewPremiumModalOpen] = useState(false);
 
+  const [nodeType, setNodeType] = useState(null);
+
   const init = async () => {
     setLoading(true);
+    setNodeType(await window.electron.getNodeType());
 
     try {
       let { data } = await UserService.getUser();
@@ -85,10 +61,6 @@ function HomeScreen() {
       return;
     }
     setLoading(false);
-  };
-  const logout = async () => {
-    await window.electron.deleteAuthTokens();
-    dispatch(setCurPage(AppPage.Auth));
   };
 
   useEffect(() => {
@@ -118,37 +90,6 @@ function HomeScreen() {
     };
   }, []);
 
-  const getSubText = () => {
-    if (user.accountTier != AccountTier.Premium) return <></>;
-    else {
-      return (
-        <div className="profileContainer">
-          {user.subscription.status == SubStatus.PastDue ? (
-            <p className="failedTxt">
-              <FontAwesomeIcon icon={faExclamationCircle} className="icon" />
-              Payment failed, please update account
-            </p>
-          ) : user.subscription.status == SubStatus.Active ? (
-            <p>
-              {`Premium renews on:`}
-              <br />
-              {format(new Date(user.subscription.nextBillDate), 'd MMM yyyy')}
-            </p>
-          ) : user.subscription.status == SubStatus.Cancelled ? (
-            <p>
-              {`Premium ending on: ${format(
-                new Date(user.subscription.nextBillDate),
-                'd MMM yyyy'
-              )}`}
-            </p>
-          ) : (
-            <></>
-          )}
-        </div>
-      );
-    }
-  };
-
   const createBtnClicked = () => {
     setCreateModalOpen(true);
     // if (user.accountTier == AccountTier.Starter && projects.length > 0) {
@@ -157,8 +98,17 @@ function HomeScreen() {
     // }
   };
 
-  const [checkUpdateResult, setCheckUpdateResult] = useState(null);
-
+  if (nodeType == NodeType.InvalidVersion || nodeType == NodeType.NotFound) {
+    return (
+      <div className="emptyContainer">
+        <p style={{ maxWidth: '300px' }}>
+          {nodeType == NodeType.InvalidVersion
+            ? 'The default node version on your machine is invalid. Please use a node version <= 18.18.2'
+            : 'Node could not be found on your machine. Please install node with version <= 18.18.2'}
+        </p>
+      </div>
+    );
+  }
   if (loading)
     return (
       <div className="emptyContainer">

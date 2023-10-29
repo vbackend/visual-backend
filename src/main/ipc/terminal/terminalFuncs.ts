@@ -1,69 +1,7 @@
 import { BrowserWindow, app } from 'electron';
 import { Actions } from '../../actions';
 import { GenFuncs } from '@/shared/utils/GenFuncs';
-import { ChildProcess, exec, spawn } from 'child_process';
-
-function compareVersions(version1: string, version2: string) {
-  const parts1 = version1.split('.').map(Number);
-  const parts2 = version2.split('.').map(Number);
-
-  for (let i = 0; i < parts1.length; i++) {
-    if (parts1[i] < parts2[i]) {
-      return -1;
-    }
-    if (parts1[i] > parts2[i]) {
-      return 1;
-    }
-  }
-
-  return 0;
-}
-
-const getNodePath = () => {
-  let detectPathCmd =
-    process.platform == 'darwin' ? 'which node' : 'where node';
-
-  return new Promise((res, rej) => {
-    exec(detectPathCmd, (whichError, whichStdout, whichStderr) => {
-      if (!whichError) {
-        const nodePath = whichStdout.trim();
-        res(nodePath);
-      } else res(null);
-    });
-  });
-};
-
-const checkNodeVer = async (w: BrowserWindow) => {
-  return new Promise((res, rej) => {
-    let nodePath = BinFuncs.getNodeBinPath();
-    exec(`${nodePath} -v`, async (err, stdout, stderr) => {
-      if (err) {
-        w.webContents.send(Actions.UPDATE_TERMINAL, {
-          type: 'error',
-          data: 'Node is not installed. Please install node ver <= 18.17.1',
-        });
-        res(false);
-        return;
-      }
-
-      let nodeVersion = stdout.trim().slice(1);
-      const requiredVersion = '18.17.1';
-      if (compareVersions(nodeVersion, requiredVersion) <= 0) {
-        res(true);
-      } else {
-        let nodePath = await getNodePath();
-        w.webContents.send(Actions.UPDATE_TERMINAL, {
-          type: 'error',
-          data: `Node version detected is ${nodeVersion}. Required version is <= 18.17.1${
-            nodePath && `\nPath to node used: ${nodePath}`
-          }`,
-        });
-        res(false);
-        return;
-      }
-    });
-  });
-};
+import { ChildProcess, spawn } from 'child_process';
 
 async function startServer(
   g: {
