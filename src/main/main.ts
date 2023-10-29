@@ -255,7 +255,8 @@ const unzipNodeMac = async () => {
 };
 
 const unzipNodeWindows = async () => {
-  let zipFileName = is64Bit() ? 'node-lts-win-x64.zip' : 'node-lts-win-x86.zip';
+  let nodeV = "v18.18.2"
+  let zipFileName = is64Bit() ? `node-${nodeV}-win-x64.zip` : `node-${nodeV}-win-x86.zip`;
   const zipFilePath = path.join(MainFuncs.getAssetsPath(), zipFileName);
 
   if (!fs.existsSync(zipFilePath)) {
@@ -274,8 +275,8 @@ const unzipNodeWindows = async () => {
     zip.extractAllTo(outputFolder);
 
     let zipOutputName = is64Bit()
-      ? 'node-v18.17.1-win-x64'
-      : 'node-v18.17.1-win-x86';
+      ? `node-${nodeV}-win-x64`
+      : `node-${nodeV}-win-x86`;
     FileFuncs.renameDir(path.join(outputFolder, zipOutputName), outputPath);
   } catch (error: any) {
     console.error('Error extracting .zip file:', error.message);
