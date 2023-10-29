@@ -78,6 +78,10 @@ function TerminalComponent() {
       if (e.domEvent.ctrlKey && e.domEvent.key === 't') {
         dispatch(setShowTerm(false));
       }
+      if (e.domEvent.ctrlKey && e.domEvent.key === 'k') {
+        dispatch(resetTermData(null));
+        terminalRef.current._xterm.clear();
+      }
     };
 
     terminalRef.current._xterm.onKey(handleKey);
@@ -164,7 +168,7 @@ function TerminalComponent() {
       <div
         ref={terminalRef}
         style={{
-          height: '260px',
+          height: '250px',
           paddingLeft: '15px',
           paddingTop: '5px',
         }}

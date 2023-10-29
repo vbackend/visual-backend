@@ -126,7 +126,7 @@ export class BinFuncs {
   static appendNodePath = () => {
     let nodeBinPath = this.getNodeBinPath();
     if (process.env.PATH && !process.env.PATH.includes(nodeBinPath)) {
-      process.env.PATH = `${this.getNodeBinPath()}:${process.env.PATH}`;
+      process.env.PATH = `${this.getNodeBinPath()}${process.platform == 'win32' ? ';' : ':'}${process.env.PATH}`;
     }
   };
 
@@ -134,12 +134,12 @@ export class BinFuncs {
     let s = new Store();
     let nodeType = s.get(nodeTypeKey);
     if (nodeType == NodeType.Default) {
-      console.log("Using system's npm");
+      console.log("Using default npm");
       return process.platform == 'win32' ? 'npm.cmd' : 'npm';
     }
 
     this.appendNodePath();
-    console.log("Using bin's npm");
+    console.log("Using downloaded npm");
     if (process.platform == 'darwin') {
       return path.join(this.getNodeBinPath(), 'npm');
     } else {
