@@ -10,7 +10,7 @@
 
 app.getPath('userData') returns:
 - **Mac:** /Users/{username}/Library/Application Support/visual-backend
-- **Windows:** C:\Users\{username}\AppData\Roaming\visual-backend
+- **Windows:** C:\Users\\\{username}\AppData\Roaming\visual-backend
 
 ## Structure of Visual Backend
 
