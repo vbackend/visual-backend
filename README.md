@@ -51,7 +51,7 @@ npm install
 npm start
 ```
 
-**Note:** Visual Backend requires a node.js version <=18.18.2. This is because with other versions, ts-node-esm doesn't work. As such, please configure your PATH such that the node binary points to a correct versio of node.
+**Note:** Visual Backend requires a node.js version <=18.18.2. This is because with other versions, ts-node-esm doesn't work. As such, please configure your PATH such that the node binary points to a correct version of node.
 
 **Note:** Hosting & OpenAI usage is run on the Visual Backend server, and is therefore not available with a self-hosted copy of this tool. To learn how to host your Visual Backend project by yourself, [read the following](https://github.com/vbackend/visual-backend/blob/main/docs/HOW_IT_WORKS.md#deploying-your-project)
 
