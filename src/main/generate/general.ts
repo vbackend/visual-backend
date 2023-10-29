@@ -31,7 +31,6 @@ export const writeIndexFile = async (projKey: string) => {
   import { Router } from './api/Router.js';
   import bodyParser from 'body-parser';
   import cors from 'cors';
-  import ngrok from "ngrok";
 
   ${importStatements}
   const init = async () => {

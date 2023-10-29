@@ -3,7 +3,6 @@ import express from 'express';
 import { Router } from './api/Router.js';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import ngrok from 'ngrok';
 
 const init = async () => {
   config();
