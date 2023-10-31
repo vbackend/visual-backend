@@ -33,6 +33,7 @@ function HomeScreen() {
   const [loading, setLoading] = useState(true);
 
   const projectClicked = (project: Project) => {
+    window.electron.openProjectInVs({ projKey: project.key });
     window.electron.setWindowSize(projWindowSize);
     dispatch(setCurrentProject(project));
     dispatch(setCurPage(AppPage.Project));
@@ -92,10 +93,6 @@ function HomeScreen() {
 
   const createBtnClicked = () => {
     setCreateModalOpen(true);
-    // if (user.accountTier == AccountTier.Starter && projects.length > 0) {
-    //   setRequireUpgradeModalOpen(true);
-    // } else {
-    // }
   };
 
   if (nodeType == NodeType.InvalidVersion || nodeType == NodeType.NotFound) {

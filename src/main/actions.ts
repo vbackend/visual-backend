@@ -91,3 +91,8 @@ export class FirebaseActions {
 export class ResendActions {
   static CREATE_EMAIL_TEMPLATE = 'create-email-template';
 }
+
+export class EditorActions {
+  static OPEN_PROJECT_IN_VS = 'open-project-in-vs';
+  static OPEN_FILE = 'open-file';
+}

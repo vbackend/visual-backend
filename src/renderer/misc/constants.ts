@@ -8,7 +8,7 @@ export const refreshTokenKey = 'refresh_token';
 export const nodeTypeKey = 'node_type';
 
 export const projWindowSize = {
-  width: 1000,
+  width: 450,
   height: 700,
 };
 

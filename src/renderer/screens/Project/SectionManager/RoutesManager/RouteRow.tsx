@@ -8,11 +8,9 @@ import React, {
 } from 'react';
 import '@/renderer/styles/Project/RouteRow.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faChevronRight,
-} from '@fortawesome/free-solid-svg-icons';
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
-import { BiSolidFilePlus } from  'react-icons/bi';
+import { BiSolidFilePlus } from 'react-icons/bi';
 
 import Margin from 'renderer/components/general/Margin';
 import { useDispatch, useSelector } from 'react-redux';
@@ -66,16 +64,22 @@ function RouteRow({
           ? `Middleware: ${node.key}`
           : `${node.type.toUpperCase()}   ${getRoutePath(node)}`;
 
-      dispatch(
-        setCurFile({
-          title: title,
-          path: `/src/api${node.parentFilePath}/${RouteFuncs.getFuncName(
-            node
-          )}.ts`,
-          type: EditorType.Route,
-          metadata: node,
-        })
-      );
+      window.electron.openFile({
+        path: `/src/api${node.parentFilePath}/${RouteFuncs.getFuncName(
+          node
+        )}.ts`,
+        projKey: curProject!.key,
+      });
+      // dispatch(
+      //   setCurFile({
+      //     title: title,
+      //     path: `/src/api${node.parentFilePath}/${RouteFuncs.getFuncName(
+      //       node
+      //     )}.ts`,
+      //     type: EditorType.Route,
+      //     metadata: node,
+      //   })
+      // );
 
       return;
     }
@@ -139,7 +143,7 @@ function RouteRow({
               }}
               onContextMenu={(e) => handleContextMenu(e)}
             >
-              <BiSolidFilePlus className='icon'/>
+              <BiSolidFilePlus className="icon" />
             </button>
           </>
         )}

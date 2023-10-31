@@ -3,6 +3,7 @@
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 import {
   Actions,
+  EditorActions,
   FirebaseActions,
   ModuleActions,
   MongoActions,
@@ -75,6 +76,13 @@ const envHandler = {
     ipcRenderer.invoke(Actions.EDIT_ENV_VAR, payload),
 };
 
+const editorHandler = {
+  openFile: (payload: any) =>
+    ipcRenderer.send(EditorActions.OPEN_FILE, payload),
+  openProjectInVs: (payload: any) =>
+    ipcRenderer.send(EditorActions.OPEN_PROJECT_IN_VS, payload),
+};
+
 const electronHandler = {
   ipcRenderer: {
     sendMessage(channel: Channels, ...args: unknown[]) {
@@ -114,6 +122,7 @@ const electronHandler = {
   ...mongoHandler,
   ...envHandler,
   ...resendHandler,
+  ...editorHandler,
 
   createProject: (payload: any) =>
     ipcRenderer.invoke(Actions.CREATE_PROJECT, payload),

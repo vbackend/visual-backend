@@ -23,6 +23,7 @@ import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import {
   Actions,
+  EditorActions,
   FirebaseActions,
   ModuleActions,
   MongoActions,
@@ -66,7 +67,12 @@ import {
   getRefreshToken,
   setAuthTokens,
 } from './ipc/auth/authFuncs';
-import { getFileContents, saveFileContents } from './ipc/project/editorFuncs';
+import {
+  getFileContents,
+  openFile,
+  openProjectInVs,
+  saveFileContents,
+} from './ipc/project/editorFuncs';
 import { FileFuncs } from './helpers/fileFuncs';
 
 import treeKill from 'tree-kill';
@@ -305,6 +311,11 @@ const resendInit = async () => {
   ipcMain.handle(ResendActions.CREATE_EMAIL_TEMPLATE, createEmailTemplate);
 };
 
+const editorInit = async () => {
+  ipcMain.on(EditorActions.OPEN_FILE, openFile);
+  ipcMain.on(EditorActions.OPEN_PROJECT_IN_VS, openProjectInVs);
+};
+
 let quitting = false;
 app.on('before-quit', async (e) => {
   if (!quitting && globalVars.serverProcess && globalVars.serverProcess.pid) {
@@ -390,6 +401,7 @@ app
     mongoInit();
     envInit();
     resendInit();
+    editorInit();
 
     app.on('activate', async () => {
       // On macOS it's common to re-create a window in the app when the

@@ -102,8 +102,10 @@ const unzipNodeMac = async () => {
 };
 
 const unzipNodeWindows = async () => {
-  let nodeV = "v18.18.2"
-  let zipFileName = is64Bit() ? `node-${nodeV}-win-x64.zip` : `node-${nodeV}-win-x86.zip`;
+  let nodeV = 'v18.18.2';
+  let zipFileName = is64Bit()
+    ? `node-${nodeV}-win-x64.zip`
+    : `node-${nodeV}-win-x86.zip`;
   const zipFilePath = path.join(MainFuncs.getAssetsPath(), zipFileName);
 
   if (!fs.existsSync(zipFilePath)) {
@@ -134,7 +136,6 @@ export const initNodeBinaries = async () => {
   let [nodeExists, _] = await checkNodeVersion();
   if (nodeExists) return;
 
-  console.log('Unzipping node binaries...');
   if (process.platform == 'darwin') {
     await unzipNodeMac();
   } else if (process.platform == 'win32') {
