@@ -1,18 +1,11 @@
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, Input } from 'antd';
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import '@/renderer/styles/Project/DeleteProjectModal.scss';
 import Margin from '@/renderer/components/general/Margin';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/renderer/redux/store';
-import { ProjectService } from '@/renderer/services/ProjectService';
-import {
-  AppPage,
-  removeProject,
-  setCurPage,
-} from '@/renderer/redux/app/appSlice';
-import { useNavigate } from 'react-router-dom';
 import { EditorType, setCurFile } from '@/renderer/redux/editor/editorSlice';
 import {
   ProjectTab,

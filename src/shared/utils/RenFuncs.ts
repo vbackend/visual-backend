@@ -1,4 +1,9 @@
-import { Platform } from '@/renderer/redux/app/appSlice';
+import {
+  AppPage,
+  Platform,
+  setCurPage,
+  setCurrentProject,
+} from '@/renderer/redux/app/appSlice';
 import { BFunc, BFuncHelpers } from '../models/BFunc';
 import { BModule, BModuleType, modConfig } from '../models/BModule';
 import { EditorType } from '@/renderer/redux/editor/editorSlice';
@@ -14,6 +19,11 @@ import {
 } from '@/renderer/redux/project/projectSlice';
 import { Dispatch } from 'react';
 import { AnyAction } from '@reduxjs/toolkit';
+import {
+  projWindowSizeNoVs,
+  projWindowSizeVs,
+} from '@/renderer/misc/constants';
+import { Project } from '../models/project';
 
 export class RenFuncs {
   static getMetaKey = (p: Platform) => {
@@ -62,5 +72,16 @@ export class RenFuncs {
     dispatch(setCreateModuleOpen(false));
     dispatch(setCurrentTab(ProjectTab.Module));
     dispatch(setCurModule(newModule));
+  };
+
+  static openProject = (project: Project, dispatch: any, openWithVs: any) => {
+    if (openWithVs) {
+      window.electron.openProjectInVs({ projKey: project.key });
+    }
+    window.electron.setWindowSize(
+      openWithVs ? projWindowSizeVs : projWindowSizeNoVs
+    );
+    dispatch(setCurrentProject(project));
+    dispatch(setCurPage(AppPage.Project));
   };
 }

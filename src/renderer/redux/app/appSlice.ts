@@ -30,6 +30,7 @@ export type AppState = {
   curPlatform: Platform;
   curPage: AppPage;
   user: any;
+  openWithVs: boolean;
 };
 
 const getInitialState = (): AppState => {
@@ -41,6 +42,7 @@ const getInitialState = (): AppState => {
     currentRoute: null,
     loggedIn: false,
     user: null,
+    openWithVs: false,
   };
 };
 // create a slice
@@ -55,6 +57,10 @@ export const appSlice = createSlice({
     setPlatform(state, action) {
       state.curPlatform = action.payload;
     },
+    setOpenWithVs(state, action) {
+      state.openWithVs = action.payload;
+    },
+
     setCurPage(state, action) {
       setAppPageReducer(state, action);
     },
@@ -87,6 +93,7 @@ export const {
   setUser,
   setCurPage,
   setPlatform,
+  setOpenWithVs,
   setProjects,
   addProject,
   setLoggedIn,

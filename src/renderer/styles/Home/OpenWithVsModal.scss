@@ -1,0 +1,41 @@
+@import '../config';
+
+.openWithVsModal .contentContainer {
+  max-width: none;
+  width: 380px;
+}
+
+.openWithVsModal .middleBar {
+
+  .inputTitle {
+    margin-bottom: 6px;
+  }
+
+  .requirementContainer {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+
+    .bulletIcon {
+      width: 15px;
+    }
+
+    p {
+      font-size: $para4;
+      margin-right: 5px;
+      color: $textSecondary;
+    }
+
+    .icon {
+      color: darken($successColor, 10%)
+    }
+
+    .reqFailedIcon {
+      margin-top: 1.5px;
+      color: $errColor;
+    }
+
+  }
+}
+
+

@@ -5,11 +5,25 @@ export const endpoint = publicEndpoint;
 
 export const accessTokenKey = 'access_token';
 export const refreshTokenKey = 'refresh_token';
+
+export const electronStoreKeys = {
+  openWithVsKey: 'open_with_vs',
+};
 export const nodeTypeKey = 'node_type';
 
-export const projWindowSize = {
-  width: 450,
+export const projWindowSizeNoVs = {
+  width: 800,
   height: 700,
+};
+
+export const projWindowSizeVs = {
+  width: 480,
+  height: 600,
+};
+
+export const homeWindowSize = {
+  width: 600,
+  height: 550,
 };
 
 export const serverLocation = 'europe-west2';

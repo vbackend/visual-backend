@@ -4,50 +4,50 @@ import {
   AppPage,
   setCurPage,
   setCurrentProject,
+  setOpenWithVs,
   setProjects,
   setUser,
 } from '../../redux/app/appSlice';
 
 import { Project } from '@/shared/models/project';
 import { RootState } from '../../redux/store';
-import { Button, Spin } from 'antd';
+import { Button, Spin, Switch } from 'antd';
 import Margin from '../../components/general/Margin';
 import { UserService } from '../../services/UserService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import CreateProjectModal from './CreateProjectModal';
-import { projWindowSize } from '../../misc/constants';
+import CreateProjectModal from './Modals/CreateProjectModal';
+import { projWindowSizeNoVs, projWindowSizeVs } from '../../misc/constants';
 import { AccountTier } from '@/shared/models/User';
 import NewPremiumModal from './NewPremiumModal';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import RequireUpgradeModal from './RequireUpgradeModal';
 import HomeSidebar from './HomeSidebar';
+import VsCodeIcon from '@/shared/assets/images/vscode.png';
 
 import '@/renderer/styles/Home/Home.scss';
 import { NodeType } from '@/shared/models/NodeType';
+import OpenWithVsModal from './Modals/OpenWithVsModal';
+import { RenFuncs } from '@/shared/utils/RenFuncs';
 
 function HomeScreen() {
   const dispatch = useDispatch();
   const projects = useSelector((state: RootState) => state.app.projects);
+  const openWithVs = useSelector((state: RootState) => state.app.openWithVs);
 
   const [createModalOpen, setCreateModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const projectClicked = (project: Project) => {
-    window.electron.openProjectInVs({ projKey: project.key });
-    window.electron.setWindowSize(projWindowSize);
-    dispatch(setCurrentProject(project));
-    dispatch(setCurPage(AppPage.Project));
-  };
-
   const [requireUpgradeModalOpen, setRequireUpgradeModalOpen] = useState(false);
   const [upgradeModalOpen, setUpgradeModalOpen] = useState(false);
   const [newPremiumModalOpen, setNewPremiumModalOpen] = useState(false);
+  const [openWithVsModal, setOpenWithVsModal] = useState(false);
 
   const [nodeType, setNodeType] = useState(null);
 
   const init = async () => {
     setLoading(true);
     setNodeType(await window.electron.getNodeType());
+    dispatch(setOpenWithVs(await window.electron.getOpenWithVs()));
 
     try {
       let { data } = await UserService.getUser();
@@ -66,9 +66,8 @@ function HomeScreen() {
 
   useEffect(() => {
     init();
-  }, []);
 
-  useEffect(() => {
+    // Manage redirect back to app after finish checkout
     const handleCheckoutStatus = async (event: any, payload: any) => {
       console.log('Received checkout status:', payload);
       setUpgradeModalOpen(false);
@@ -95,6 +94,19 @@ function HomeScreen() {
     setCreateModalOpen(true);
   };
 
+  const projectClicked = (project: Project) => {
+    RenFuncs.openProject(project, dispatch, openWithVs);
+  };
+
+  const switchClicked = async (val: boolean) => {
+    if (val) {
+      setOpenWithVsModal(val);
+    } else {
+      dispatch(setOpenWithVs(val));
+      await window.electron.setOpenWithVs({ openWithVs: val });
+    }
+  };
+
   if (nodeType == NodeType.InvalidVersion || nodeType == NodeType.NotFound) {
     return (
       <div className="emptyContainer">
@@ -106,6 +118,7 @@ function HomeScreen() {
       </div>
     );
   }
+
   if (loading)
     return (
       <div className="emptyContainer">
@@ -123,6 +136,7 @@ function HomeScreen() {
       {createModalOpen && (
         <CreateProjectModal setModalOpen={setCreateModalOpen} />
       )}
+      {openWithVsModal && <OpenWithVsModal setModalOpen={setOpenWithVsModal} />}
       <div className="homeContainer">
         {/* SIDEBAR */}
         <HomeSidebar />
@@ -132,7 +146,20 @@ function HomeScreen() {
           <Margin height={10} />
           <div className="mainContainer">
             <div className="projectsContainer">
-              <p className="openProjectTxt">Open project: </p>
+              <div className="topBar">
+                <p className="openProjectTxt">Open project: </p>
+                <div className="vsSwitchContainer">
+                  {/* <img className="logoImg" src={VsCodeIcon} alt="vb-logo" /> */}
+                  {/* <p>With VS Code</p> */}
+                  <div className="vsImgContainer">
+                    <p>With</p>
+                    <img className="vsImg" src={VsCodeIcon} alt="vs-icon" />
+                  </div>
+                  <Margin height={5} />
+                  <Switch onChange={switchClicked} checked={openWithVs} />
+                </div>
+              </div>
+
               {projects && projects.length === 0 && (
                 <p className="noProjectsTxt">No projects created</p>
               )}

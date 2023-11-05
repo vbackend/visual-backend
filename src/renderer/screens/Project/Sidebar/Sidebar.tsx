@@ -32,6 +32,7 @@ import DeleteProjectModal from '../DeleteProjectModal';
 import { RenFuncs } from '@/shared/utils/RenFuncs';
 import DeleteModuleModal from '../SectionManager/Modules/General/DeleteModuleModal';
 import { Divider } from 'antd';
+import { homeWindowSize } from '@/renderer/misc/constants';
 
 let moduleIndex = 2;
 
@@ -47,7 +48,7 @@ function Sidebar() {
   const curFile = useSelector((state: RootState) => state.editor.currentFile);
 
   const homeClicked = async () => {
-    // window.electron.setWindowSize(homeWindowSize);
+    window.electron.setWindowSize(homeWindowSize);
     window.electron.killServer({});
 
     dispatch(setCurPage(AppPage.Home));
@@ -125,9 +126,7 @@ function Sidebar() {
 
         <div className="hintsContainer">
           <p className="title">Shortcuts:</p>
-          <p className="infoText">
-            {`All shortcuts are preceded by ${metaKey}`}
-          </p>
+          <p className="infoText">{`Shortcuts start with ${metaKey}`}</p>
           <Margin height={10} />
           <p className="shortcutText">
             <span>T</span>: Toggle terminal
@@ -135,16 +134,16 @@ function Sidebar() {
           <p className="shortcutText">
             <span>K</span>: Clear terminal
           </p>
-          <p className="shortcutText">
+          {/* <p className="shortcutText">
             <span>Num</span>: Toggle sidebar
-          </p>
+          </p> */}
           <Divider style={{ margin: '10px 0px', backgroundColor: '#eee' }} />
           <p className="shortcutText">
-            <span>Shift + R</span>: Run server
+            <span>Shift + R/E</span>: <br /> Run/Stop server
           </p>
-          <p className="shortcutText">
+          {/* <p className="shortcutText">
             <span>Shift + E</span>: Stop server
-          </p>
+          </p> */}
           <button
             className="deleteBtn"
             onClick={() => setDeleteModalOpen(true)}

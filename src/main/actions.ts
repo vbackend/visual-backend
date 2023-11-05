@@ -14,6 +14,9 @@ export class Actions {
   static UPDATE_CHECKOUT_STATUS = 'update-checkout-status';
   static OPEN_CUSTOMER_PORTAL = 'open-customer-portal';
   static GET_NODE_TYPE = 'get-node-type';
+  static GET_OPEN_WITH_VS = 'get-open-with-vs';
+  static SET_OPEN_WITH_VS = 'set-open-with-vs';
+  static CHECK_VS_REQUIREMENTS_MET = 'check-vs-requirements-met';
 
   // PROJECT
   static CREATE_PROJECT = 'create-project';

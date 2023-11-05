@@ -5,20 +5,26 @@ import '@/renderer/styles/Home/CreateProjectModal.scss';
 import { Button, Input } from 'antd';
 import Margin from '@/renderer/components/general/Margin';
 import { ProjectService } from '@/renderer/services/ProjectService';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   AppPage,
   addProject,
   setCurPage,
   setCurrentProject,
 } from '@/renderer/redux/app/appSlice';
-import { projWindowSize } from '@/renderer/misc/constants';
+import { RootState } from '@/renderer/redux/store';
+import {
+  projWindowSizeVs,
+  projWindowSizeNoVs,
+} from '@/renderer/misc/constants';
+import { RenFuncs } from '@/shared/utils/RenFuncs';
 
 type CreateProjectModalProps = {
   setModalOpen: Dispatch<SetStateAction<boolean>>;
 };
 function CreateProjectModal({ setModalOpen }: CreateProjectModalProps) {
   const dispatch = useDispatch();
+  const openWithVs = useSelector((state: RootState) => state.app.openWithVs);
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState('');
   const [errorText, setErrorText] = useState('');
@@ -44,9 +50,8 @@ function CreateProjectModal({ setModalOpen }: CreateProjectModalProps) {
       }
 
       dispatch(addProject({ ...data }));
-      window.electron.setWindowSize(projWindowSize);
-      dispatch(setCurrentProject(data));
-      dispatch(setCurPage(AppPage.Project));
+      RenFuncs.openProject(data, dispatch, openWithVs);
+
       setModalOpen(false);
     } catch (error: any) {
       // conflict

@@ -27,6 +27,7 @@ function ProjectScreen() {
   const [loading, setLoading] = useState(true);
   const [loadingErr, setLoadingErr] = useState(false);
   const showTerm = useSelector((state: RootState) => state.project.showTerm);
+  const openWithVs = useSelector((state: RootState) => state.app.openWithVs);
 
   let initProject = async () => {
     let project = app.currentProject;
@@ -78,7 +79,25 @@ function ProjectScreen() {
       <div className="projectScreen">
         <Sidebar />
         <SectionManager />
-        <EditorScreen />
+        {!openWithVs ? (
+          <EditorScreen />
+        ) : (
+          <div
+            className="emptyContainer"
+            style={{ flexDirection: 'column', textAlign: 'justify' }}
+          >
+            <div>
+              <p style={{ marginBottom: '6px', fontWeight: '600' }}>
+                Project is opened in VS Code
+              </p>
+              <p>
+                {'1. Use node version <= 18.18.1'}
+                <br />
+                {'2. Run server with npm run dev'}
+              </p>
+            </div>
+          </div>
+        )}
         {showTerm && <TerminalComponent />}
       </div>
     </>

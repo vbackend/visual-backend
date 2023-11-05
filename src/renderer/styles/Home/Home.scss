@@ -12,57 +12,44 @@
     }
 }
 
-.homeContainer .leftBar {
-    height: 100vh;
-    background-color: white;
-    padding: 30px 20px;
-    padding-right: 40px;
-    width: 250px;
+.homeContainer .topBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 10px;
 }
 
-.leftBar .logoContainer {
-    display: flex;
-    align-items: center;
-    transform: translateX(-5px);
+.vsSwitchContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-bottom: 4px;
 
-    .logoImg {
-        object-fit: contain;
-        width: 27px;
-        margin-right: 5px;
-    }
-
-    .logoTxt {
-        font-size: $para2;
-        color: black;
-        font-weight: bold;
-    }
+  p {
+    font-size: $para5;
+  }
 }
 
-.leftBar .profileContainer {
+.vsImgContainer {
     display: flex;
     align-items: center;
-    margin-bottom: 12px;
 
-    .icon {
-      margin-right: 8px;
-      color: $textGrey;
-      width: 20px;
+    .vsImg {
+      object-fit: contain;
+      width: 16px;
+      margin-left: 5px;
     }
 
     p {
-        font-size: $para4;
-        color: $textSecondary
-    }
-
-
-}
-
-.leftBar {
-    .homeBtn {
-        width: 100%;
-        @include flexCenter(row);
+      font-size: $para4;
+      font-weight: bold;
+      color: $textSecondary
     }
 }
+
+
+
 
 .homeContainer .middleBar {
     @include flexCenter(column);
@@ -71,12 +58,14 @@
     height: 100vh;
     margin: 0px;
     width: 100%;
+    padding: 20px;
 }
 
 .mainContainer {
     min-height: 250px;
     max-height: 400px;
     width: 300px;
+
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     border-radius: 10px;
     @include flexCenter(column);

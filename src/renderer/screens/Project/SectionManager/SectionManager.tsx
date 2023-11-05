@@ -12,9 +12,20 @@ import RoutesManager from './RoutesManager/RoutesManager';
 
 function SectionManager() {
   let curTab = useSelector((state: RootState) => state.project.currentTab);
+  let openWithVs = useSelector((state: RootState) => state.app.openWithVs);
 
   return (
-    <div className="sectionManager">
+    <div
+      className="sectionManager"
+      style={
+        openWithVs
+          ? {
+              maxWidth: '300px',
+              minWidth: '300px',
+            }
+          : {}
+      }
+    >
       {curTab == ProjectTab.Routes ? (
         <RoutesManager />
       ) : curTab == ProjectTab.Module ? (

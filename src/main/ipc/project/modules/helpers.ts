@@ -41,6 +41,5 @@ export const writeModuleStarterFuncs = async (projKey: string, key: string) => {
 
   await Promise.all(promises);
   newFuncs = await Promise.all(newFuncPromises);
-  console.log('Successfully written module starter funcs: ', newFuncs);
   return newFuncs;
 };

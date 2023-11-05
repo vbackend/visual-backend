@@ -12,9 +12,17 @@ export const FuncButton = ({ func, module }: any) => {
   const curProject = useSelector(
     (state: RootState) => state.app.currentProject
   );
+  const openWithVs = useSelector((state: RootState) => state.app.openWithVs);
 
   const funcClicked = async (f: BFunc, m: BModule) => {
-    dispatch(setCurFile(RenFuncs.getFuncFileData(f, m)));
+    if (openWithVs) {
+      window.electron.openFile({
+        path: RenFuncs.getFuncFileData(f, m).path,
+        projKey: curProject!.key,
+      });
+    } else {
+      dispatch(setCurFile(RenFuncs.getFuncFileData(f, m)));
+    }
   };
 
   useEffect(() => {

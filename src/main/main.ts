@@ -97,8 +97,19 @@ import {
 } from './ipc/auth/subscriptionFuncs';
 import { config } from 'dotenv';
 import { initNodeBinaries, setNodeType } from './helpers/binFuncs';
-import { getDeviceType, getNodeType } from './ipc/home/homeFuncs';
-import { nodeTypeKey } from '@/renderer/misc/constants';
+import {
+  checkVsRequirementsMet,
+  getDeviceType,
+  getNodeType,
+  getOpenWithVs,
+  setOpenWithVs,
+  setWindowSze,
+} from './ipc/home/homeFuncs';
+import {
+  electronStoreKeys,
+  homeWindowSize,
+  nodeTypeKey,
+} from '@/renderer/misc/constants';
 
 config();
 
@@ -155,8 +166,8 @@ const createWindow = async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: 650,
-    height: 550,
+    ...homeWindowSize,
+    // maxWidth: 500,
     icon: getAssetPath('icon.png'),
     webPreferences: {
       // devTools: false,
@@ -209,16 +220,19 @@ let globalVars: {
 
 const init = async () => {
   // Home Funcs
-  ipcMain.on(
-    Actions.SET_WINDOW_SIZE,
-    (e: Electron.IpcMainEvent, payload: any) => {
-      mainWindow?.setSize(payload.width, payload.height);
-    }
+  ipcMain.on(Actions.SET_WINDOW_SIZE, (_, p: any) =>
+    setWindowSze(p, mainWindow!)
   );
 
   ipcMain.handle(Actions.GET_DEVICE_TYPE, getDeviceType);
-
   ipcMain.handle(Actions.GET_NODE_TYPE, getNodeType);
+  ipcMain.handle(Actions.GET_OPEN_WITH_VS, getOpenWithVs);
+  ipcMain.handle(Actions.SET_OPEN_WITH_VS, (e: any, p: any) =>
+    setOpenWithVs(e, p, mainWindow!)
+  );
+  ipcMain.handle(Actions.CHECK_VS_REQUIREMENTS_MET, checkVsRequirementsMet);
+
+  ipcMain.handle(Actions.SET_WINDOW_SIZE, setOpenWithVs);
 
   ipcMain.handle(Actions.OPEN_CHECKOUT_PAGE, openCheckoutPage);
   ipcMain.handle(Actions.OPEN_CUSTOMER_PORTAL, openCustomerPortal);
@@ -392,8 +406,9 @@ app
 
     await FileFuncs.createDirIfNotExists(BinFuncs.getBinOutputFolder());
 
-    let s = new Store();
-    console.log('Node type:', s.get(nodeTypeKey));
+    // let s = new Store();
+    // s.delete(electronStoreKeys.openWithVsKey);
+    // console.log('Node type:', s.get(nodeTypeKey));
 
     init();
     firebaseInit();

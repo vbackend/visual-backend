@@ -116,6 +116,11 @@ const electronHandler = {
   getDeviceType: () => ipcRenderer.invoke(Actions.GET_DEVICE_TYPE),
   getAppPaths: () => ipcRenderer.invoke(Actions.GET_APP_PATHS),
   getNodeType: () => ipcRenderer.invoke(Actions.GET_NODE_TYPE),
+  getOpenWithVs: () => ipcRenderer.invoke(Actions.GET_OPEN_WITH_VS),
+  setOpenWithVs: (payload: any) =>
+    ipcRenderer.invoke(Actions.SET_OPEN_WITH_VS, payload),
+  checkVsRequirementsMet: () =>
+    ipcRenderer.invoke(Actions.CHECK_VS_REQUIREMENTS_MET),
 
   ...firebaseHandler,
   ...moduleHandler,

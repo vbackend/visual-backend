@@ -1,4 +1,71 @@
-@import '../config';;
+@import '../config';
 
-.profileContainer .badgeCheckIcon {
+.homeSidebar {
+  height: 100vh;
+  background-color: white;
+  padding: 30px 20px;
+  padding-right: 40px;
+  width: 200px;
 }
+
+.homeSidebar .logoContainer {
+  display: flex;
+  align-items: center;
+  transform: translateX(-5px);
+
+  .logoImg {
+    object-fit: contain;
+    width: 27px;
+    margin-right: 5px;
+  }
+
+  .logoTxt {
+    font-size: $para3;
+    color: black;
+    font-weight: bold;
+  }
+}
+
+.homeSidebar .profileContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+
+  .iconContainer {
+    @include flexCenter(row);
+    margin-right: 6px;
+    color: $textGrey;
+  }
+
+  p {
+    font-size: $para5;
+    color: $textSecondary
+  }
+}
+
+.homeSidebar .right{
+  .homeBtn {
+    width: 115%;
+    @include flexCenter(row);
+    font-size: $para5;
+  }
+}
+
+
+// .vsSwitchContainer {
+//   display: flex;
+//   align-items: center;
+//   transform: translateX(-5px);
+
+//   .logoImg {
+//     object-fit: contain;
+//     width: 16px;
+//     margin-right: 8px;
+//     margin-left: 8px;
+//   }
+
+//   p {
+//     font-size: $para4;
+//     color: $textSecondary
+//   }
+// }

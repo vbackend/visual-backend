@@ -13,6 +13,7 @@ import {
   setCurPage,
 } from '@/renderer/redux/app/appSlice';
 import { useNavigate } from 'react-router-dom';
+import { homeWindowSize } from '@/renderer/misc/constants';
 
 type DeleteProjectModalProps = {
   setModalOpen: Dispatch<SetStateAction<boolean>>;
@@ -46,6 +47,7 @@ function DeleteProjectModal({ setModalOpen }: DeleteProjectModalProps) {
 
       //  Remove project from redux state
       dispatch(setCurPage(AppPage.Home));
+      await window.electron.setWindowSize(homeWindowSize);
     } catch (error) {
       setErrText('Failed to delete project');
     }

@@ -40,6 +40,7 @@ function RouteRow({
   const curProject = useSelector(
     (state: RootState) => state.app.currentProject
   );
+  const openWithVs = useSelector((state: RootState) => state.app.openWithVs);
 
   const routeClicked = () => {
     dispatch(setCurRoute(node));
@@ -64,22 +65,25 @@ function RouteRow({
           ? `Middleware: ${node.key}`
           : `${node.type.toUpperCase()}   ${getRoutePath(node)}`;
 
-      window.electron.openFile({
-        path: `/src/api${node.parentFilePath}/${RouteFuncs.getFuncName(
-          node
-        )}.ts`,
-        projKey: curProject!.key,
-      });
-      // dispatch(
-      //   setCurFile({
-      //     title: title,
-      //     path: `/src/api${node.parentFilePath}/${RouteFuncs.getFuncName(
-      //       node
-      //     )}.ts`,
-      //     type: EditorType.Route,
-      //     metadata: node,
-      //   })
-      // );
+      if (openWithVs) {
+        window.electron.openFile({
+          path: `/src/api${node.parentFilePath}/${RouteFuncs.getFuncName(
+            node
+          )}.ts`,
+          projKey: curProject!.key,
+        });
+      } else {
+        dispatch(
+          setCurFile({
+            title: title,
+            path: `/src/api${node.parentFilePath}/${RouteFuncs.getFuncName(
+              node
+            )}.ts`,
+            type: EditorType.Route,
+            metadata: node,
+          })
+        );
+      }
 
       return;
     }

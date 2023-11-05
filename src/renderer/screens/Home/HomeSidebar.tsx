@@ -6,16 +6,17 @@ import {
   faExclamationCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button } from 'antd';
+import { Button, Switch } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import LogoImg from '@/shared/assets/images/logo.png';
 import { format } from 'date-fns';
 import { useState } from 'react';
 import { AppPage, setCurPage } from '@/renderer/redux/app/appSlice';
-import UpgradeModal from './UpgradeModal';
+import UpgradeModal from './Modals/UpgradeModal';
 
-import { HiBadgeCheck } from 'react-icons/hi';
+import { HiBadgeCheck, HiUserCircle } from 'react-icons/hi';
 import { LuBadge } from 'react-icons/lu';
+
 import '@/renderer/styles/Home/HomeSidebar.scss';
 
 function HomeSidebar() {
@@ -76,21 +77,28 @@ function HomeSidebar() {
   return (
     <>
       {upgradeModalOpen && <UpgradeModal setModalOpen={setUpgradeModalOpen} />}
-      <div className="leftBar">
+      <div className="homeSidebar">
         <div className="logoContainer">
           <img className="logoImg" src={LogoImg} alt="vb-logo" />
           <div className="logoTxt">Visual Backend</div>
         </div>
         <Margin height={15} />
         <div className="profileContainer">
-          <FontAwesomeIcon icon={faCircleUser} className="icon" />
+          {/* <FontAwesomeIcon icon={faCircleUser} className="icon" /> */}
+          <div className="iconContainer">
+            <HiUserCircle size={19} />
+          </div>
           <p>{user.email}</p>
         </div>
         <div className="profileContainer">
           {user.accountTier == 'starter' ? (
-            <LuBadge className="icon" size={19} />
+            <div className="iconContainer">
+              <LuBadge size={19} />
+            </div>
           ) : (
-            <HiBadgeCheck className="icon badgeCheckIcon" size={19} />
+            <div className="iconContainer">
+              <HiBadgeCheck size={19} />
+            </div>
           )}
 
           <p>
@@ -99,6 +107,7 @@ function HomeSidebar() {
               : 'Premium Account'}
           </p>
         </div>
+
         <Margin height={10} />
         <div className="right">
           {getSubText()}
