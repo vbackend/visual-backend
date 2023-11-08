@@ -137,7 +137,6 @@ export const setFirestoreMetadata = async (
   payload: any
 ) => {
   let { metadata } = payload;
-  console.log('Setting firestore metadata:', metadata);
 
   await editModuleMetadata(metadata, BModuleType.FirebaseFirestore);
 

@@ -4,10 +4,8 @@ import { envConsts } from '@/renderer/misc/constants';
 import CreateStripe from '@/renderer/screens/Project/SectionManager/Modules/StripeModule/CreateStripe';
 import CreateGpt from '@/renderer/screens/Project/SectionManager/Modules/GptModule/CreateGpt';
 import CreateJwt from '@/renderer/screens/Project/SectionManager/Modules/JwtModule/CreateJwt';
-import {
-  faMoneyBillsSimple,
-  faRotate,
-} from '@fortawesome/free-solid-svg-icons';
+import { faRotate } from '@fortawesome/free-solid-svg-icons';
+import CreateSupabase from '@/renderer/screens/Project/SectionManager/Modules/SupabaseModule/CreateSupabase';
 
 export type BModule = {
   id?: number;
@@ -31,6 +29,7 @@ export class BModuleFuncs {
 }
 
 export enum BModuleType {
+  Supabase = 'supabase',
   Mongo = 'mongo',
   FirebaseAuth = 'firebase_auth',
   FirebaseFirestore = 'firebase_firestore',
@@ -43,6 +42,22 @@ export enum BModuleType {
 export const modConfig: {
   [key: string]: any;
 } = {
+  // SUPABASE
+  supabase: {
+    key: BModuleType.Supabase,
+    init: 'supabase',
+    path: 'supabase',
+    metadata: {},
+    title: 'Supabase',
+    gptDetails: '',
+    starterFile: 'supabaseStarter.txt',
+    starterFuncs: ['firebaseAuthMiddleware'],
+    envVars: [envConsts.SUPABASE_PROJECT_URL, envConsts.SUPABASE_SERVICE_KEY],
+    createComp: (setSelection: any, selection: any) => (
+      <CreateSupabase setSelection={setSelection} selection={selection} />
+    ),
+  },
+
   // FIREBASE
   firebase_auth: {
     key: BModuleType.FirebaseAuth,

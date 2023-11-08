@@ -48,7 +48,6 @@ export const setOpenWithVs = async (
 
 export const getOpenWithVs = async (e: Electron.IpcMainInvokeEvent, p: any) => {
   let s = new Store();
-  console.log('Open with vs code:', s.get(electronStoreKeys.openWithVsKey));
 
   return s.get(electronStoreKeys.openWithVsKey);
 };

@@ -46,7 +46,7 @@ function CreateResend({ setSelection, selection }: any) {
   };
   return (
     <div className="createModule">
-      <CreateModalHeader setSelection={setSelection} title="resend" />
+      <CreateModalHeader setSelection={setSelection} title="Resend" />
       <div className="middleBar">
         <p className="inputTitle">API Key</p>
         <Input

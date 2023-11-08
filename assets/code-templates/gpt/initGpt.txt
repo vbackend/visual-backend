@@ -2,6 +2,7 @@ import OpenAI from "openai";
 
 export let openaiCli: OpenAI;
 export const initGpt = () => {
+  console.log("OpenAI module initialised")
 	openaiCli = new OpenAI({
 		apiKey: process.env.OPENAI_API_KEY,
 	});

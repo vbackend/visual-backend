@@ -31,6 +31,8 @@ export const serverLocation = 'europe-west2';
 export const envConsts: {
   [key: string]: string;
 } = {
+  SUPABASE_PROJECT_URL: 'SUPABASE_PROJECT_URL',
+  SUPABASE_SERVICE_KEY: 'SUPABASE_SERVICE_KEY',
   MONGO_CONN_STRING: 'MONGO_CONN_STRING',
   MONGO_DEFAULT_DB: 'MONGO_DEFAULT_DB',
   JWT_ACCESS_SECRET: 'JWT_ACCESS_SECRET',

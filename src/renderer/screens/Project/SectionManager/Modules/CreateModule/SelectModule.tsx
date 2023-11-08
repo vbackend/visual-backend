@@ -16,6 +16,7 @@ import JWTLogo from '@/shared/assets/images/jwt.png';
 import StripeLogo from '@/shared/assets/images/stripe.png';
 import GptLogo from '@/shared/assets/images/chatgpt.png';
 import ResendLogo from '@/shared/assets/images/resend.png';
+import SupabaseLogo from '@/shared/assets/images/supabase.png';
 
 import '@/renderer/styles/Project/CreateModule/CreateModule.scss';
 
@@ -28,6 +29,12 @@ function SelectModule({ setSelection }: SelectModuleProps) {
   const modules = useSelector((state: RootState) => state.module.modules);
 
   let availableMods = [
+    {
+      title: 'Supabase',
+      image: SupabaseLogo,
+      key: BModuleType.Supabase,
+      position: 0,
+    },
     {
       title: 'Firebase (Auth)',
       image: FBAuthLogo,

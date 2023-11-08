@@ -80,6 +80,7 @@
     "adm-zip": "^0.5.10",
     "antd": "^5.8.3",
     "app-root-dir": "^1.0.2",
+    "archiver": "^6.0.1",
     "axios": "^1.4.0",
     "clipboard-copy": "^4.0.1",
     "date-fns": "^2.30.0",
@@ -125,7 +126,7 @@
     }
   },
   "devDependencies": {
-    "@electron/notarize": "^1.2.3",
+    "@electron/notarize": "^2.1.0",
     "@electron/rebuild": "^3.2.13",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
     "@svgr/webpack": "^8.0.1",

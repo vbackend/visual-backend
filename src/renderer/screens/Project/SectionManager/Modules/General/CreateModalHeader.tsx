@@ -8,7 +8,7 @@ function CreateModalHeader({ title, setSelection }: any) {
       <button onClick={() => setSelection(null)}>
         <FontAwesomeIcon icon={faArrowLeft} className="icon" />
       </button>
-      <p className="header">Create {title} module</p>
+      <p className="header">Add {title} module</p>
     </div>
   );
 }

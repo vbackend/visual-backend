@@ -1,4 +1,4 @@
-import openaiCli from '@/modules/gpt/init.js'
+import { openaiCli } from '@/modules/gpt/init.js'
 
 export const createChatCompletion = async (content: string) => {
 	const result = await openaiCli.chat.completions.create({

@@ -1,26 +1,28 @@
 @import '../../config';
 
 $sidebarHorizontalPadding: 10px;
-$sidebarBgColor: #FAFAFA;
+// $sidebarBgColor: #fbfbfd;
+$sidebarBgColor: #fbfbfd;
+
 .sidebarContainer {
-    min-height: 100vh;
-    background-color: $sidebarBgColor;
+  min-height: 100vh;
+  background-color: $sidebarBgColor;
 
-    min-width: $sidebarWidth;
-    max-width: $sidebarWidth;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  min-width: $sidebarWidth;
+  max-width: $sidebarWidth;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
-    // padding: 20px 10px;
-    font-size: 16px;
+  // padding: 20px 10px;
+  font-size: 16px;
 
-    .projectName {
-        font-size: $para2;
-        font-weight: bold;
-        margin-bottom: 10px;
-        padding-left: 8px;
-    }
+  .projectName {
+    font-size: $para2;
+    font-weight: bold;
+    margin-bottom: 10px;
+    padding-left: 8px;
+  }
 }
 
 .btnsContainer {
@@ -28,153 +30,151 @@ $sidebarBgColor: #FAFAFA;
   padding-bottom: 0px;
 }
 
-
 .homeBtn {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
 
-    .icon {
-        font-size: $para3;
-        padding-left: 8px;
-    }
+  .icon {
+    font-size: $para3;
+    padding-left: 8px;
+  }
 }
 
 $sidebarSecondary: #6e6f7f;
 .sidebarContainer .sidebarBtn {
-    padding: 0px 8px;
-    border-radius: 5px;
-    width: 100%;
-    text-align: start;
-    font-size: 14px;
-    font-weight: 500;
-    height: 32px;
-    margin-bottom: 2px;
+  padding: 0px 8px;
+  border-radius: 5px;
+  width: 100%;
+  text-align: start;
+  font-size: 14px;
+  font-weight: 500;
+  height: 32px;
+  margin-bottom: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+  cursor: pointer;
+
+  .left {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    user-select: none;
-    cursor: pointer;
+  }
 
+  .iconContainer {
+    font-size: $para4;
+    width: 30px;
+    display: flex;
+    justify-content: flex-start;
+    color: $sidebarSecondary;
+  }
 
-    .left {
-        display: flex;
-        align-items: center;
-    }
+  .iconContainer .icon {
+    transform-origin: 0;
+  }
 
-    .iconContainer {
-        font-size: $para4;
-        width: 30px;
-        display: flex;
-        justify-content: flex-start;
-        color: $sidebarSecondary;
-    }
+  .name {
+    width: 80px;
+    font-size: $para3;
+    color: #6e6f7f;
+  }
 
-    .iconContainer .icon {
-        transform-origin: 0;
-    }
-
-    .name {
-        width: 80px;
-        font-size: $para3;
-        color: #6e6f7f
-    }
-
-    .right {
-        padding-right: 5px;
-    }
+  .right {
+    padding-right: 5px;
+  }
 }
 
 .addIcon {
-    color: darken($sidebarSecondary, 10%);
-    margin-top: 2px;
+  color: darken($sidebarSecondary, 10%);
+  margin-top: 2px;
 }
 
 $sidebarActive: rgb(0, 115, 255);
-$activeBgColor: #DAE4FF;
+$activeBgColor: #dae4ff;
 .sidebarContainer .curSidebarBtn {
-    background-color: #DAE4FF;
-    .iconContainer {
-        color: $sidebarActive
-    }
+  background-color: #dae4ff;
+  .iconContainer {
+    color: $sidebarActive;
+  }
 
-    .name {
-        color: $sidebarActive
-    }
+  .name {
+    color: $sidebarActive;
+  }
 }
 
 .newModuleIcon {
-    font-size: 15px;
-    color: darken($sidebarSecondary, 10%);
+  font-size: 15px;
+  color: darken($sidebarSecondary, 10%);
 }
 
 .moduleBtnsContainer {
-    padding: 0px 15px;
-    padding-right: 0px;
-    margin-bottom: 10px;
+  padding: 0px 15px;
+  padding-right: 0px;
+  margin-bottom: 10px;
 
-    .moduleBtn {
-        border-left: 1px solid grey;
-        width: 100%;
-        display: flex;
-        padding: 5px 10px;
-        border-radius: 5px;
-        border-top-left-radius: 0px;
-        border-bottom-left-radius: 0px;
-        font-size: $para3;
-        font-weight: 500;
-        color: $sidebarSecondary;
-        justify-content: space-between;
-        padding-right: calc(8px);
+  .moduleBtn {
+    border-left: 1px solid grey;
+    width: 100%;
+    display: flex;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    font-size: $para3;
+    font-weight: 500;
+    color: $sidebarSecondary;
+    justify-content: space-between;
+    padding-right: calc(8px);
 
-        .right {
-            padding-right: 5px;
-            color: black;
-        }
-
-        &:hover {
-            background-color: #eee;
-        }
+    .right {
+      padding-right: 5px;
+      color: black;
     }
 
-    .moduleBtnActive {
-        background-color: $activeBgColor !important;
-        color: $sidebarActive;
-        border-left: 2px solid $sidebarActive;
+    &:hover {
+      background-color: #eee;
     }
+  }
+
+  .moduleBtnActive {
+    background-color: $activeBgColor !important;
+    color: $sidebarActive;
+    border-left: 2px solid $sidebarActive;
+  }
 }
 
 .sidebarContainer .hintsContainer {
-    padding: 8px $sidebarHorizontalPadding + 5px;
-    font-size: $para5;
+  padding: 8px $sidebarHorizontalPadding + 5px;
+  font-size: $para5;
 
-    .title {
-        font-weight: bold;
-    }
+  .title {
+    font-weight: bold;
+  }
 
-    .infoText {
-        color: $sidebarSecondary;
-    }
+  .infoText {
+    color: $sidebarSecondary;
+  }
 
-    .shortcutText {
-        margin-bottom: 5px;
-        span {
-            font-weight: bold;
-        }
+  .shortcutText {
+    margin-bottom: 5px;
+    span {
+      font-weight: bold;
     }
+  }
 }
 
 .sidebarContainer .deleteBtn {
-    display: flex;
-    align-items: center;
-    padding-bottom: 20px;
-    padding-top: 20px;
-    width: 100%;
-    font-size: $para3;
-    color: $errColor;
-    background-color: $sidebarBgColor;
+  display: flex;
+  align-items: center;
+  padding-bottom: 20px;
+  padding-top: 20px;
+  width: 100%;
+  font-size: $para3;
+  color: $errColor;
+  background-color: $sidebarBgColor;
 
-    .icon {
-        font-size: $para4;
-    }
+  .icon {
+    font-size: $para4;
+  }
 }

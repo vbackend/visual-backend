@@ -15,15 +15,10 @@ import { RootState } from '@/renderer/redux/store';
 import { LoadingOutlined } from '@ant-design/icons';
 import Margin from '@/renderer/components/general/Margin';
 
-import { addModule, setCurModule } from '@/renderer/redux/module/moduleSlice';
-import {
-  ProjectTab,
-  setCreateModuleOpen,
-  setCurrentTab,
-} from '@/renderer/redux/project/projectSlice';
 import { RenFuncs } from '@/shared/utils/RenFuncs';
 import { BModuleType } from '@/shared/models/BModule';
 import { envConsts } from '@/renderer/misc/constants';
+import CreateModalHeader from '../General/CreateModalHeader';
 
 type CreateMongoDBProps = {
   setSelection: Dispatch<SetStateAction<BModuleType | null>>;
@@ -86,12 +81,7 @@ function CreateMongoDB({ setSelection }: CreateMongoDBProps) {
 
   return (
     <div className="createMongoDb">
-      <div className="headerBar">
-        <button onClick={() => setSelection(null)}>
-          <FontAwesomeIcon icon={faArrowLeft} className="icon" />
-        </button>
-        <p className="header">{`Create MongoDB module`}</p>
-      </div>
+      <CreateModalHeader setSelection={setSelection} title="MongoDB" />
       <div className="middleBar">
         <p className="inputTitle">Paste connection String</p>
         <Input

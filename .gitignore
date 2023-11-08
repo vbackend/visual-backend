@@ -1,4 +1,5 @@
 .env
+zip.js
 
 assets/node-v18.18.2-darwin-arm64.tar.gz
 assets/node-v18.18.2-darwin-x64.tar.gz
