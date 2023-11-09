@@ -33,6 +33,7 @@ import { ChildProcess } from 'child_process';
 import {
   createModule,
   deleteModule,
+  setModuleMetadata,
   showModuleContextMenu,
 } from './ipc/project/modules/moduleFuncs';
 import {
@@ -312,6 +313,7 @@ const moduleInit = async () => {
   ipcMain.handle(ModuleActions.CREATE_MODULE, createModule);
   ipcMain.handle(ModuleActions.DELETE_MODULE, deleteModule);
   ipcMain.handle(ModuleActions.ADD_WEBHOOK_TEMPLATES, addWebhookTemplates);
+  ipcMain.handle(ModuleActions.SET_MODULE_METADATA, setModuleMetadata);
 };
 
 const envInit = async () => {

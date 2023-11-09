@@ -75,6 +75,7 @@ export class ModuleActions {
   static UPDATE_MODULE_DELETE_CLICKED = 'update-module-delete-clicked';
   static DELETE_MODULE = 'delete-module';
   static CREATE_MODULE = 'create-module';
+  static SET_MODULE_METADATA = 'set-module-metadata';
 
   static ADD_WEBHOOK_TEMPLATES = 'add-webhook-templates';
 }

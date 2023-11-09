@@ -50,9 +50,11 @@ const moduleHandler = {
   removeModuleDeleteClickedListener: () =>
     ipcRenderer.removeAllListeners(ModuleActions.UPDATE_MODULE_DELETE_CLICKED),
 
-  //
   addWebhookTemplates: (payload: any) =>
     ipcRenderer.invoke(ModuleActions.ADD_WEBHOOK_TEMPLATES, payload),
+
+  setModuleMetadata: (payload: any) =>
+    ipcRenderer.invoke(ModuleActions.SET_MODULE_METADATA, payload),
 };
 
 const mongoHandler = {

@@ -58,6 +58,7 @@ export const generateFuncCode = async (payload: any) => {
 
   funcScaffold = await getModuleScaffold({ key: funcName, funcGroup }, module);
 
+  console.log('Use GPT:', useGpt);
   if (!useGpt) {
     await writeToFuncFile(
       projKey,

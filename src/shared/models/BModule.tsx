@@ -47,11 +47,13 @@ export const modConfig: {
     key: BModuleType.Supabase,
     init: 'supabase',
     path: 'supabase',
-    metadata: {},
+    metadata: { tables: [] },
     title: 'Supabase',
     gptDetails: '',
     starterFile: 'supabaseStarter.txt',
-    starterFuncs: ['firebaseAuthMiddleware'],
+    starterFuncs: ['auth/supabaseAuthMiddleware'],
+    initFile: 'initSupabase.txt',
+    dependencies: ['@supabase/supabase-js'],
     envVars: [envConsts.SUPABASE_PROJECT_URL, envConsts.SUPABASE_SERVICE_KEY],
     createComp: (setSelection: any, selection: any) => (
       <CreateSupabase setSelection={setSelection} selection={selection} />

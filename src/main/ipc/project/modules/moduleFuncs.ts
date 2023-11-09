@@ -1,14 +1,10 @@
 import { GenFuncs } from '@/shared/utils/GenFuncs';
 import { BFunc, BFuncHelpers } from '@/shared/models/BFunc';
 import { FileFuncs } from '@/main/helpers/fileFuncs';
-import { BrowserWindow, Menu } from 'electron';
+import { BrowserWindow, IpcMainInvokeEvent, Menu } from 'electron';
 import { MainFuncs, PathFuncs } from '@/shared/utils/MainFuncs';
 import path from 'path';
-import {
-  deleteFuncByModule,
-  getFuncByKey,
-  insertFuncQuery,
-} from '@/main/db/funcs/funcQueries';
+import { deleteFuncByModule } from '@/main/db/funcs/funcQueries';
 import { ModuleActions } from '@/main/actions';
 import { BModuleType, modConfig } from '@/shared/models/BModule';
 import {
@@ -18,12 +14,14 @@ import {
 import {
   createModuleQuery,
   deleteModuleQuery,
+  editModuleMetadata,
 } from '@/main/db/modules/moduleQueries';
 
 import { deletePackages, installPackages } from '@/main/generate/install';
 import { writeModuleStarterFuncs, writeModuleTemplate } from './helpers';
 import { removeEnvVar, writeEnvVars } from '@/main/generate/env';
 import { writeIndexFile } from '@/main/generate/general';
+import { createSupabaseModuleFiles } from './supabase/supabaseFuncs';
 
 export const getModuleFromConfig = (mConfig: any) => {
   return {
@@ -38,9 +36,9 @@ export const createModule = async (
   e: Electron.IpcMainInvokeEvent,
   payload: any
 ) => {
-  let { projKey, key } = payload;
+  let { projKey, key, metadata } = payload;
   let mConfig = modConfig[key];
-  if (payload.metadata) {
+  if (metadata) {
     mConfig.metadata = payload.metadata;
   }
 
@@ -59,6 +57,8 @@ export const createModule = async (
       case BModuleType.FirebaseFirestore:
         newFuncs = await createFirebaseModuleFiles(payload);
         break;
+      // case BModuleType.Supabase:
+      //   newFuncs = await createSupabaseModuleFiles(payload);
       default:
         newFuncs = await createModuleFiles(payload);
     }
@@ -169,4 +169,14 @@ export const showModuleContextMenu = async (
       },
     },
   ]).popup({ window: window! });
+};
+
+export const setModuleMetadata = async (
+  e: IpcMainInvokeEvent,
+  payload: any
+) => {
+  let { metadata, bModule } = payload;
+  console.log('Payload:', payload);
+  await editModuleMetadata(metadata, bModule);
+  return true;
 };

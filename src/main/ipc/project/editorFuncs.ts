@@ -39,7 +39,5 @@ export const openProjectInVs = async (
   payload: any
 ) => {
   const { projKey } = payload;
-  console.log('Opening project in VS Code');
-  console.log(PathFuncs.getProjectPath(projKey));
   exec(`cd "${PathFuncs.getProjectPath(projKey)}" && code .`);
 };

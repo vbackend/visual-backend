@@ -1,15 +1,9 @@
 import Margin from '@/renderer/components/general/Margin';
 import { RootState } from '@/renderer/redux/store';
 
-import { LuFilePlus2 } from 'react-icons/lu';
-
-import {
-  faFolderPlus,
-  faPlus,
-  faTrash,
-} from '@fortawesome/free-solid-svg-icons';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import '@/renderer/styles/Project/Modules/FirebaseModule/FirestoreManager.scss';
 import { Button, Spin, Tooltip } from 'antd';

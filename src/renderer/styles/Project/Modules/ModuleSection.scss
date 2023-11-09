@@ -2,79 +2,79 @@
 @import '../../config';
 
 .moduleSection {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .moduleSection .headerContainer {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 
-    .title {
-        font-size: $para2;
-        margin-right: 10px;
-    }
+  .title {
+    font-size: $para2;
+    margin-right: 10px;
+  }
 }
 
 .moduleSection .infoContainer {
-    padding: 0px $sectionHorizPadding;
+  padding: 0px $sectionHorizPadding;
+  font-size: $para5;
+  margin-bottom: 20px;
+
+  .variableContainer {
+    display: flex;
+    .varName {
+      font-weight: bold;
+      // width: 80px;
+      margin-right: 10px;
+    }
+  }
+}
+
+.moduleSection .mainContainer {
+  width: 100%;
+  padding: 0px $sectionHorizPadding;
+  font-weight: bold;
+  font-size: $para4;
+  box-shadow: none;
+
+  .description .title {
+    margin-bottom: 5px;
+  }
+
+  .description .info {
+    font-weight: 500;
     font-size: $para5;
-    margin-bottom: 20px;
-
-    .variableContainer {
-        display: flex;
-        .varName {
-            font-weight: bold;
-            // width: 80px;
-            margin-right: 10px;
-        }
-    }
+  }
 }
 
 .moduleSection .mainContainer {
-    width: 100%;
-    padding: 0px $sectionHorizPadding;
-    font-weight: bold;
-    font-size: $para4;
-    box-shadow: none;
-
-    .description .title {
-        margin-bottom: 5px;
-    }
-
-    .description .info {
-        font-weight: 500;
-        font-size: $para5;
-    }
+  justify-content: flex-start;
+  align-items: flex-start;
 }
-
-.moduleSection .mainContainer {
-    justify-content: flex-start;
-    align-items: flex-start;
-}
-
 
 .funcGroupContainer {
-    width: 100%;
-    min-height: 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
+  width: 100%;
+  min-height: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
 
-    margin: 8px 0px;
+  margin: 8px 0px;
 
-    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
-    border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+    rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+  border-radius: 5px;
 
-    padding: 10px;
+  padding: 10px;
 }
 
 .colHeader {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    height: 30px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  height: 30px;
 }
 
 $iconColor: #535469;
@@ -108,62 +108,61 @@ $iconColor: #535469;
 }
 
 .funcGroupHeader {
-    width: 100%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 20px;
 
-    p {
-        color: #333;
-    }
+  p {
+    color: #333;
+  }
 
-    button {
-        margin-left: 15px;
-        color: #666;
-        font-size: 16px;
-    }
+  button {
+    margin-left: 15px;
+    color: #666;
+    font-size: 16px;
+  }
 }
 
 .funcGroupBtn {
-    @include flexCenter(row);
-    padding: 0px 10px;
-    width: 25px !important;
-    margin: 0px !important;
+  @include flexCenter(row);
+  padding: 0px 10px;
+  width: 25px !important;
+  margin: 0px !important;
 
-    .icon {
-      color: $iconColor
-    }
+  .icon {
+    color: $iconColor;
+  }
 }
 
 .funcContainer {
-    padding: 0px 10px;
-    margin-left: 3px;
-    height: 25px;
-    display: flex;
-    align-items: center;
-    border-left: 1px solid #222;
-    font-size: $para5;
-    font-weight: 500;
-    transition: 0.2s    ;
-    &:hover {
-        background-color: #EEE;
-    }
+  padding: 0px 10px;
+  margin-left: 3px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  border-left: 1px solid #222;
+  font-size: $para5;
+  font-weight: 500;
+  transition: 0.2s;
+  &:hover {
+    background-color: #eee;
+  }
 }
 
 .actionBtnsContainer {
-    width: 100%;
-    padding: 0px $sectionHorizPadding;
-    font-weight: bold;
-    font-size: $para4;
-    box-shadow: none;
+  width: 100%;
+  padding: 0px $sectionHorizPadding;
+  font-weight: bold;
+  font-size: $para4;
+  box-shadow: none;
 
-    .sectionBtn {
-        @include flexCenter(row);
-        color: #333;
-        .icon {
-            margin-right: 5px;
-        }
+  .sectionBtn {
+    @include flexCenter(row);
+    color: #333;
+    .icon {
+      margin-right: 5px;
     }
+  }
 }
-
-

@@ -45,30 +45,31 @@ function CreateSupabase({ setSelection, selection }: any) {
   };
 
   const disabled = () => {
-    return details.testKey == '' || details.liveKey == '';
+    return details.projectUrl == '' || details.serviceKey == '';
   };
   return (
     <div className="createModule">
       <CreateModalHeader setSelection={setSelection} title="Supabase" />
       <div className="middleBar">
-        <p className="inputTitle">Test Key</p>
+        <p className="inputTitle">Project URL</p>
         <Input
-          onChange={(e) => setDetails({ ...details, testKey: e.target.value })}
-          value={details.testKey}
+          onChange={(e) =>
+            setDetails({ ...details, projectUrl: e.target.value })
+          }
+          value={details.projectUrl}
           className="createInput"
-          placeholder="Test API Key"
+          placeholder="e.g. https://abc123.supabase.co"
         />
 
         <Margin height={20} />
-        <p className="inputTitle">Live Key</p>
-        <p className="inputDescription">
-          You may use your test key in this field first, and change it later on.
-        </p>
+        <p className="inputTitle">Service Key</p>
         <Input
-          onChange={(e) => setDetails({ ...details, liveKey: e.target.value })}
-          value={details.liveKey}
+          onChange={(e) =>
+            setDetails({ ...details, serviceKey: e.target.value })
+          }
+          value={details.serviceKey}
           className="createInput"
-          placeholder="Production API Key"
+          placeholder="e.g. eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
         />
       </div>
       <Margin height={20} />

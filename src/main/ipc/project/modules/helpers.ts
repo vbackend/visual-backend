@@ -3,6 +3,7 @@ import { FileFuncs } from '@/main/helpers/fileFuncs';
 import { modConfig } from '@/shared/models/BModule';
 import { PathFuncs } from '@/shared/utils/MainFuncs';
 import path from 'path';
+import fs from 'fs-extra';
 
 export const writeModuleTemplate = async (
   mPath: string,
@@ -19,9 +20,27 @@ export const writeModuleTemplate = async (
   let filePath = path.join(folderPath, targetFileName);
 
   await FileFuncs.createDirIfNotExists(folderPath);
+
+  const dirPath = path.dirname(filePath);
+  if (!fs.existsSync(dirPath)) {
+    fs.mkdirSync(dirPath, { recursive: true });
+  }
+
   let data: any = await FileFuncs.readFile(templatesPath);
   await FileFuncs.writeFile(filePath, data);
 };
+
+function getFuncNameFromPath(str: string) {
+  return str.substring(str.lastIndexOf('/') + 1);
+}
+
+function getFuncDirFromPath(str: any) {
+  const lastSlashIndex = str.lastIndexOf('/');
+  if (lastSlashIndex === -1) {
+    return '';
+  }
+  return str.substring(0, lastSlashIndex);
+}
 
 export const writeModuleStarterFuncs = async (projKey: string, key: string) => {
   let newFuncs: any = [];
@@ -36,7 +55,11 @@ export const writeModuleStarterFuncs = async (projKey: string, key: string) => {
       writeModuleTemplate(mConfig.path, `${name}.txt`, `${name}.ts`, projKey)
     );
 
-    newFuncPromises.push(insertFuncQuery(name, mConfig.key, '*', 'ts'));
+    let dir = getFuncDirFromPath(name);
+    let funcGroup = dir == '' ? '*' : dir;
+    newFuncPromises.push(
+      insertFuncQuery(getFuncNameFromPath(name), mConfig.key, funcGroup, 'ts')
+    );
   }
 
   await Promise.all(promises);
