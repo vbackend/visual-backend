@@ -1,18 +1,16 @@
 @import '../../config';
-@import '../projectConfig';;
+@import '../projectConfig';
 
 .modalBackground {
-    @include modalBg;
-    
+  @include modalBg;
 }
 
 .createModuleModal .contentContainer {
-    background-color: white;
-    max-width: none;
-    width: 350px;
+  background-color: white;
+  max-width: none;
+  width: 350px;
 }
 
 .dbSelect {
-    width: 50%;
+  width: 50%;
 }
-

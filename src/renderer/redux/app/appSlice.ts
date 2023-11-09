@@ -31,6 +31,7 @@ export type AppState = {
   curPage: AppPage;
   user: any;
   openWithVs: boolean;
+  someModalOpen: boolean;
 };
 
 const getInitialState = (): AppState => {
@@ -43,6 +44,7 @@ const getInitialState = (): AppState => {
     loggedIn: false,
     user: null,
     openWithVs: false,
+    someModalOpen: false,
   };
 };
 // create a slice
@@ -59,6 +61,10 @@ export const appSlice = createSlice({
     },
     setOpenWithVs(state, action) {
       state.openWithVs = action.payload;
+    },
+
+    setSomeModalOpen(state, action) {
+      state.someModalOpen = action.payload;
     },
 
     setCurPage(state, action) {
@@ -94,6 +100,7 @@ export const {
   setCurPage,
   setPlatform,
   setOpenWithVs,
+  setSomeModalOpen,
   setProjects,
   addProject,
   setLoggedIn,

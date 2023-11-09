@@ -4,6 +4,10 @@ import { AccountTier, SubStatus } from '@/shared/models/User';
 import {
   faCircleUser,
   faExclamationCircle,
+  faWindowClose,
+  faWindowMaximize,
+  faWindowMinimize,
+  faXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, Switch } from 'antd';
@@ -19,7 +23,7 @@ import { LuBadge } from 'react-icons/lu';
 
 import '@/renderer/styles/Home/HomeSidebar.scss';
 
-function HomeSidebar() {
+function HomeSidebar({ modalsOpen }: any) {
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.app.user);
   const [errText, setErrText] = useState('');
@@ -77,76 +81,81 @@ function HomeSidebar() {
   return (
     <>
       {upgradeModalOpen && <UpgradeModal setModalOpen={setUpgradeModalOpen} />}
-      <div className="homeSidebar">
-        <div className="logoContainer">
-          <img className="logoImg" src={LogoImg} alt="vb-logo" />
-          <div className="logoTxt">Visual Backend</div>
-        </div>
-        <Margin height={15} />
-        <div className="profileContainer">
-          {/* <FontAwesomeIcon icon={faCircleUser} className="icon" /> */}
-          <div className="iconContainer">
-            <HiUserCircle size={19} />
+      <div
+        className={`homeSidebar ${modalsOpen ? 'undraggable' : 'draggable'}`}
+      >
+        <div className="main undraggable">
+          <div className="logoContainer">
+            <img className="logoImg" src={LogoImg} alt="vb-logo" />
+            <div className="logoTxt">Visual Backend</div>
           </div>
-          <p>{user.email}</p>
-        </div>
-        <div className="profileContainer">
-          {user.accountTier == 'starter' ? (
+          <Margin height={15} />
+          <div className="profileContainer">
+            {/* <FontAwesomeIcon icon={faCircleUser} className="icon" /> */}
             <div className="iconContainer">
-              <LuBadge size={19} />
+              <HiUserCircle size={19} />
             </div>
-          ) : (
-            <div className="iconContainer">
-              <HiBadgeCheck size={19} />
-            </div>
-          )}
+            <p>{user.email}</p>
+          </div>
+          <div className="profileContainer">
+            {user.accountTier == 'starter' ? (
+              <div className="iconContainer">
+                <LuBadge size={19} />
+              </div>
+            ) : (
+              <div className="iconContainer">
+                <HiBadgeCheck size={19} />
+              </div>
+            )}
 
-          <p>
-            {user.accountTier == 'starter'
-              ? 'Starter Account'
-              : 'Premium Account'}
-          </p>
-        </div>
-
-        <Margin height={10} />
-        <div className="right">
-          {getSubText()}
-          {errText && (
-            <p
-              className="errorText"
-              style={{
-                marginBottom: '10px',
-                paddingTop: '0px',
-              }}
-            >
-              {errText}
+            <p>
+              {user.accountTier == 'starter'
+                ? 'Starter Account'
+                : 'Premium Account'}
             </p>
-          )}
-          {user.accountTier == AccountTier.Premium ? (
+          </div>
+
+          <Margin height={10} />
+          <div className="right">
+            {getSubText()}
+            {errText && (
+              <p
+                className="errorText"
+                style={{
+                  marginBottom: '10px',
+                  paddingTop: '0px',
+                }}
+              >
+                {errText}
+              </p>
+            )}
+            {user.accountTier == AccountTier.Premium ? (
+              <Button
+                className="homeBtn undraggable"
+                type="primary"
+                onClick={() => manageAccountClicked()}
+                loading={portalLoading}
+              >
+                Manage Subscription
+              </Button>
+            ) : (
+              <Button
+                className="homeBtn undraggable"
+                type="primary"
+                onClick={() => setUpgradeModalOpen(true)}
+              >
+                Upgrade
+              </Button>
+            )}
             <Button
-              className="homeBtn"
-              type="primary"
-              onClick={() => manageAccountClicked()}
-              loading={portalLoading}
+              className="homeBtn undraggable"
+              type="default"
+              onClick={logout}
             >
-              Manage Subscription
+              Sign Out
             </Button>
-          ) : (
-            <Button
-              className="homeBtn"
-              type="primary"
-              onClick={() => setUpgradeModalOpen(true)}
-            >
-              Upgrade
-            </Button>
-          )}
-          <Button className="homeBtn" type="default" onClick={logout}>
-            Sign Out
-          </Button>
+          </div>
         </div>
-        {/* <p>
-              Update result: {checkUpdateResult ? checkUpdateResult : 'checking'}
-            </p> */}
       </div>
     </>
   );

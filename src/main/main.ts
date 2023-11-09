@@ -16,6 +16,7 @@ import {
   ipcMain,
   Menu,
   globalShortcut,
+  nativeTheme,
 } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
@@ -28,6 +29,7 @@ import {
   ModuleActions,
   MongoActions,
   ResendActions,
+  WindowActions,
 } from './actions';
 import { ChildProcess } from 'child_process';
 import {
@@ -106,6 +108,11 @@ import {
   setWindowSze,
 } from './ipc/home/homeFuncs';
 import { homeWindowSize } from '@/renderer/misc/constants';
+import {
+  closeWindow,
+  maximizeWindow,
+  minimizeWindow,
+} from './ipc/home/windowFuncs';
 
 config();
 
@@ -164,8 +171,12 @@ const createWindow = async () => {
     show: false,
     ...homeWindowSize,
     // maxWidth: 500,
-    // transparent: true,
-    // frame: false,
+    transparent: true,
+    titleBarStyle: 'hidden',
+    titleBarOverlay: true,
+    trafficLightPosition: { x: 14, y: 10 },
+    frame: false,
+    darkTheme: false,
     icon: getAssetPath('icon.png'),
     webPreferences: {
       // devTools: false,
@@ -214,6 +225,12 @@ let globalVars: {
 } = {
   serverProcess: null,
   store: new Store(),
+};
+
+const windowInit = async () => {
+  ipcMain.on(WindowActions.CLOSE_WINDOW, () => closeWindow(mainWindow!));
+  ipcMain.on(WindowActions.MINIMIZE_WINDOW, () => minimizeWindow(mainWindow!));
+  ipcMain.on(WindowActions.MAXIMIZE_WINDOW, () => maximizeWindow(mainWindow!));
 };
 
 const init = async () => {
@@ -391,6 +408,7 @@ if (!gotTheLock) {
 app
   .whenReady()
   .then(async () => {
+    nativeTheme.themeSource = 'light';
     // autoUpdater.checkForUpdates();
 
     await initNodeBinaries();
@@ -409,6 +427,7 @@ app
     // s.delete(electronStoreKeys.openWithVsKey);
     // console.log('Node type:', s.get(nodeTypeKey));
 
+    windowInit();
     init();
     firebaseInit();
     moduleInit();

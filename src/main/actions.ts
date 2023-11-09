@@ -1,3 +1,8 @@
+export class WindowActions {
+  static CLOSE_WINDOW = 'close-window';
+  static MINIMIZE_WINDOW = 'minimize-window';
+  static MAXIMIZE_WINDOW = 'maximize-window';
+}
 export class Actions {
   static SHORTCUT_DETECTED = 'shortcut-detected';
 

@@ -6,24 +6,34 @@ import { HiSparkles } from 'react-icons/hi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, Input, Switch, Tooltip } from 'antd';
 import '@/renderer/styles/Project/Modules/CreateFuncModal.scss';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/renderer/redux/store';
 import { AccountTier } from '@/shared/models/User';
 import useShortcut from '@/renderer/hooks/useShortcut';
 import useEscHook from '@/renderer/hooks/useEscClicked';
 import { RenFuncs } from '@/shared/utils/RenFuncs';
+import { setSomeModalOpen } from '@/renderer/redux/app/appSlice';
 
 function CreateFuncModal({ setModalOpen, onCreateClicked, funcGroup }: any) {
-  let [funcName, setFuncName] = useState('');
-  const [errText, setErrText] = useState('');
-  const [useGpt, setUseGpt] = useState(true);
-  const [createLoading, setCreateLoading] = useState(false);
+  const dispatch = useDispatch();
   const curModule = useSelector((state: RootState) => state.module.curModule);
   const user = useSelector((state: RootState) => state.app.user);
   const inputRef = useRef<any>(null);
 
+  let [funcName, setFuncName] = useState('');
+  const [errText, setErrText] = useState('');
+  const [useGpt, setUseGpt] = useState(true);
+  const [createLoading, setCreateLoading] = useState(false);
+
   useEffect(() => {
     inputRef.current.focus();
+  }, []);
+
+  useEffect(() => {
+    dispatch(setSomeModalOpen(true));
+    return () => {
+      dispatch(setSomeModalOpen(false));
+    };
   }, []);
 
   useEscHook(() => setModalOpen(false));

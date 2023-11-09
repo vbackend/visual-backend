@@ -32,6 +32,7 @@ function CreateProjectModal({ setModalOpen }: CreateProjectModalProps) {
   const createClicked = async () => {
     setLoading(true);
     setErrorText('');
+    if (name == '') return;
     try {
       let { data } = await ProjectService.createProject(name);
 

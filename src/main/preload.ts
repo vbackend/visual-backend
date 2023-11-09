@@ -8,9 +8,16 @@ import {
   ModuleActions,
   MongoActions,
   ResendActions,
+  WindowActions,
 } from './actions';
 
 export type Channels = 'ipc-example';
+
+const windowHandler = {
+  closeWindow: () => ipcRenderer.send(WindowActions.CLOSE_WINDOW),
+  minimizeWindow: () => ipcRenderer.send(WindowActions.MINIMIZE_WINDOW),
+  maximizeWindow: () => ipcRenderer.send(WindowActions.MAXIMIZE_WINDOW),
+};
 
 const firebaseHandler = {
   checkFirebaseCredentials: (payload: any) =>
@@ -111,6 +118,14 @@ const electronHandler = {
   removeUpdateCheckResultListener: () =>
     ipcRenderer.removeAllListeners(Actions.UPDATE_CHECK_RESULT),
 
+  ...windowHandler,
+  ...firebaseHandler,
+  ...moduleHandler,
+  ...mongoHandler,
+  ...envHandler,
+  ...resendHandler,
+  ...editorHandler,
+
   // SEND ACTIONS
 
   setWindowSize: (payload: any) =>
@@ -123,13 +138,6 @@ const electronHandler = {
     ipcRenderer.invoke(Actions.SET_OPEN_WITH_VS, payload),
   checkVsRequirementsMet: () =>
     ipcRenderer.invoke(Actions.CHECK_VS_REQUIREMENTS_MET),
-
-  ...firebaseHandler,
-  ...moduleHandler,
-  ...mongoHandler,
-  ...envHandler,
-  ...resendHandler,
-  ...editorHandler,
 
   createProject: (payload: any) =>
     ipcRenderer.invoke(Actions.CREATE_PROJECT, payload),

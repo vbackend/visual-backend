@@ -1,12 +1,21 @@
 import Margin from '@/renderer/components/general/Margin';
+import { setSomeModalOpen } from '@/renderer/redux/app/appSlice';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, Input } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 function CreateFsColModal({ setModalOpen, onCreateClicked }: any) {
+  const dispatch = useDispatch();
   let [colName, setColName] = useState('');
   const [errText, setErrText] = useState('');
+  useEffect(() => {
+    dispatch(setSomeModalOpen(true));
+    return () => {
+      dispatch(setSomeModalOpen(false));
+    };
+  }, []);
 
   return (
     <div className="modalBackground createAuthFuncModal">

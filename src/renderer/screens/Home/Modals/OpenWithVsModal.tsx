@@ -44,8 +44,8 @@ function OpenWithVsModal({ setModalOpen }: OpenWithVsModalProps) {
   // }, []);
 
   return (
-    <div className="modalBackground openWithVsModal">
-      <div className="contentContainer">
+    <div className="modalBackground openWithVsModal undraggable">
+      <div className="contentContainer undraggable">
         <div className="topBar">
           <p className="title">Open projects with VS Code</p>
           <button onClick={() => setModalOpen(false)}>
@@ -71,9 +71,9 @@ function OpenWithVsModal({ setModalOpen }: OpenWithVsModalProps) {
         </div>
         <Margin height={20} />
         <Button
+          className="undraggable"
           loading={loading}
           onClick={btnClicked}
-          className="modalActionBtn"
           type="primary"
         >
           Confirm

@@ -46,6 +46,9 @@ function Sidebar() {
   let platform = useSelector((state: RootState) => state.app.curPlatform);
   let metaKey = RenFuncs.getMetaKey(platform);
   const curFile = useSelector((state: RootState) => state.editor.currentFile);
+  const someModalOpen = useSelector(
+    (state: RootState) => state.app.someModalOpen
+  );
 
   const homeClicked = async () => {
     window.electron.setWindowSize(homeWindowSize);
@@ -83,10 +86,13 @@ function Sidebar() {
       {deleteModalOpen && (
         <DeleteProjectModal setModalOpen={setDeleteModalOpen} />
       )}
-      <div className="sidebarContainer">
+      <div className={`sidebarContainer ${!someModalOpen && 'draggable'}`}>
         <div className="btnsContainer">
           <div className="row1">
-            <button className="homeBtn" onClick={() => homeClicked()}>
+            <button
+              className="homeBtn undraggable"
+              onClick={() => homeClicked()}
+            >
               <FontAwesomeIcon icon={faArrowLeft} className="icon" />
             </button>
           </div>
@@ -124,7 +130,7 @@ function Sidebar() {
           />
         </div>
 
-        <div className="hintsContainer">
+        <div className="hintsContainer undraggable">
           <p className="title">Shortcuts:</p>
           <p className="infoText">{`Shortcuts start with ${metaKey}`}</p>
           <Margin height={10} />
@@ -184,7 +190,7 @@ const SidebarBtn = ({ tab, name, icon, scale = 1.0, shortcut }: any) => {
     <>
       <div
         key={tab}
-        className={`sidebarBtn ${
+        className={`undraggable sidebarBtn ${
           curTab === tab && tab != ProjectTab.Module && 'curSidebarBtn'
         }`}
         onClick={() => setCurTab(tab)}
@@ -252,7 +258,7 @@ const ModuleButton = ({ index, module }: any) => {
       ref={btnRef}
       key={index}
       onClick={() => setModuleTab(module)}
-      className={`moduleBtn ${
+      className={`undraggable moduleBtn ${
         curTab == ProjectTab.Module &&
         curModule?.key == module.key &&
         'moduleBtnActive'

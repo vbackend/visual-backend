@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import '@/renderer/styles/Project/CreateRouteModal.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'renderer/redux/store';
 import { Route, RouteNode, RouteType } from '@/shared/models/route';
 import { addRoute } from '@/renderer/redux/routes/routesSlice';
+import { setSomeModalOpen } from '@/renderer/redux/app/appSlice';
 
 type CreateRouteModalProps = {
   setCreateModalOpen: Dispatch<SetStateAction<boolean>>;
@@ -100,6 +101,13 @@ function CreateRouteModal({
       setCreateModalOpen(false);
     }
   };
+
+  useEffect(() => {
+    dispatch(setSomeModalOpen(true));
+    return () => {
+      dispatch(setSomeModalOpen(false));
+    };
+  }, []);
 
   return (
     <div className="modalBackground">

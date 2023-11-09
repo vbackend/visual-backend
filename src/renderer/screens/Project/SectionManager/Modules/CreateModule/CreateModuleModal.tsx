@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import '@/renderer/styles/Project/CreateModule/CreateModuleModal.scss';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,9 +10,7 @@ import useEscHook from '@/renderer/hooks/useEscClicked';
 import { BModuleType, modConfig } from '@/shared/models/BModule';
 import CreateMongoDB from '../MongoModule/CreateMongoDB';
 import CreateFirebaseModule from '../../../../../../archives/CreateFirebaseModule';
-import CreateJwt from '../JwtModule/CreateJwt';
-import CreateStripe from '../StripeModule/CreateStripe';
-import CreateGpt from '../GptModule/CreateGpt';
+import { setSomeModalOpen } from '@/renderer/redux/app/appSlice';
 
 function CreateModuleModal() {
   const dispatch = useDispatch();
@@ -42,6 +40,14 @@ function CreateModuleModal() {
     }
     return <SelectModule setSelection={setSelection} />;
   };
+
+  useEffect(() => {
+    dispatch(setSomeModalOpen(true));
+    return () => {
+      dispatch(setSomeModalOpen(false));
+    };
+  }, []);
+
   return (
     <div className="modalBackground createModuleModal">
       <div className="contentContainer">{getModuleCreateModal()}</div>

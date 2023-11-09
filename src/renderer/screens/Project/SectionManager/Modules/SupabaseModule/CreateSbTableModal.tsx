@@ -1,16 +1,26 @@
 import Margin from '@/renderer/components/general/Margin';
+import { setSomeModalOpen } from '@/renderer/redux/app/appSlice';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, Input } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 function CreateSbTableModal({ setModalOpen, onCreateClicked }: any) {
   let [colName, setColName] = useState('');
   const [errText, setErrText] = useState('');
   const inputRef = useRef<any>(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     inputRef.current.focus();
+  }, []);
+
+  useEffect(() => {
+    dispatch(setSomeModalOpen(true));
+    return () => {
+      dispatch(setSomeModalOpen(false));
+    };
   }, []);
 
   return (

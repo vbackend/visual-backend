@@ -3,9 +3,20 @@
 .homeSidebar {
   height: 100vh;
   background-color: white;
-  padding: 30px 20px;
-  padding-right: 40px;
-  width: 200px;
+  min-width: 200px;
+  max-width: 200px;
+  z-index: 1;
+}
+
+.menuControls {
+  padding: 0px 16px;
+  padding-top: 10px;
+}
+
+.homeSidebar .main {
+  padding: 0px 16px;
+  margin-top: 40px;
+  // padding-right: 40px;
 }
 
 .homeSidebar .logoContainer {
@@ -39,18 +50,17 @@
 
   p {
     font-size: $para5;
-    color: $textSecondary
+    color: $textSecondary;
   }
 }
 
-.homeSidebar .right{
+.homeSidebar .right {
   .homeBtn {
-    width: 115%;
+    width: 100%;
     @include flexCenter(row);
     font-size: $para5;
   }
 }
-
 
 // .vsSwitchContainer {
 //   display: flex;

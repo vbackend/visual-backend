@@ -2,56 +2,57 @@
 @import './projectConfig';
 
 .modalBackground {
-    @include modalBg;
+  @include modalBg;
+  z-index: 1;
 }
 
 .contentContainer {
-    width: 300px;
-    background-color: white;
-    padding: 20px;
-    position: relative;
+  width: 300px;
+  background-color: white;
+  padding: 20px;
+  position: relative;
 }
 
 .contentContainer .title {
-    font-weight: bold;
-    font-size: $para1;
+  font-weight: bold;
+  font-size: $para1;
 }
 
 .contentContainer .topBar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
 
-    .closeBtn .icon {
-        font-size: 18px;
-    }
+  .closeBtn .icon {
+    font-size: 18px;
+  }
 }
 
 .recText {
-    font-size: $para5;
-    color: $textGrey;
-    padding-left: 3px;
-    margin-bottom: 10px;
+  font-size: $para5;
+  color: $textGrey;
+  padding-left: 3px;
+  margin-bottom: 10px;
 }
 
 .pathContainer {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .createInput {
-    width: 80%;
-    height: 30px;
+  width: 80%;
+  height: 30px;
 }
 
 .pathPreview {
-    font-size: 15px;
+  font-size: 15px;
 }
 
 .contentContainer .closeBtn {
-    // font-size: 20px;
-    // position: absolute;
-    // top: 10px;
-    // right: 10px;
+  // font-size: 20px;
+  // position: absolute;
+  // top: 10px;
+  // right: 10px;
 }

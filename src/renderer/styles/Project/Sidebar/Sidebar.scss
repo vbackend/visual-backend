@@ -1,8 +1,7 @@
 @import '../../config';
 
-$sidebarHorizontalPadding: 10px;
-// $sidebarBgColor: #fbfbfd;
-$sidebarBgColor: rgba(249, 249, 251, 0.97);
+$sidebarHorizontalPadding: 9px;
+$sidebarBgColor: #fbfbfd;
 
 .sidebarContainer {
   min-height: 100vh;
@@ -14,7 +13,6 @@ $sidebarBgColor: rgba(249, 249, 251, 0.97);
   flex-direction: column;
   justify-content: space-between;
 
-  // padding: 20px 10px;
   font-size: 16px;
 
   .projectName {
@@ -26,7 +24,7 @@ $sidebarBgColor: rgba(249, 249, 251, 0.97);
 }
 
 .btnsContainer {
-  padding: 20px $sidebarHorizontalPadding;
+  padding: 40px $sidebarHorizontalPadding;
   padding-bottom: 0px;
 }
 
@@ -172,7 +170,7 @@ $activeBgColor: #dae4ff;
   width: 100%;
   font-size: $para3;
   color: $errColor;
-  background-color: $sidebarBgColor;
+  // background-color: $sidebarBgColor;
 
   .icon {
     font-size: $para4;

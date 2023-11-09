@@ -137,15 +137,24 @@ function HomeScreen() {
         <CreateProjectModal setModalOpen={setCreateModalOpen} />
       )}
       {openWithVsModal && <OpenWithVsModal setModalOpen={setOpenWithVsModal} />}
+
       <div className="homeContainer">
         {/* SIDEBAR */}
-        <HomeSidebar />
+        <HomeSidebar
+          modalsOpen={createModalOpen || openWithVsModal || newPremiumModalOpen}
+        />
 
         {/* CONTENT */}
-        <div className="middleBar">
+        <div
+          className={`middleBar ${
+            createModalOpen || openWithVsModal || newPremiumModalOpen
+              ? 'undraggable'
+              : 'draggable'
+          }`}
+        >
           <Margin height={10} />
-          <div className="mainContainer">
-            <div className="projectsContainer">
+          <div className="mainContainer undraggable">
+            <div className="projectsContainer ">
               <div className="topBar">
                 <p className="openProjectTxt">Open project: </p>
                 <div className="vsSwitchContainer">
