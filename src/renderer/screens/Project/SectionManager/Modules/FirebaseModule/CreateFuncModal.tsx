@@ -11,6 +11,7 @@ import { RootState } from '@/renderer/redux/store';
 import { AccountTier } from '@/shared/models/User';
 import useShortcut from '@/renderer/hooks/useShortcut';
 import useEscHook from '@/renderer/hooks/useEscClicked';
+import { RenFuncs } from '@/shared/utils/RenFuncs';
 
 function CreateFuncModal({ setModalOpen, onCreateClicked, funcGroup }: any) {
   let [funcName, setFuncName] = useState('');
@@ -67,8 +68,8 @@ function CreateFuncModal({ setModalOpen, onCreateClicked, funcGroup }: any) {
         </div>
         <Margin height={20} />
         <Button
-          onClick={() =>
-            onCreateClicked(
+          onClick={async () => {
+            await onCreateClicked(
               funcName,
               setErrText,
               // user.accountTier == AccountTier.Starter ? false : useGpt,
@@ -76,8 +77,8 @@ function CreateFuncModal({ setModalOpen, onCreateClicked, funcGroup }: any) {
               setCreateLoading,
               funcGroup,
               setModalOpen
-            )
-          }
+            );
+          }}
           type="primary"
           loading={createLoading}
         >

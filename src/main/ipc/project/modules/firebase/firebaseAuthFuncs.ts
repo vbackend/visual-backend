@@ -1,5 +1,5 @@
 import { insertFuncQuery } from '@/main/db/funcs/funcQueries';
-import { writeFbAuthFuncFile } from '@/main/generate/modules/firebase/firebaseGen';
+// import { writeFbAuthFuncFile } from '@/main/generate/modules/firebase/firebaseGen';
 import { BFunc } from '@/shared/models/BFunc';
 import { BModuleType } from '@/shared/models/BModule';
 
@@ -9,7 +9,7 @@ export const createFirebaseAuthFunc = async (
 ) => {
   // 1. Insert func module query
   const { funcName, projKey } = p;
-  let lastId = await insertFuncQuery(funcName, BModuleType.FirebaseAuth, '*');
+  // let lastId = await insertFuncQuery(funcName, BModuleType.FirebaseAuth, '*');
   if (!lastId) {
     return { error: 'Failed to insert' };
   }
@@ -21,7 +21,7 @@ export const createFirebaseAuthFunc = async (
     funcGroup: '*',
   };
 
-  await writeFbAuthFuncFile(projKey, newFunc);
+  // await writeFbAuthFuncFile(projKey, newFunc);
 
   return { error: null, newFunc };
 };

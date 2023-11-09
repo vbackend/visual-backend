@@ -2,10 +2,54 @@
 @import '../projectConfig';
 
 .createModule .headerBar {
-    @include createModuleHeaderBar();
+  @include createModuleHeaderBar();
 }
 
 .inputDescription {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
+  font-size: $para5;
+}
+
+// Firebase Specific
+
+.firebaseConnected {
+  font-size: $para3;
+  margin-bottom: 20px;
+  margin-left: 3px;
+  color: $textGrey;
+
+  .icon {
     font-size: $para5;
+    margin-right: 6px;
+  }
+
+  p {
+    margin-top: 2px;
+    font-weight: bold;
+    color: #222;
+  }
+}
+
+.projectStatusContainer {
+  display: flex;
+  align-items: center;
+
+  .statusIcon {
+    margin-left: 3px;
+    margin-right: 6px;
+  }
+  .statusIconEmpty {
+    color: rgb(255, 217, 0);
+  }
+  .statusIconSuccess {
+    color: $successColor;
+  }
+  .statusIconError {
+    color: $errColor;
+  }
+
+  .text {
+    font-size: $para4;
+    color: $textGrey;
+  }
 }

@@ -1,19 +1,8 @@
-import logo from './logo.svg';
 import './App.scss';
-import Home from './screens/Home/Home';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from './redux/store';
 import ProjectScreen from './screens/Project/ProjectScreen';
-import { useCommand, useCommandA } from './hooks/shortcuts';
-import {
-  createBrowserRouter,
-  createHashRouter,
-  HashRouter,
-  Route,
-  RouterProvider,
-} from 'react-router-dom';
-import TerminalComponent from './screens/Project/Terminal/Terminal';
 import AuthScreen from './screens/Auth/AuthScreen';
 import { AppPage, setPlatform } from './redux/app/appSlice';
 import HomeScreen from './screens/Home/Home';

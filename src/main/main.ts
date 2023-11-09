@@ -37,7 +37,6 @@ import {
   showModuleContextMenu,
 } from './ipc/project/modules/moduleFuncs';
 import {
-  getDbCols,
   getMongoCols,
   getMongoDbs,
 } from './ipc/project/modules/mongodb/mongoFuncs';
@@ -77,7 +76,7 @@ import {
 import { FileFuncs } from './helpers/fileFuncs';
 
 import treeKill from 'tree-kill';
-import { BinFuncs, MainFuncs } from '@/shared/utils/MainFuncs';
+import { BinFuncs } from '@/shared/utils/MainFuncs';
 import {
   checkFirebaseCredentials,
   getCurrentFirebase,
@@ -106,11 +105,7 @@ import {
   setOpenWithVs,
   setWindowSze,
 } from './ipc/home/homeFuncs';
-import {
-  electronStoreKeys,
-  homeWindowSize,
-  nodeTypeKey,
-} from '@/renderer/misc/constants';
+import { homeWindowSize } from '@/renderer/misc/constants';
 
 config();
 
@@ -169,6 +164,8 @@ const createWindow = async () => {
     show: false,
     ...homeWindowSize,
     // maxWidth: 500,
+    // transparent: true,
+    // frame: false,
     icon: getAssetPath('icon.png'),
     webPreferences: {
       // devTools: false,

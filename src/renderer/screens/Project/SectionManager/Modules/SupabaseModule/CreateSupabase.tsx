@@ -1,7 +1,7 @@
 import { RootState } from '@/renderer/redux/store';
 import { BModuleType } from '@/shared/models/BModule';
 import { RenFuncs } from '@/shared/utils/RenFuncs';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import CreateModalHeader from '../General/CreateModalHeader';
 import { Button, Input } from 'antd';

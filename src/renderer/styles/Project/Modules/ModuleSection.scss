@@ -9,6 +9,7 @@
 .moduleSection .headerContainer {
   display: flex;
   align-items: center;
+  margin-bottom: 0px;
 
   .title {
     font-size: $para2;
@@ -61,7 +62,7 @@
   align-items: flex-start;
   justify-content: flex-start;
 
-  margin: 8px 0px;
+  margin: 5px 0px;
 
   box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
     rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;

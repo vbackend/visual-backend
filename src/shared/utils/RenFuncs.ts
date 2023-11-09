@@ -6,7 +6,7 @@ import {
 } from '@/renderer/redux/app/appSlice';
 import { BFunc, BFuncHelpers } from '../models/BFunc';
 import { BModule, BModuleType, modConfig } from '../models/BModule';
-import { EditorType } from '@/renderer/redux/editor/editorSlice';
+import { EditorType, setCurFile } from '@/renderer/redux/editor/editorSlice';
 import {
   addFuncs,
   addModule,
@@ -83,5 +83,22 @@ export class RenFuncs {
     );
     dispatch(setCurrentProject(project));
     dispatch(setCurPage(AppPage.Project));
+  };
+
+  static openFile = (
+    project: Project,
+    f: BFunc,
+    m: BModule,
+    dispatch: any,
+    openWithVs: any
+  ) => {
+    if (openWithVs) {
+      window.electron.openFile({
+        path: RenFuncs.getFuncFileData(f, m).path,
+        projKey: project!.key,
+      });
+    } else {
+      dispatch(setCurFile(RenFuncs.getFuncFileData(f, m)));
+    }
   };
 }

@@ -1,5 +1,4 @@
 import {
-  createModuleQuery,
   editModuleMetadata,
   getModules,
 } from '@/main/db/modules/moduleQueries';
@@ -8,18 +7,17 @@ import {
   writeFirebaseCredentials,
 } from '@/main/generate/modules/firebase/firebaseGen';
 import { FileFuncs } from '@/main/helpers/fileFuncs';
-import { BModule, BModuleType, modConfig } from '@/shared/models/BModule';
+import { BModule, BModuleType } from '@/shared/models/BModule';
 import admin from 'firebase-admin';
 import { installPackages } from '@/main/generate/install';
-import { insertFuncQuery } from '@/main/db/funcs/funcQueries';
 import { PathFuncs } from '@/shared/utils/MainFuncs';
 import path from 'path';
-import { writeModuleStarterFuncs, writeModuleTemplate } from '../helpers';
+import { writeModuleStarterFuncs } from '../helpers';
 import { envConsts } from '@/renderer/misc/constants';
 import { ProjectService } from '@/main/services/ProjectService';
-import { getModuleFromConfig } from '../moduleFuncs';
 import { writeIndexFile } from '@/main/generate/general';
 
+// TO DELETE
 export const getCurrentFirebase = async (
   e: Electron.IpcMainInvokeEvent,
   p: any
@@ -45,7 +43,7 @@ export const checkFirebaseCredentials = async (
   e: Electron.IpcMainInvokeEvent,
   p: any
 ) => {
-  let { filePath, type, projKey } = p;
+  let { filePath, projKey } = p;
 
   try {
     let cred;
@@ -68,28 +66,30 @@ export const checkFirebaseCredentials = async (
     });
     // let firestore = admin.firestore();
 
-    if (type == BModuleType.FirebaseAuth) {
-      let auth = admin.auth();
-      await auth.listUsers();
-    } else {
-      let firestore = admin.firestore();
-      await firestore.listCollections();
-    }
+    // if (type == BModuleType.FirebaseAuth) {
+    //   let auth = admin.auth();
+    //   await auth.listUsers();
+    // } else {
+    //   let firestore = admin.firestore();
+    //   await firestore.listCollections();
+    // }
     admin.app().delete();
-
     return { projId: cred.project_id, error: null };
   } catch (error: any) {
-    admin.app().delete();
-    console.log('Error:', error);
-    if (
-      error.errorInfo &&
-      error.errorInfo.code &&
-      error.errorInfo.code == 'auth/configuration-not-found'
-    ) {
-      return { error: 'Auth service not enabled in firebase' };
-    } else if (error.reason && error.reason == 'SERVICE_DISABLED') {
-      return { error: 'Firestore service not enabled in firebase' };
-    }
+    // console.log('Error when checking firebase credentials');
+
+    // console.log('Admin app:', admin.app());
+    // admin.app().delete();
+    // console.log('Error:', error);
+    // if (
+    //   error.errorInfo &&
+    //   error.errorInfo.code &&
+    //   error.errorInfo.code == 'auth/configuration-not-found'
+    // ) {
+    //   return { error: 'Auth service not enabled in firebase' };
+    // } else if (error.reason && error.reason == 'SERVICE_DISABLED') {
+    //   return { error: 'Firestore service not enabled in firebase' };
+    // }
     return { error: 'Failed to connect to firebase project' };
   }
 };

@@ -53,12 +53,12 @@ export const createModule = async (
 
   try {
     switch (key) {
-      case BModuleType.FirebaseAuth:
-      case BModuleType.FirebaseFirestore:
-        newFuncs = await createFirebaseModuleFiles(payload);
-        break;
-      // case BModuleType.Supabase:
-      //   newFuncs = await createSupabaseModuleFiles(payload);
+      // case BModuleType.FirebaseAuth:
+      // case BModuleType.FirebaseFirestore:
+      //   newFuncs = await createFirebaseModuleFiles(payload);
+      //   break;
+      // // case BModuleType.Supabase:
+      // //   newFuncs = await createSupabaseModuleFiles(payload);
       default:
         newFuncs = await createModuleFiles(payload);
     }

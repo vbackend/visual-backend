@@ -1,21 +1,15 @@
 import { useEffect, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faArrowLeft,
-  faCircle,
-  faCodeBranch,
-} from '@fortawesome/free-solid-svg-icons';
-
-import { Button, Spin, Upload } from 'antd';
+import CreateModalHeader from '../General/CreateModalHeader';
 import Margin from '@/renderer/components/general/Margin';
-import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/renderer/redux/store';
+import { faCodeBranch, faCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Upload, Button, Spin } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
 import { BModuleType } from '@/shared/models/BModule';
-import { addModule } from '@/renderer/redux/module/moduleSlice';
-import { setCreateModuleOpen } from '@/renderer/redux/project/projectSlice';
 import { RenFuncs } from '@/shared/utils/RenFuncs';
 
-function CreateFirebaseModule({ setSelection, selection }: any) {
+function CreateFirebase({ setSelection, selection }: any) {
   const dispatch = useDispatch();
   let curProject = useSelector((state: RootState) => state.app.currentProject);
 
@@ -47,26 +41,13 @@ function CreateFirebaseModule({ setSelection, selection }: any) {
 
   const onCreate = async () => {
     setCreateLoading(true);
-    let newModule, newFuncs;
-    if (selection == BModuleType.FirebaseAuth) {
-      let res = await window.electron.createModule({
-        projId: curProject?._id,
-        projKey: curProject!.key,
-        filePath,
-        key: BModuleType.FirebaseAuth,
-      });
-      console.log('Back here:', res);
-      newModule = res.newModule;
-      newFuncs = res.newFuncs;
-    } else if (selection == BModuleType.FirebaseFirestore) {
-      let res = await window.electron.createModule({
-        projId: curProject?._id,
-        projKey: curProject!.key,
-        filePath,
-        key: BModuleType.FirebaseFirestore,
-      });
-      newModule = res.newModule;
-    }
+
+    let { newModule, newFuncs } = await window.electron.createModule({
+      projId: curProject?._id,
+      projKey: curProject!.key,
+      filePath,
+      key: BModuleType.Firebase,
+    });
 
     setCreateLoading(false);
     RenFuncs.createModuleSuccess(dispatch, newModule, newFuncs);
@@ -112,16 +93,8 @@ function CreateFirebaseModule({ setSelection, selection }: any) {
     );
   }
   return (
-    <div className="createFirebase">
-      <div className="headerBar">
-        <button onClick={() => setSelection(null)}>
-          <FontAwesomeIcon icon={faArrowLeft} className="icon" />
-        </button>
-        <p className="header">
-          Create Firebase{' '}
-          {selection === BModuleType.FirebaseAuth ? 'Auth' : 'Firestore'} module
-        </p>
-      </div>
+    <div className="createModule createFirebase">
+      <CreateModalHeader setSelection={setSelection} title="Firebase" />
       <div className="middleBar">
         {curFirebase != '' ? (
           <>
@@ -192,4 +165,4 @@ function CreateFirebaseModule({ setSelection, selection }: any) {
   );
 }
 
-export default CreateFirebaseModule;
+export default CreateFirebase;

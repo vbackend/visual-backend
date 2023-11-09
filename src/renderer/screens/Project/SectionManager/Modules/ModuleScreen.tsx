@@ -11,6 +11,7 @@ import BasicModuleManager from './General/BasicModuleManager';
 import ResendManager from './ResendModule/ResendManager';
 import StripeManager from './StripeModule/StripeManager';
 import SupabaseManager from './SupabaseModule/SupabaseManager';
+import FirebaseManager from './FirebaseModule/FirebaseManager';
 
 function ModuleScreen() {
   const dispatch = useDispatch();
@@ -39,9 +40,10 @@ function ModuleScreen() {
   const getCurScreen = () => {
     if (!curModule) return <></>;
     let key = curModule.key;
+    if (key === BModuleType.Firebase) return <FirebaseManager />;
     if (key === BModuleType.Supabase) return <SupabaseManager />;
     if (key === BModuleType.Mongo) return <ManageMongo />;
-    if (key === BModuleType.FirebaseFirestore) return <FirestoreManager />;
+    // if (key === BModuleType.FirebaseFirestore) return <FirestoreManager />;
     if (key === BModuleType.Resend) return <ResendManager />;
     if (key === BModuleType.Stripe) return <StripeManager />;
     else {

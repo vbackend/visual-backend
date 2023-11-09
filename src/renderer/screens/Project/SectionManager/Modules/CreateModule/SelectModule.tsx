@@ -36,17 +36,23 @@ function SelectModule({ setSelection }: SelectModuleProps) {
       position: 0,
     },
     {
-      title: 'Firebase (Auth)',
+      title: 'Firebase',
       image: FBAuthLogo,
-      key: BModuleType.FirebaseAuth,
+      key: BModuleType.Firebase,
       position: 1,
     },
-    {
-      title: 'Firebase (Firestore)',
-      image: FBFirestoreLogo,
-      key: BModuleType.FirebaseFirestore,
-      position: 2,
-    },
+    // {
+    //   title: 'Firebase (Auth)',
+    //   image: FBAuthLogo,
+    //   key: BModuleType.FirebaseAuth,
+    //   position: 1,
+    // },
+    // {
+    //   title: 'Firebase (Firestore)',
+    //   image: FBFirestoreLogo,
+    //   key: BModuleType.FirebaseFirestore,
+    //   position: 2,
+    // },
     { title: 'MongoDB', image: MongoDBLogo, key: BModuleType.Mongo },
     {
       title: 'JWT (Auth)',
@@ -107,6 +113,7 @@ function SelectModule({ setSelection }: SelectModuleProps) {
       <div className="selectionContainer">
         {sortedMods.map((mod: any) => (
           <button
+            key={mod.key}
             onClick={() => setSelection(mod.key)}
             className="moduleSelection"
             disabled={

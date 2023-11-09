@@ -16,21 +16,24 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { BFunc } from '@/shared/models/BFunc';
 import { MdCreateNewFolder, MdNoteAdd } from 'react-icons/md';
-import CreateSbTableModal from './CreateSbTableModal';
 import { FuncButton } from '../General/FuncButton';
 import CreateFuncModal from '../FirebaseModule/CreateFuncModal';
+import CreateFsColModal from './FirebaseFirestore/CreateFsColModal';
 
-function SupabaseManager() {
+function FirebaseManager() {
   const curProject = useSelector(
     (state: RootState) => state.app.currentProject
   );
   const curModule = useSelector((state: RootState) => state.module.curModule);
+  let cols = curModule?.metadata.cols;
+
   const dispatch = useDispatch();
   const moduleFuncs = useSelector((state: RootState) => state.module.funcs);
 
-  const [createTableOpen, setCreateTableOpen] = useState(false);
-  const [createTableFuncOpen, setCreateTableFuncOpen] = useState(false);
-  const [tableSelected, setTableSelected] = useState('');
+  const [createColOpen, setCreateColOpen] = useState(false);
+  const [createColFuncOpen, setCreateColFuncOpen] = useState(false);
+  const [colSelected, setColSelected] = useState('');
+  const [sortedFuncs, setSortedFuncs] = useState<any>({});
 
   const createFunc = async (
     funcName: string,
@@ -49,7 +52,7 @@ function SupabaseManager() {
       projKey: curProject?.key,
       module: curModule,
       useGpt,
-      details: `This module uses the supabase ${funcGroup} service specifically`,
+      details: `This module uses the firebase ${funcGroup} service specifically and admin has already been initialised`,
     });
 
     setLoading(false);
@@ -80,35 +83,31 @@ function SupabaseManager() {
     );
   };
 
-  let tables = curModule?.metadata.tables;
-
-  const [sortedFuncs, setSortedFuncs] = useState<any>({});
-
   useEffect(() => {
     let newSortedFuncs: any = {};
-    let prefix = 'database/';
+    let prefix = 'firestore/';
     moduleFuncs?.map((f: BFunc) => {
       if (
-        f.moduleKey == BModuleType.Supabase &&
-        f.funcGroup.includes('database')
+        f.moduleKey == BModuleType.Firebase &&
+        f.funcGroup.includes('firestore')
       ) {
-        let tableName = f.funcGroup.slice(prefix.length);
-        if (!newSortedFuncs[tableName]) {
-          newSortedFuncs[tableName] = [];
+        let colName = f.funcGroup.slice(prefix.length);
+        if (!newSortedFuncs[colName]) {
+          newSortedFuncs[colName] = [];
         }
-        newSortedFuncs[tableName].push(f);
+        newSortedFuncs[colName].push(f);
       }
     });
     setSortedFuncs(newSortedFuncs);
   }, [moduleFuncs]);
 
-  let createSupabaseTable = async (tableName: string) => {
-    let newTable = [...tables];
-    newTable.push(tableName);
-    let metadata = { ...curModule?.metadata, tables: newTable };
+  let createFirebaseCol = async (col: string) => {
+    let newCols = [...cols];
+    newCols.push(col);
+    let metadata = { ...curModule?.metadata, cols: newCols };
     await window.electron.setModuleMetadata({
       metadata: JSON.stringify(metadata),
-      bModule: BModuleType.Supabase,
+      bModule: BModuleType.Firebase,
     });
 
     dispatch(
@@ -117,7 +116,7 @@ function SupabaseManager() {
         metadata,
       })
     );
-    setCreateTableOpen(false);
+    setCreateColOpen(false);
   };
 
   // DELETE DB GROUP
@@ -125,26 +124,26 @@ function SupabaseManager() {
     for (let i = 0; i < moduleFuncs!.length; i++) {
       let f = moduleFuncs![i];
       if (
-        f.moduleKey == BModuleType.Supabase &&
-        f.funcGroup == `database/${table}`
+        f.moduleKey == BModuleType.Firebase &&
+        f.funcGroup == `firestore/${table}`
       ) {
         return;
       }
     }
 
-    let newTables = [...tables];
-    let index = newTables.findIndex((t: string) => t == table);
-    newTables.splice(index, 1);
-    let metadata = { ...curModule?.metadata, tables: newTables };
+    let newCols = [...cols];
+    let index = newCols.findIndex((t: string) => t == table);
+    newCols.splice(index, 1);
+    let metadata = { ...curModule?.metadata, cols: newCols };
     await window.electron.setModuleMetadata({
       metadata: JSON.stringify(metadata),
-      bModule: BModuleType.Supabase,
+      bModule: BModuleType.Firebase,
     });
 
     dispatch(
       setModuleMetadata({
         module: curModule,
-        metadata: { ...curModule?.metadata, tables: newTables },
+        metadata: { ...curModule?.metadata, cols: newCols },
       })
     );
   };
@@ -162,22 +161,23 @@ function SupabaseManager() {
 
   return (
     <>
-      {createTableFuncOpen && (
+      {createColFuncOpen && (
         <CreateFuncModal
           onCreateClicked={createFunc}
-          funcGroup={tableSelected}
-          setModalOpen={setCreateTableFuncOpen}
+          funcGroup={colSelected}
+          setModalOpen={setCreateColFuncOpen}
         />
       )}
-      {createTableOpen && (
-        <CreateSbTableModal
-          setModalOpen={setCreateTableOpen}
-          onCreateClicked={createSupabaseTable}
+      {createColOpen && (
+        <CreateFsColModal
+          setModalOpen={setCreateColOpen}
+          onCreateClicked={createFirebaseCol}
         />
       )}
+
       <div className="moduleSection">
         <div className="headerContainer">
-          <h3 className="title">Supabase</h3>
+          <h3 className="title">Firebase</h3>
         </div>
         <Margin height={10} />
         <div className="mainContainer">
@@ -190,45 +190,36 @@ function SupabaseManager() {
             }
           />
           {renderMarginBottomComp('auth')}
-          <FuncSection
-            createFuncClicked={createFunc}
-            funcGroup="storage"
-            title="Storage"
-            funcFilter={(func: BFunc) =>
-              func.moduleKey == curModule?.key && func.funcGroup == 'storage'
-            }
-          />
-          {renderMarginBottomComp('storage')}
 
           <div className="colHeader">
-            <p className="title">Database (by table)</p>
+            <p className="title">Firebase (by col)</p>
             <Button
               className="folderAddBtn"
               type="text"
-              onClick={() => setCreateTableOpen(true)}
+              onClick={() => setCreateColOpen(true)}
             >
               <MdCreateNewFolder className="icon folderAddIcon" />
             </Button>
           </div>
-          {tables.map((table: string, index: number) => {
+          {cols.map((col: string, index: number) => {
             return (
               <div key={index} className="funcGroupContainer">
                 <div className="funcGroupHeader">
-                  <p>{table}</p>
+                  <p>{col}</p>
                   <Button
                     className="funcAddBtn"
                     type="text"
                     onClick={() => {
-                      setCreateTableFuncOpen(true);
-                      setTableSelected(`database/${table}`);
+                      setCreateColFuncOpen(true);
+                      setColSelected(`firestore/${col}`);
                     }}
                   >
                     <MdNoteAdd className="icon noteAddIcon" />
                   </Button>
                   <Tooltip
                     title={
-                      sortedFuncs[table] &&
-                      sortedFuncs[table].length > 0 &&
+                      sortedFuncs[col] &&
+                      sortedFuncs[col].length > 0 &&
                       tooltipContent
                     }
                     color="white"
@@ -237,10 +228,10 @@ function SupabaseManager() {
                       <Button
                         className="funcGroupBtn"
                         type="text"
-                        onClick={() => deleteDbGroup(table)}
+                        onClick={() => deleteDbGroup(col)}
                         title="Tooltip Text"
                         disabled={
-                          sortedFuncs[table] && sortedFuncs[table].length > 0
+                          sortedFuncs[col] && sortedFuncs[col].length > 0
                         }
                       >
                         <FontAwesomeIcon
@@ -252,9 +243,9 @@ function SupabaseManager() {
                     </span>
                   </Tooltip>
                 </div>
-                {sortedFuncs[table] && <Margin height={5} />}
-                {sortedFuncs[table] &&
-                  sortedFuncs[table].map((f: BFunc) => {
+                {sortedFuncs[col] && <Margin height={5} />}
+                {sortedFuncs[col] &&
+                  sortedFuncs[col].map((f: BFunc) => {
                     return (
                       <FuncButton key={f.id} func={f} module={curModule} />
                     );
@@ -268,4 +259,4 @@ function SupabaseManager() {
   );
 }
 
-export default SupabaseManager;
+export default FirebaseManager;

@@ -1,4 +1,5 @@
-import { auth } from '@/modules/firebase/init.js';
+import admin from "firebase-admin";
+let auth = admin.auth();
 
 export const firebaseAuthMiddleware = async (req, res, next) => {
   let authHeader = req.headers.authorization;
