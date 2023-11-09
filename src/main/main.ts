@@ -16,6 +16,7 @@ import {
   ipcMain,
   Menu,
   globalShortcut,
+  nativeTheme,
 } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
@@ -166,6 +167,7 @@ const createWindow = async () => {
     // maxWidth: 500,
     // transparent: true,
     // frame: false,
+
     icon: getAssetPath('icon.png'),
     webPreferences: {
       // devTools: false,
@@ -218,6 +220,7 @@ let globalVars: {
 
 const init = async () => {
   // Home Funcs
+  nativeTheme.themeSource = 'light';
   ipcMain.on(Actions.SET_WINDOW_SIZE, (_, p: any) =>
     setWindowSze(p, mainWindow!)
   );
