@@ -9,7 +9,7 @@ import { RootState } from '@/renderer/redux/store';
 import useEscHook from '@/renderer/hooks/useEscClicked';
 import { BModuleType, modConfig } from '@/shared/models/BModule';
 import CreateMongoDB from '../MongoModule/CreateMongoDB';
-import CreateFirebaseModule from '../FirebaseModule/CreateFirebaseModule';
+import CreateFirebaseModule from '../../../../../../archives/CreateFirebaseModule';
 import CreateJwt from '../JwtModule/CreateJwt';
 import CreateStripe from '../StripeModule/CreateStripe';
 import CreateGpt from '../GptModule/CreateGpt';

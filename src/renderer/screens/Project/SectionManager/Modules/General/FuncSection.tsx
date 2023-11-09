@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { Button } from 'antd';
-import CreateFuncModal from '../FirebaseModule/CreateFuncModal';
+import CreateFuncModal from './CreateFuncModal';
 import { FuncButton } from './FuncButton';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/renderer/redux/store';

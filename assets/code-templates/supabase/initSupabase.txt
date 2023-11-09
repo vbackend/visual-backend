@@ -3,9 +3,9 @@ import { SupabaseClient, createClient } from "@supabase/supabase-js";
 export let supabaseCli: SupabaseClient;
 
 export const supabaseInit = async () => {
-  let projectUrl = "https://gsihfhhielojkqapccnd.supabase.co";
+  let projectUrl = process.env.SUPABASE_PROJECT_URL;
   let serviceKey =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdzaWhmaGhpZWxvamtxYXBjY25kIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5NDUxNzI3NywiZXhwIjoyMDEwMDkzMjc3fQ.8giNU6lPAWpByC_p40-nJKGiEMsebsPfeugi51oZtTk";
+    process.env.SUPABASE_SERVICE_KEY
 
   supabaseCli = createClient(projectUrl, serviceKey);
 };

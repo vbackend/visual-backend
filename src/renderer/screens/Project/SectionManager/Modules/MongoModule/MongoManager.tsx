@@ -15,7 +15,7 @@ import 'renderer/styles/Project/Modules/MongoModule/ManageMongo.scss';
 import { EditorType, setCurFile } from '@/renderer/redux/editor/editorSlice';
 import { LuFilePlus2 } from 'react-icons/lu';
 
-import CreateFuncModal from '../FirebaseModule/CreateFuncModal';
+import CreateFuncModal from '../General/CreateFuncModal';
 import { BModuleType } from '@/shared/models/BModule';
 import { RenFuncs } from '@/shared/utils/RenFuncs';
 import { FuncButton } from '../General/FuncButton';

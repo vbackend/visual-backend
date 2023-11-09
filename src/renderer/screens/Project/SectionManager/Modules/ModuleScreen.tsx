@@ -6,7 +6,7 @@ import { BModuleType, modConfig } from '@/shared/models/BModule';
 import { useEffect } from 'react';
 import { EditorType, setCurFile } from '@/renderer/redux/editor/editorSlice';
 import { deleteFunc } from '@/renderer/redux/module/moduleSlice';
-import FirestoreManager from './FirebaseModule/FirebaseFirestore/FirestoreManager';
+import FirestoreManager from '../../../../../archives/FirebaseFirestore/FirestoreManager';
 import BasicModuleManager from './General/BasicModuleManager';
 import ResendManager from './ResendModule/ResendManager';
 import StripeManager from './StripeModule/StripeManager';

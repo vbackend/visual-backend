@@ -18,7 +18,7 @@ import { BFunc } from '@/shared/models/BFunc';
 import { MdCreateNewFolder, MdNoteAdd } from 'react-icons/md';
 import CreateSbTableModal from './CreateSbTableModal';
 import { FuncButton } from '../General/FuncButton';
-import CreateFuncModal from '../FirebaseModule/CreateFuncModal';
+import CreateFuncModal from '../General/CreateFuncModal';
 
 function SupabaseManager() {
   const curProject = useSelector(

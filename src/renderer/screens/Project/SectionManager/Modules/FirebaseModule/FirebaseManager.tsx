@@ -17,8 +17,8 @@ import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { BFunc } from '@/shared/models/BFunc';
 import { MdCreateNewFolder, MdNoteAdd } from 'react-icons/md';
 import { FuncButton } from '../General/FuncButton';
-import CreateFuncModal from '../FirebaseModule/CreateFuncModal';
-import CreateFsColModal from './FirebaseFirestore/CreateFsColModal';
+import CreateFuncModal from '../General/CreateFuncModal';
+import CreateFsColModal from './CreateFsColModal';
 
 function FirebaseManager() {
   const curProject = useSelector(

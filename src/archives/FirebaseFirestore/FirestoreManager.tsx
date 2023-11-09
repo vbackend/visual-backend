@@ -7,17 +7,17 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import '@/renderer/styles/Project/Modules/FirebaseModule/FirestoreManager.scss';
 import { Button, Spin, Tooltip } from 'antd';
-import CreateFsColModal from './CreateFsColModal';
+import CreateFsColModal from '../../renderer/screens/Project/SectionManager/Modules/FirebaseModule/CreateFsColModal';
 import {
   addFunc,
   setModuleMetadata,
 } from '@/renderer/redux/module/moduleSlice';
-import CreateAuthFuncModal from '../CreateFuncModal';
+import CreateAuthFuncModal from '../../renderer/screens/Project/SectionManager/Modules/General/CreateFuncModal';
 import { BModuleType } from '@/shared/models/BModule';
 import { setCurFile } from '@/renderer/redux/editor/editorSlice';
 import { RenFuncs } from '@/shared/utils/RenFuncs';
 import { BFunc } from '@/shared/models/BFunc';
-import { FuncButton } from '../../General/FuncButton';
+import { FuncButton } from '../../renderer/screens/Project/SectionManager/Modules/General/FuncButton';
 import { MdNoteAdd } from 'react-icons/md';
 import { MdCreateNewFolder } from 'react-icons/md';
 

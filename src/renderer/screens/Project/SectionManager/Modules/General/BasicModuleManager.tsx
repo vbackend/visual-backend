@@ -6,7 +6,7 @@ import { modConfig } from '@/shared/models/BModule';
 import { RenFuncs } from '@/shared/utils/RenFuncs';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import CreateFuncModal from '../FirebaseModule/CreateFuncModal';
+import CreateFuncModal from './CreateFuncModal';
 import Margin from '@/renderer/components/general/Margin';
 import { Button } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
