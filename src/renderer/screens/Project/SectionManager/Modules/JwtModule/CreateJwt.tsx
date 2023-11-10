@@ -48,7 +48,7 @@ function CreateJwt({ setSelection, selection }: any) {
     return details.accessSecret == '' || details.refreshSecret == '';
   };
   return (
-    <div className="createFirebase">
+    <div className="createModule">
       <CreateModalHeader setSelection={setSelection} title="JWT" />
       <div className="middleBar">
         <p className="inputTitle">Access token secret</p>

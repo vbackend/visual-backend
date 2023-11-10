@@ -90,7 +90,7 @@ function BasicModuleManager() {
               <MdNoteAdd className="icon noteAddIcon" />
             </Button>
           </div>
-          <Margin height={8} />
+          {/* <Margin height={8} /> */}
           {modFuncs.map((func: BFunc) => (
             <FuncButton func={func} module={curModule} />
           ))}

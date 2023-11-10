@@ -17,6 +17,7 @@ import StripeLogo from '@/shared/assets/images/stripe.png';
 import GptLogo from '@/shared/assets/images/chatgpt.png';
 import ResendLogo from '@/shared/assets/images/resend.png';
 import SupabaseLogo from '@/shared/assets/images/supabase.png';
+import FirebaseLogo from '@/shared/assets/images/firebase.png';
 
 import '@/renderer/styles/Project/CreateModule/CreateModule.scss';
 
@@ -37,7 +38,7 @@ function SelectModule({ setSelection }: SelectModuleProps) {
     },
     {
       title: 'Firebase',
-      image: FBAuthLogo,
+      image: FirebaseLogo,
       key: BModuleType.Firebase,
       position: 1,
     },

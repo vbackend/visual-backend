@@ -6,6 +6,7 @@
   padding: 30px 20px;
   padding-right: 40px;
   width: 200px;
+  z-index: 10;
 }
 
 .homeSidebar .logoContainer {
@@ -39,18 +40,17 @@
 
   p {
     font-size: $para5;
-    color: $textSecondary
+    color: $textSecondary;
   }
 }
 
-.homeSidebar .right{
+.homeSidebar .right {
   .homeBtn {
     width: 115%;
     @include flexCenter(row);
     font-size: $para5;
   }
 }
-
 
 // .vsSwitchContainer {
 //   display: flex;

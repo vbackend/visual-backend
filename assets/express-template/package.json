@@ -8,6 +8,7 @@
     "build": "tspc",
     "run:prod": "node dist/index.js",
     "dev": "ts-node-esm src/index.ts",
+    "dev2": "nodemon src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

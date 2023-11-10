@@ -8,4 +8,5 @@ export const supabaseInit = async () => {
     process.env.SUPABASE_SERVICE_KEY
 
   supabaseCli = createClient(projectUrl, serviceKey);
+  console.log("Supabase module initialised");
 };
