@@ -130,6 +130,7 @@ function CreateRouteModal({
               { value: 'grp', label: 'GROUP' },
               { value: 'mid', label: 'MIDDLEWARE' },
               { value: 'get', label: 'GET' },
+              { value: 'put', label: 'PUT' },
               { value: 'post', label: 'POST' },
               { value: 'delete', label: 'DELETE' },
               { value: 'patch', label: 'PATCH' },

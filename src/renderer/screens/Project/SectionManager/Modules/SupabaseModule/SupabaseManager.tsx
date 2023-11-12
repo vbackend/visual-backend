@@ -42,6 +42,12 @@ function SupabaseManager() {
   ) => {
     setLoading(true);
     let mConfig = modConfig[curModule?.key!];
+
+    let details = funcGroup.includes('database')
+      ? `This module uses the supabase database service specifically, and interacts with the ${funcGroup.slice(
+          funcGroup.indexOf('/') + 1
+        )} table`
+      : `This module uses the supabase ${funcGroup} service specifically`;
     let { error, newFunc } = await window.electron.createFunc({
       funcName,
       funcGroup,
@@ -49,7 +55,7 @@ function SupabaseManager() {
       projKey: curProject?.key,
       module: curModule,
       useGpt,
-      details: `This module uses the supabase ${funcGroup} service specifically`,
+      details: details,
     });
 
     setLoading(false);
@@ -201,7 +207,7 @@ function SupabaseManager() {
           {renderMarginBottomComp('storage')}
 
           <div className="colHeader">
-            <p className="title">Database (by table)</p>
+            <p className="title">Database</p>
             <Button
               className="folderAddBtn"
               type="text"

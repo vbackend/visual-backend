@@ -2,7 +2,7 @@ import { SupabaseClient, createClient } from "@supabase/supabase-js";
 
 export let supabaseCli: SupabaseClient;
 
-export const supabaseInit = async () => {
+export const initSupabase = async () => {
   let projectUrl = process.env.SUPABASE_PROJECT_URL;
   let serviceKey =
     process.env.SUPABASE_SERVICE_KEY

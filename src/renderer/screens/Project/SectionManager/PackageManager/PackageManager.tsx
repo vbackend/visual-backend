@@ -21,7 +21,7 @@ let hidePackages: any = {
   axios: 'show',
   dotenv: 'show',
   cors: 'show',
-  ngrok: 'show'
+  ngrok: 'show',
   // mongodb: 'show',
 };
 

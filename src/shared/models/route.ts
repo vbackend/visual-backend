@@ -22,8 +22,9 @@ export enum RouteType {
   middleware = 'mid',
   get = 'get',
   post = 'post',
-  patch = 'patch',
+  put = 'put',
   delete = 'delete',
+  patch = 'patch',
 }
 
 export class RouteFuncs {
