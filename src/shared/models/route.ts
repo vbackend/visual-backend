@@ -66,10 +66,32 @@ export class RouteFuncs {
     });
   };
 
-  static getFuncNameFromStr = (key: string, type: string, id: number) => {
-    if (key === '') return '';
-    // let name = key.replace('-', ' ');
-    // name = key.replace('_', ' ');
+  static getParentKey = (parentPath: string) => {
+    let arr = parentPath.split('/');
+    arr = arr.filter((x) => x != '');
+    return arr[arr.length - 1];
+  };
+
+  static getFuncNameFromStr = (
+    parentPath: string,
+    key: string,
+    type: string,
+    id: number
+  ) => {
+    // handle key is empty
+    if (key === '') {
+      // Case 1: Root group, id is 1
+      if (id == 1) return '';
+
+      // Case 2: Middleware
+      if (parentPath == '') {
+        return `root_${type.toLowerCase()}`;
+      } else {
+        return `${RouteFuncs.getParentKey(parentPath)}_${type.toLowerCase()}`;
+      }
+    }
+
+    // handle key is not empty
     let name = key;
     if (name[0] == ':') {
       name = name.replace(':', 'by_');
@@ -89,7 +111,12 @@ export class RouteFuncs {
   };
 
   static getFuncName = (route: Route) => {
-    return this.getFuncNameFromStr(route.key, route.type, route.id!);
+    return this.getFuncNameFromStr(
+      route.parentPath,
+      route.key,
+      route.type,
+      route.id!
+    );
   };
 
   static getImportStatement = (route: Route) => {

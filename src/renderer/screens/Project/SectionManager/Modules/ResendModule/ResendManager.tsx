@@ -43,7 +43,7 @@ function ResendManager() {
       setErrText(error);
       return;
     }
-    console.log('Made it here');
+
     setErrText('');
     dispatch(addFunc(newFunc));
     dispatch(setCurFile(RenFuncs.getFuncFileData(newFunc, curModule!)));

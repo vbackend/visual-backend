@@ -20,7 +20,6 @@ function ModuleScreen() {
 
   useEffect(() => {
     const handleFuncDeleted = (event: any, payload: any) => {
-      console.log('Received func delete event:', payload);
       if (
         curFile &&
         curFile.metadata.type == EditorType.Func &&

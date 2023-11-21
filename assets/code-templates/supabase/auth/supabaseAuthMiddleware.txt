@@ -13,8 +13,9 @@ export const supabaseAuthMiddleware = async (req, res, next) => {
   if (error) {
     console.log("Failed to get supabase auth user:", error);
     return res.status(401).json({ message: 'Unauthorized' });
-  } else {
-    let authId = data.user.id;
-    return next();
   }
+
+  req.user = data.user
+  return next();
+
 };

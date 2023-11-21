@@ -49,7 +49,7 @@ const insertNodeRecursive = (curNode: RouteNode, newNode: RouteNode) => {
 
 export const addRouteReducer = (state: RoutesState, action: any) => {
   let newNode = action.payload;
-  console.log('Adding new node:', newNode);
+
   state.rootNode = insertNodeRecursive(state.rootNode!, newNode);
 };
 

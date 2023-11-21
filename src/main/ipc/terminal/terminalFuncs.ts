@@ -16,7 +16,6 @@ async function startServer(
   });
 
   let finalPort = port ? port : '8080';
-  console.log('Port:', port);
 
   let npmPath = BinFuncs.getNpmPath();
   g.serverProcess = spawn(npmPath, ['run', 'dev', finalPort, '--silent'], {
@@ -64,7 +63,6 @@ import { BinFuncs, MainFuncs, PathFuncs } from '@/shared/utils/MainFuncs';
 export async function stopServer(g: { serverProcess: ChildProcess | null }) {
   return new Promise(async (resolve, reject) => {
     if (g.serverProcess) {
-      console.log('Killing process with pid:', g.serverProcess.pid);
       treeKill(g.serverProcess.pid!, (err) => {});
 
       g.serverProcess.on('exit', () => {

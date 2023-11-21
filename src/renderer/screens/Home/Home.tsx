@@ -56,7 +56,6 @@ function HomeScreen() {
       let res = await UserService.getProjects();
       dispatch(setProjects(res.data));
     } catch (error) {
-      console.log('Failed to get user:', error);
       dispatch(setCurPage(AppPage.Auth));
 
       return;
@@ -69,7 +68,6 @@ function HomeScreen() {
 
     // Manage redirect back to app after finish checkout
     const handleCheckoutStatus = async (event: any, payload: any) => {
-      console.log('Received checkout status:', payload);
       setUpgradeModalOpen(false);
 
       try {

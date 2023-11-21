@@ -21,6 +21,7 @@ function LoginContainer({ setIsSignUp }: LoginContainerProps) {
 
     try {
       let res = await UserService.login(email, password);
+      console.log('Res:', res);
       await window.electron.setAuthTokens(res.data);
       dispatch(setCurPage(AppPage.Home));
     } catch (error) {

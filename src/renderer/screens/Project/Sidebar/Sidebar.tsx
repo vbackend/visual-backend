@@ -61,7 +61,6 @@ function Sidebar() {
 
   useEffect(() => {
     const handleFuncDeleted = (event: any, payload: any) => {
-      console.log('Delete module clicked');
       setDeleteModule(payload);
       setDeleteModuleModalOpen(true);
     };

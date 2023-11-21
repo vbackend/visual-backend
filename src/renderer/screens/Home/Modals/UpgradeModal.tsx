@@ -25,7 +25,6 @@ function UpgradeModal({ setModalOpen }: any) {
 
   useEffect(() => {
     const handleCheckoutStatus = (event: any, payload: any) => {
-      console.log('Received checkout status:', payload);
       setCheckoutLoading(false);
     };
 

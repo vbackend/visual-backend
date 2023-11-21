@@ -32,7 +32,13 @@ const checkForDuplicateRoute = async (
     childRoutes.map((route: Route) => {
       if (
         route.key === newKey ||
-        curFuncName === RouteFuncs.getFuncNameFromStr(newKey, newType, 0)
+        curFuncName ===
+          RouteFuncs.getFuncNameFromStr(
+            RouteFuncs.getPath(curRoute),
+            newKey,
+            newType,
+            0
+          )
       ) {
         return true;
       }
@@ -83,7 +89,12 @@ export const createRouteGroup = async (
 
   let parentDir = `${apiDir}${GenFuncs.getFilePath(curRoute)}`;
 
-  await writeRouterFile(curRoute.id, curRoute.key, parentDir);
+  await writeRouterFile(
+    curRoute.parentPath,
+    curRoute.id,
+    curRoute.key,
+    parentDir
+  );
 
   // // 2. Create group folder
   createRouterGroupFolder(parentDir, newRoute);
@@ -141,7 +152,12 @@ export const createEndpoint = async (
   await createRouteFile(parentDir, newRoute);
 
   // 2. Write router file
-  await writeRouterFile(curRoute.id, curRoute.key, parentDir);
+  await writeRouterFile(
+    curRoute.parentPath,
+    curRoute.id,
+    curRoute.key,
+    parentDir
+  );
 
   return {
     error: null,
@@ -189,7 +205,12 @@ export const deleteRoute = async (
 
           // write router file of parent group
           let parentDir = `${apiDir}${GenFuncs.getFilePath(parent)}`;
-          await writeRouterFile(parent.id, parent.key, parentDir);
+          await writeRouterFile(
+            parent.parentPath,
+            parent.id,
+            parent.key,
+            parentDir
+          );
           window.webContents.send(Actions.UPDATE_ROUTE_DELETED, route);
         },
       },

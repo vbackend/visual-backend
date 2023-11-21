@@ -58,7 +58,6 @@ export const generateFuncCode = async (payload: any) => {
 
   funcScaffold = await getModuleScaffold({ key: funcName, funcGroup }, module);
 
-  console.log('Use GPT:', useGpt);
   if (!useGpt) {
     await writeToFuncFile(
       projKey,
@@ -87,7 +86,6 @@ export const createFunc = async (e: Electron.IpcMainInvokeEvent, p: any) => {
   // 1. Check if func name already exists
   let func = await getFuncByKey(funcName);
   if (func) {
-    console.log('Name taken');
     return { error: 'Name already taken' };
   }
 

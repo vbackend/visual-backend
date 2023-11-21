@@ -73,7 +73,6 @@ function CreateMongoDB({ setSelection }: CreateMongoDBProps) {
       projKey: curProject?.key,
       metadata: { connString: connString, defaultDb: mongoDbSelectVal },
     });
-    console.log('Result:', newModule, newFuncs);
 
     setCreateLoading(false);
     RenFuncs.createModuleSuccess(dispatch, newModule, newFuncs);

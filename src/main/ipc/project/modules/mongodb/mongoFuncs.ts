@@ -43,7 +43,7 @@ export const getMongoCols = async (
 ) => {
   // 1. get cols
   const { connString, dbName } = payload;
-  console.log('Getting monogodb funcs');
+
   try {
     let cols = await getDbCols(connString, dbName);
     return { cols };

@@ -9,6 +9,7 @@ import { getRoutes } from '@/main/db/route/routeQueries';
 import { getModules } from '../db/modules/moduleQueries';
 
 export const writeRouterFile = async (
+  parentPath: string,
   parentId: number,
   parentKey: string,
   parentDir: string
@@ -34,6 +35,7 @@ export const writeRouterFile = async (
 
   // 3. Initialise router for parent
   let parentFuncName = RouteFuncs.getFuncNameFromStr(
+    parentPath,
     parentKey,
     RouteType.group,
     parentId
@@ -50,6 +52,7 @@ export const writeRouterFile = async (
   }
 
   let routerPath = `${parentDir}/${parentFuncName}Router.ts`;
+  console.log('Router path:', routerPath);
   await FileFuncs.writeFile(routerPath, file);
 };
 

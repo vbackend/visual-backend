@@ -53,9 +53,7 @@ function HostingManager() {
   const copyEndpointClicked = async () => {
     let textToCopy = cloudService.endpoint;
     clipboardCopy(textToCopy)
-      .then(() => {
-        // console.log('Text copied to clipboard:', textToCopy);
-      })
+      .then(() => {})
       .catch((err) => {
         console.error('Error copying text:', err);
       });
