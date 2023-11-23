@@ -1,0 +1,42 @@
+from fastapi import Header, Request
+from src.modules.stripe.sub_invoice_paid import sub_invoice_paid
+from src.modules.stripe.sub_invoice_payment_failed import sub_invoice_payment_failed
+from src.modules.stripe.sub_updated import sub_updated
+from src.modules.stripe.sub_deleted import sub_deleted
+
+
+async def sub_webhooks_handler(req: Request, stripe_signature: str = Header(None)):
+    try:
+        # To verify webhook signature
+        # webhook_secret = os.environ["STRIPE_WEBHOOK_SECRET"]
+        # data = await req.body()
+        # event = stripe.Webhook.construct_event(
+        #     payload=data,
+        #     # sig_header=stripe_signature,
+        #     # secret=webhook_secret # this is optional
+        # )
+
+        event = await req.json()
+        event_data = event["data"]
+
+    except Exception as e:
+        print("Failed to handle sub webhooks:", str(e))
+        raise e
+
+    event_type = event["type"]
+    event_data_object = event_data["object"]
+
+    match event_type:
+        case "invoice.paid":
+            sub_invoice_paid(event_data_object)
+
+        case "invoice.payment_failed":
+            sub_invoice_payment_failed(event_data_object)
+
+        case "customer.subscription.updated":
+            sub_updated(event_data_object)
+
+        case "customer.subscription.deleted":
+            sub_deleted(event_data_object)
+
+    return {"status": "success"}

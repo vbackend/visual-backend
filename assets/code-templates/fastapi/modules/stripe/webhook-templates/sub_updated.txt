@@ -1,0 +1,12 @@
+import stripe
+
+
+def sub_updated(data: dict):
+    sub_id = data["id"]
+    cancel_at = data["cancel_at"]
+    cancel_at_period_end = data["cancel_at_period_end"]
+    customer_id = data["customer"]
+
+    if cancel_at_period_end:
+        # customer cancelled subscription
+        pass

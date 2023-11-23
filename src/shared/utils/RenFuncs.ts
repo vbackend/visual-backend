@@ -48,7 +48,7 @@ export class RenFuncs {
   };
 
   static getFuncFileData = (f: BFunc, m: BModule) => {
-    return {
+    let data = {
       title: `${this.getModuleFileTitle(m)}: ${f.key}`,
       path: `/src/modules/${m.path}/${BFuncHelpers.getFuncPath(f)}`,
       metadata: {
@@ -58,6 +58,8 @@ export class RenFuncs {
         extension: f.extension,
       },
     };
+    console.log('Data:', data);
+    return data;
   };
 
   static createModuleSuccess = (
@@ -74,7 +76,16 @@ export class RenFuncs {
     dispatch(setCurModule(newModule));
   };
 
-  static openProject = (project: Project, dispatch: any, openWithVs: any) => {
+  static openProject = async (
+    project: Project,
+    dispatch: any,
+    openWithVs: any
+  ) => {
+    await window.electron.setCurProject({
+      projKey: project.key,
+      projType: project.projectType,
+    });
+
     if (openWithVs) {
       window.electron.openProjectInVs({ projKey: project.key });
     }

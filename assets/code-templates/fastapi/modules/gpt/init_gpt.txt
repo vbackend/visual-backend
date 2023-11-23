@@ -1,0 +1,7 @@
+import os
+import openai
+
+
+def init_openai():
+    print("OpenAI module initialised")
+    openai.api_key = os.getenv("OPENAI_API_KEY")

@@ -2,10 +2,7 @@ import {
   editModuleMetadata,
   getModules,
 } from '@/main/db/modules/moduleQueries';
-import {
-  writeFbInit,
-  writeFirebaseCredentials,
-} from '@/main/generate/modules/firebase/firebaseGen';
+import { writeFbInit } from '@/main/generate/modules/firebase/firebaseGen';
 import { FileFuncs } from '@/main/helpers/fileFuncs';
 import { BModule, BModuleType } from '@/shared/models/BModule';
 import admin from 'firebase-admin';
@@ -16,6 +13,50 @@ import { writeModuleStarterFuncs } from '../helpers';
 import { envConsts } from '@/renderer/misc/constants';
 import { ProjectService } from '@/main/services/ProjectService';
 import { writeIndexFile } from '@/main/generate/general';
+import { replaceEnvVarInFile, writeEnvVars } from '@/main/generate/env';
+
+export const writeFirebaseCredentials = async (payload: any) => {
+  let { projId, projKey, filePath } = payload;
+  let credDir = path.join(PathFuncs.getProjectPath(projKey), 'credentials');
+  let targetFile = path.join(credDir, 'firebase_credentials.json');
+
+  await FileFuncs.createDirIfNotExists(credDir);
+  let data: any = await FileFuncs.readFile(filePath);
+
+  console.log('Project ID:', projId);
+
+  // // await writeEnvVars(projId, projKey, )
+  // let newLine1 = `FIREBASE_CREDENTIALS=${data}`;
+  // await replaceEnvVarInFile(
+  //   path.join(PathFuncs.getProjectPath(projKey), '.env'),
+  //   'FIREBASE_CREDENTIALS',
+  //   newLine1
+  // );
+
+  // 3. Add env file to firebase
+  ProjectService.addEnvVars({
+    projectId: projId,
+    envVars: [{ key: 'FIREBASE_CREDENTIALS', val: data }],
+  });
+
+  await FileFuncs.writeFile(targetFile, data);
+  console.log('Successfully written firebase credentials');
+};
+
+export const deleteFirebaseCredentials = async (projKey: string) => {
+  let credPath = path.join(
+    PathFuncs.getProjectPath(projKey),
+    'credentials',
+    'firebase_credentials.json'
+  );
+
+  console.log('');
+  try {
+    await FileFuncs.deleteFile(credPath);
+  } catch (error) {
+    console.log('Failed to delete firebase credentials file');
+  }
+};
 
 // TO DELETE
 export const getCurrentFirebase = async (
@@ -102,43 +143,13 @@ export const initialiseFirebase = async (projKey: string) => {
   await writeIndexFile(projKey);
 };
 
-export const createFirebaseModuleFiles = async (payload: any) => {
-  let { filePath, projId, projKey, key } = payload;
-
-  console.log('Creating firebase module files');
-
-  let modules = await getModules();
-  let firebaseAlreadyInitialised =
-    modules.findIndex(
-      (m: BModule) => m.key.includes('firebase') && m.key != key
-    ) != -1;
-
-  let promises: any = [];
-  if (!firebaseAlreadyInitialised) {
-    promises = promises.concat([
-      writeFirebaseCredentials(projId, projKey, filePath),
-      writeFbInit(projKey),
-      writeIndexFile(projKey),
-      installPackages(['firebase-admin'], projKey),
-    ]);
-  }
-
-  try {
-    let newFuncs = await writeModuleStarterFuncs(projKey, key);
-    await Promise.all(promises);
-    return newFuncs;
-  } catch (error) {
-    console.log('Failed to create module files: ', key);
-  }
-};
-
 export const setFirestoreMetadata = async (
   e: Electron.IpcMainInvokeEvent,
   payload: any
 ) => {
   let { metadata } = payload;
 
-  await editModuleMetadata(metadata, BModuleType.FirebaseFirestore);
+  await editModuleMetadata(metadata, BModuleType.Firebase);
 
   return true;
 };

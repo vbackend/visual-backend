@@ -1,0 +1,10 @@
+from pymongo import MongoClient
+import os
+
+def init_mongo():
+    mongo_cli = MongoClient(
+        os.getenv("MONGO_CONN_STRING"), tls=True, tlsAllowInvalidCertificates=True
+    )
+    default_db = mongo_cli.get_database(os.getenv('MONGO_DEFAULT_DB'))
+    print("Mongo module initialised")
+    return mongo_cli, default_db

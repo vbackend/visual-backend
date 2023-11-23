@@ -1,0 +1,27 @@
+import { stripeCli } from "@/modules/stripe/init.js";
+
+export const createCheckout = async () => {
+	let priceId = ""; // price_id attached to product
+	let clientReferenceId = ""; // unique customer identifier
+  let mode = "subscription"; // mode: subscription or payment
+
+	try {
+		const session = await stripeCli.checkout.sessions.create({
+			line_items: [
+				{
+					price: priceId,
+					quantity: 1,
+				},
+			],
+			mode: mode,
+			client_reference_id: clientReferenceId,
+			success_url: `http://localhost:3000/success`,
+			cancel_url: `http://localhost:3000/cancel`,
+		});
+
+		return session.url;
+	} catch (error) {
+		console.log("Failed to create checkout");
+		return null;
+	}
+};

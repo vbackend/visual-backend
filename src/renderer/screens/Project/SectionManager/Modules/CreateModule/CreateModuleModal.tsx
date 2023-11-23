@@ -10,9 +10,6 @@ import useEscHook from '@/renderer/hooks/useEscClicked';
 import { BModuleType, modConfig } from '@/shared/models/BModule';
 import CreateMongoDB from '../MongoModule/CreateMongoDB';
 import CreateFirebaseModule from '../../../../../../archives/CreateFirebaseModule';
-import CreateJwt from '../JwtModule/CreateJwt';
-import CreateStripe from '../StripeModule/CreateStripe';
-import CreateGpt from '../GptModule/CreateGpt';
 
 function CreateModuleModal() {
   const dispatch = useDispatch();
@@ -26,17 +23,7 @@ function CreateModuleModal() {
     if (selection == BModuleType.Mongo)
       return <CreateMongoDB setSelection={setSelection} />;
 
-    if (
-      selection == BModuleType.FirebaseFirestore ||
-      selection == BModuleType.FirebaseAuth
-    )
-      return (
-        <CreateFirebaseModule
-          setSelection={setSelection}
-          selection={selection}
-        />
-      );
-    else if (selection && modConfig[selection]) {
+    if (selection && modConfig[selection]) {
       let conf = modConfig[selection!];
       return conf.createComp(setSelection, selection);
     }

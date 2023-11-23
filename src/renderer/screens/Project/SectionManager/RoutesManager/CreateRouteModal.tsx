@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'renderer/redux/store';
 import { Route, RouteNode, RouteType } from '@/shared/models/route';
 import { addRoute } from '@/renderer/redux/routes/routesSlice';
+import { ProjectType } from '@/shared/models/project';
 
 type CreateRouteModalProps = {
   setCreateModalOpen: Dispatch<SetStateAction<boolean>>;
@@ -43,7 +44,8 @@ function CreateRouteModal({
     if (
       key.length === 0 &&
       type != RouteType.group &&
-      type != RouteType.middleware
+      type != RouteType.middleware &&
+      type != RouteType.dependency
     ) {
       return { valid: true, error: '' };
     }
@@ -142,7 +144,9 @@ function CreateRouteModal({
             onChange={(val) => setType(val)}
             options={[
               { value: 'grp', label: 'GROUP' },
-              { value: 'mid', label: 'MIDDLEWARE' },
+              project?.projectType == ProjectType.FastAPI
+                ? { value: 'dep', label: 'DEPENDENCY' }
+                : { value: 'mid', label: 'MIDDLEWARE' },
               { value: 'get', label: 'GET' },
               { value: 'put', label: 'PUT' },
               { value: 'post', label: 'POST' },

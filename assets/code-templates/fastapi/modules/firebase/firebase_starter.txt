@@ -1,0 +1,5 @@
+from firebase_admin import {{fb_service}}
+
+def {{func_name}}():
+    next
+

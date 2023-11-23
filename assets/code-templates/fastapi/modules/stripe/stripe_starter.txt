@@ -1,0 +1,4 @@
+import stripe
+
+def {{func_name}}():
+    return

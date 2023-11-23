@@ -1,0 +1,24 @@
+import jwt
+import os
+
+
+def parse_token(token, type):
+    secret_key = (
+        os.getenv("JWT_ACCESS_SECRET")
+        if type == "access"
+        else os.getenv("JWT_REFRESH_SECRET")
+    )
+
+    try:
+        # Decoding the JWT token
+        decoded_token = jwt.decode(token, secret_key, algorithms=["HS256"])
+
+        return decoded_token
+
+    except jwt.ExpiredSignatureError:
+        print("The token has expired.")
+        return None
+
+    except jwt.InvalidTokenError:
+        print("Invalid token.")
+        return None

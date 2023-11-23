@@ -25,7 +25,7 @@ function FuncSection({
         ? funcFilter
         : (func: BFunc) =>
             func.moduleKey == curModule?.key &&
-            func.extension == ExtensionType.ts;
+            func.extension != ExtensionType.html;
     let newModFuncs = funcs?.filter(filter);
     setModFuncs(newModFuncs);
   }, [funcs]);

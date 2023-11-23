@@ -4,10 +4,9 @@ import { addFunc, addFuncs } from '@/renderer/redux/module/moduleSlice';
 import { RootState } from '@/renderer/redux/store';
 import { BModuleType, modConfig } from '@/shared/models/BModule';
 import { RenFuncs } from '@/shared/utils/RenFuncs';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import FuncSection from '../General/FuncSection';
-import EmailTemplatesSection from '../ResendModule/EmailTemplatesSection';
 import { Button } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -27,6 +26,7 @@ function StripeManager() {
     setErrText: any,
     useGpt: boolean,
     setLoading: any,
+    funcGroup: string,
     setModalOpen?: any
   ) => {
     setLoading(true);

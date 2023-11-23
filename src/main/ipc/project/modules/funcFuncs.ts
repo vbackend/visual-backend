@@ -7,32 +7,47 @@ import {
 import { FileFuncs } from '@/main/helpers/fileFuncs';
 import { GptService } from '@/main/services/GptService';
 import { BFuncHelpers } from '@/shared/models/BFunc';
-import { BModule, modConfig } from '@/shared/models/BModule';
-import { PathFuncs } from '@/shared/utils/MainFuncs';
+import { BModule, BModuleType, modConfig } from '@/shared/models/BModule';
+import { ProjectType } from '@/shared/models/project';
+import { MainFuncs, PathFuncs } from '@/shared/utils/MainFuncs';
 import { BrowserWindow, Menu } from 'electron';
 import path from 'path';
 
-export const getModuleScaffold = async (f: any, m: BModule) => {
+export const getModuleScaffold = async (
+  f: any,
+  m: BModule,
+  projType: ProjectType = ProjectType.Express
+) => {
   let mPath = path.join(...m.path.split('/'));
   let funcName = BFuncHelpers.getFuncName(f);
-  let mConfig = modConfig[m.key];
+  let mConfig = MainFuncs.getModConfig(m.key, projType);
 
   let templatePath = path.join(
-    PathFuncs.getCodeTemplatesPath(),
+    PathFuncs.getModTemplatesPath(projType),
     mPath,
     mConfig.starterFile
   );
 
   let data: any = await FileFuncs.readFile(templatePath);
-  const newData = data.replace(/\$\{funcName\}/g, funcName);
-  return newData;
+
+  // For firebase fast api
+  if (projType == ProjectType.FastAPI && m.key == BModuleType.Firebase) {
+    data = data.replace('{{fb_service}}', f.funcGroup);
+  }
+  if (projType == ProjectType.FastAPI) {
+    data = data.replace('{{func_name}}', funcName);
+  } else {
+    data = data.replace(/\$\{funcName\}/g, funcName);
+  }
+  return data;
 };
 
 export const writeToFuncFile = async (
   projKey: string,
   m: BModule,
   f: any,
-  data: string
+  data: string,
+  projType: ProjectType = ProjectType.Express
 ) => {
   let mPath = path.join(...m.path.split('/'));
   let funcName = BFuncHelpers.getFuncName(f);
@@ -45,25 +60,33 @@ export const writeToFuncFile = async (
 
   await FileFuncs.createDirIfNotExists(parentPath);
 
-  let filePath = path.join(parentPath, `${funcName}.ts`);
+  let filePath = path.join(
+    parentPath,
+    `${funcName}.${MainFuncs.getExtension(projType)}`
+  );
 
   await FileFuncs.writeFile(filePath, data);
 };
 
-export const generateFuncCode = async (payload: any) => {
+export const generateFuncCode = async (payload: any, projType: ProjectType) => {
   const { funcName, projKey, moduleKey, funcGroup, useGpt, module, details } =
     payload;
 
   let funcScaffold: any = '';
 
-  funcScaffold = await getModuleScaffold({ key: funcName, funcGroup }, module);
+  funcScaffold = await getModuleScaffold(
+    { key: funcName, funcGroup },
+    module,
+    projType
+  );
 
   if (!useGpt) {
     await writeToFuncFile(
       projKey,
       module,
       { key: funcName, funcGroup },
-      funcScaffold
+      funcScaffold,
+      projType
     );
     return;
   }
@@ -73,15 +96,24 @@ export const generateFuncCode = async (payload: any) => {
     funcName,
     serviceName: moduleKey,
     details: details,
+    projectType: projType,
   });
 
   let code = res.data.code;
 
-  await writeToFuncFile(projKey, module, { key: funcName, funcGroup }, code);
+  await writeToFuncFile(
+    projKey,
+    module,
+    { key: funcName, funcGroup },
+    code,
+    projType
+  );
 };
 
 export const createFunc = async (e: Electron.IpcMainInvokeEvent, p: any) => {
   const { funcName, moduleKey, funcGroup } = p;
+
+  const { projType } = MainFuncs.getCurProject();
 
   // 1. Check if func name already exists
   let func = await getFuncByKey(funcName);
@@ -90,14 +122,19 @@ export const createFunc = async (e: Electron.IpcMainInvokeEvent, p: any) => {
   }
 
   // 2. Insert func module query
-  let newFunc = await insertFuncQuery(funcName, moduleKey, funcGroup, 'ts');
+  let newFunc = await insertFuncQuery(
+    funcName,
+    moduleKey,
+    funcGroup,
+    MainFuncs.getExtension(projType)
+  );
 
   if (!newFunc) {
     return { error: 'Failed to insert' };
   }
 
   try {
-    await generateFuncCode(p);
+    await generateFuncCode(p, projType);
     return { error: null, newFunc };
   } catch (error) {
     console.log('Failed to write to file:', error);

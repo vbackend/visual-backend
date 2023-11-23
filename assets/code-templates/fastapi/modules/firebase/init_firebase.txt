@@ -1,0 +1,19 @@
+import firebase_admin
+from firebase_admin import credentials
+from pathlib import Path
+import os
+import json
+
+
+def init_firebase():
+    is_production = os.getenv("ENV") == "production"
+    if is_production:
+        fb_credentials = credentials.Certificate(
+            json.loads(os.getenv("FIREBASE_CREDENTIALS"))
+        )
+    else:
+        credentials_path = Path("./credentials/firebase_credentials.json")
+        fb_credentials = credentials.Certificate(credentials_path)
+
+    firebase_admin.initialize_app(credential=fb_credentials)
+    print("Firebase module initialised")

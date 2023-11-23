@@ -5,9 +5,12 @@ export const getMongoDbs = async (
   event: Electron.IpcMainInvokeEvent,
   payload: string
 ) => {
-  await GenFuncs.timeout(500);
+  // await GenFuncs.timeout(500);
+  console.log('Getting mongodbs');
   try {
-    let client = new MongoClient(payload);
+    let client = new MongoClient(payload, {
+      tlsAllowInvalidCertificates: true,
+    });
     await client.connect();
     const admin = client.db('admin');
 

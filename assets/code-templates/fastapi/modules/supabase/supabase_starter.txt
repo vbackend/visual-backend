@@ -1,0 +1,7 @@
+from supabase import Client
+from fastapi import Request
+
+def {{func_name}}(req: Request):
+    supabase_cli: Client = req.app.state.supabase_cli
+
+    next

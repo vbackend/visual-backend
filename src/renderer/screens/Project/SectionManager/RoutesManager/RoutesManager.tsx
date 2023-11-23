@@ -8,9 +8,6 @@ import { RootState } from '@/renderer/redux/store';
 import { deleteRoute } from '@/renderer/redux/routes/routesSlice';
 import '@/renderer/styles/Project/Routes/RoutesScreen.scss';
 
-type ManageRoutesScreenProps = {
-  rootNode: RouteNode;
-};
 function RoutesManager() {
   const [selectedRoute, setSelectedRoute] = useState<Route | null>(null);
   const [createModalOpen, setCreateOpenModal] = useState(false);
@@ -59,6 +56,8 @@ function RoutesManager() {
       window.electron.removeRouteListener();
     };
   }, [curFile]);
+
+  // useEffect(() => {}, [rootNode]);
 
   if (rootNode === null) return <></>;
 

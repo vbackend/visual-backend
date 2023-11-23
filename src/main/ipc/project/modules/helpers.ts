@@ -1,31 +1,36 @@
 import { insertFuncQuery } from '@/main/db/funcs/funcQueries';
 import { FileFuncs } from '@/main/helpers/fileFuncs';
 import { modConfig } from '@/shared/models/BModule';
-import { PathFuncs } from '@/shared/utils/MainFuncs';
+import { MainFuncs, PathFuncs } from '@/shared/utils/MainFuncs';
 import path from 'path';
 import fs from 'fs-extra';
+import { ProjectType } from '@/shared/models/project';
+import { GenFuncs } from '@/shared/utils/GenFuncs';
 
 export const writeModuleTemplate = async (
   mPath: string,
   templateFileName: string,
   targetFileName: string,
-  projKey: string
+  projKey: string,
+  projType: ProjectType = ProjectType.Express
 ) => {
   let templatesPath = path.join(
-    PathFuncs.getCodeTemplatesPath(),
+    PathFuncs.getModTemplatesPath(projType),
     mPath,
     templateFileName
   );
+
   let folderPath = path.join(PathFuncs.getModulesPath(projKey), mPath);
   let filePath = path.join(folderPath, targetFileName);
 
+  // 1. Create folder dir if not exists
   await FileFuncs.createDirIfNotExists(folderPath);
-
   const dirPath = path.dirname(filePath);
   if (!fs.existsSync(dirPath)) {
     fs.mkdirSync(dirPath, { recursive: true });
   }
 
+  // 2. Read template and write to file
   let data: any = await FileFuncs.readFile(templatesPath);
   await FileFuncs.writeFile(filePath, data);
 };
@@ -42,9 +47,13 @@ function getFuncDirFromPath(str: any) {
   return str.substring(0, lastSlashIndex);
 }
 
-export const writeModuleStarterFuncs = async (projKey: string, key: string) => {
+export const writeModuleStarterFuncs = async (
+  projKey: string,
+  key: string,
+  projType: ProjectType = ProjectType.Express
+) => {
   let newFuncs: any = [];
-  let mConfig = modConfig[key];
+  let mConfig = MainFuncs.getModConfig(key, projType);
   if (mConfig.starterFuncs.length == 0) return [];
 
   let promises = [];
@@ -52,13 +61,24 @@ export const writeModuleStarterFuncs = async (projKey: string, key: string) => {
   for (let i = 0; i < mConfig.starterFuncs.length; i++) {
     let name = mConfig.starterFuncs[i];
     promises.push(
-      writeModuleTemplate(mConfig.path, `${name}.txt`, `${name}.ts`, projKey)
+      writeModuleTemplate(
+        mConfig.path,
+        `${name}.txt`,
+        `${name}.${GenFuncs.getExtension(projType)}`,
+        projKey,
+        projType
+      )
     );
 
     let dir = getFuncDirFromPath(name);
     let funcGroup = dir == '' ? '*' : dir;
     newFuncPromises.push(
-      insertFuncQuery(getFuncNameFromPath(name), mConfig.key, funcGroup, 'ts')
+      insertFuncQuery(
+        getFuncNameFromPath(name),
+        mConfig.key,
+        funcGroup,
+        MainFuncs.getExtension(projType)
+      )
     );
   }
 

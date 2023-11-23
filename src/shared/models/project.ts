@@ -1,7 +1,13 @@
+export enum ProjectType {
+  Express = 'express',
+  FastAPI = 'fastapi',
+}
+
 export type Project = {
   _id: string;
   name: string;
   key: string;
+  projectType?: ProjectType;
   gitlabProjectId: number;
   projectAccessToken: string;
   triggerId: string;

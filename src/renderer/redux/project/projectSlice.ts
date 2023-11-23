@@ -8,8 +8,6 @@ import {
   setCurrentTabReducer,
   setServerRunningReducer,
 } from './projectReducers';
-import { DbConn } from '@/shared/models/dbConn';
-import { BFunc } from '@/shared/models/BFunc';
 import { Route } from '@/shared/models/route';
 
 export enum ProjectTab {

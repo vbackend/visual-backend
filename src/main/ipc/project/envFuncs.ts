@@ -1,4 +1,8 @@
-import { removeEnvVar, updateEnvVars, writeEnvVars } from '@/main/generate/env';
+import {
+  removeEnvVars,
+  updateEnvVars,
+  writeEnvVars,
+} from '@/main/generate/env';
 import { PathFuncs } from '@/shared/utils/MainFuncs';
 import fs from 'fs';
 import path from 'path';
@@ -61,6 +65,6 @@ export const editEnvVars = async (e: Electron.IpcMainInvokeEvent, p: any) => {
 
 export const deleteEnvVar = async (e: Electron.IpcMainInvokeEvent, p: any) => {
   let { projdId, projKey, key } = p;
-  await removeEnvVar(projdId, projKey, [{ key, val: '' }]);
+  await removeEnvVars(projdId, projKey, [{ key, val: '' }]);
   return;
 };

@@ -1,0 +1,5 @@
+from fastapi import APIRouter, Depends
+{{import_statements}}
+
+{{func_name}}_router = APIRouter(prefix="{{route_key}}"{{dependencies}})
+{{endpoints}}

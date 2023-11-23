@@ -1,0 +1,6 @@
+from fastapi.requests import Request
+from fastapi.responses import Response
+
+async def {{func_name}}(req: Request, res: Response):
+{{dependency_text}}
+    next

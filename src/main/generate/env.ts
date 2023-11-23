@@ -8,18 +8,15 @@ export const writeEnvVars = async (
   projKey: string,
   envs: Array<{ key: string; val: string }>
 ) => {
-  let promises = [];
   for (let i = 0; i < envs.length; i++) {
     let env = envs[i];
     const envPath = path.join(PathFuncs.getProjectPath(projKey), '.env');
     let newLine1 = `${env.key}=${env.val}`;
     await replaceEnvVarInFile(envPath, env.key, newLine1);
-    promises.push(replaceEnvVarInFile(envPath, env.key, newLine1));
   }
   // promises.push(
-  ProjectService.addEnvVars({ projectId: projId, envVars: envs });
+  await ProjectService.addEnvVars({ projectId: projId, envVars: envs });
   // );
-  await Promise.all(promises);
 
   console.log('Successfully written env vars');
   return;
@@ -99,22 +96,18 @@ export const replaceEnvVarInFile = async (
   });
 };
 
-export const removeEnvVar = async (
+// Remove env vars
+export const removeEnvVars = async (
   projId: string,
   projKey: string,
   envs: Array<{ key: string; val: string }>
 ) => {
   let rootDir = PathFuncs.getProjectPath(projKey);
   const envPath = path.join(rootDir, '.env');
-  let promises = [];
   for (let i = 0; i < envs.length; i++) {
-    promises.push(removeEnvVarInFile(envPath, envs[i].key));
+    await removeEnvVarInFile(envPath, envs[i].key);
   }
-  promises.push(
-    ProjectService.deleteEnvVars({ projectId: projId, envVars: envs })
-  );
-
-  await Promise.all(promises);
+  await ProjectService.deleteEnvVars({ projectId: projId, envVars: envs });
   console.log('Successfully deleted env vars');
   return;
 };
@@ -147,7 +140,10 @@ export const removeEnvVarInFile = async (filePath: string, key: string) => {
               console.error('Error writing to .env file:', err.message);
               rej(err);
               return;
-            } else res(true);
+            } else {
+              console.log('Successfully deleted env var:', key);
+              res(true);
+            }
           });
         });
       }

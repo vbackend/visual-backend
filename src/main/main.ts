@@ -28,6 +28,7 @@ import {
   FirebaseActions,
   ModuleActions,
   MongoActions,
+  ProjectActions,
   ResendActions,
 } from './actions';
 import { ChildProcess } from 'child_process';
@@ -45,6 +46,7 @@ import {
   createProject,
   deleteProject,
   initProject,
+  setCurProject,
   updateYamlAndGitPush,
 } from './ipc/project/projectFuncs';
 import {
@@ -291,6 +293,10 @@ const init = async () => {
   ipcMain.handle(Actions.DELETE_AUTH_TOKENS, deleteTokens);
 };
 
+const projectInit = async () => {
+  ipcMain.handle(ProjectActions.SET_CURRENT_PROJECT, setCurProject);
+};
+
 const mongoInit = async () => {
   ipcMain.handle(MongoActions.GET_MONGO_COLS, getMongoCols);
 };
@@ -413,6 +419,7 @@ app
     // console.log('Node type:', s.get(nodeTypeKey));
 
     init();
+    projectInit();
     firebaseInit();
     moduleInit();
     mongoInit();

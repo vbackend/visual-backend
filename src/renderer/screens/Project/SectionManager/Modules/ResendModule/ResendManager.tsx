@@ -8,6 +8,7 @@ import { addFunc } from '@/renderer/redux/module/moduleSlice';
 import { setCurFile } from '@/renderer/redux/editor/editorSlice';
 import { RenFuncs } from '@/shared/utils/RenFuncs';
 import EmailTemplatesSection from './EmailTemplatesSection';
+import { ProjectType } from '@/shared/models/project';
 
 function ResendManager() {
   const curModule = useSelector((state: RootState) => state.module.curModule);
@@ -21,6 +22,7 @@ function ResendManager() {
     setErrText: any,
     useGpt: boolean,
     setLoading: any,
+    funcGroup: string,
     setModalOpen?: any
   ) => {
     setLoading(true);
@@ -29,7 +31,7 @@ function ResendManager() {
 
     let { error, newFunc } = await window.electron.createFunc({
       funcName,
-      funcGroup: '*',
+      funcGroup: funcGroup,
       moduleKey: curModule?.key,
       projKey: curProject?.key,
       module: curModule,
@@ -59,8 +61,12 @@ function ResendManager() {
         <Margin height={10} />
 
         <div className="mainContainer">
-          <EmailTemplatesSection />
-          <Margin height={10} />
+          {/* {curProject?.projectType != ProjectType.FastAPI && (
+            <>
+              <EmailTemplatesSection />
+              <Margin height={10} />
+            </>
+          )} */}
           <FuncSection createFuncClicked={createFunc} />
         </div>
       </div>

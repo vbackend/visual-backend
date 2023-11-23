@@ -1,11 +1,26 @@
 import { app } from 'electron';
 import path from 'path';
-import { modConfig } from '../models/BModule';
+import { modConfig, pyModConfig } from '../models/BModule';
 import Store from 'electron-store';
-import { nodeTypeKey } from '@/renderer/misc/constants';
+import { curProjectKey, nodeTypeKey } from '@/renderer/misc/constants';
 import { NodeType } from '../models/NodeType';
+import { ProjectType } from '../models/project';
 
 export class MainFuncs {
+  static getCurProject = () => {
+    let s = new Store();
+    let curProjString: any = s.get(curProjectKey);
+
+    let curProj = JSON.parse(curProjString);
+    if (!curProj.projType) curProj.projType = ProjectType.Express;
+
+    return curProj;
+  };
+
+  static getExtension = (projType: ProjectType) => {
+    return projType == ProjectType.FastAPI ? 'py' : 'ts';
+  };
+
   static getDataPath = () => {
     if (process.env.NODE_ENV != 'production') {
       return path.join(app.getPath('userData'), '..', 'visual-backend');
@@ -57,6 +72,14 @@ export class MainFuncs {
 
     return modifiedPath;
   }
+
+  static getModConfig = (modKey: string, projType: string) => {
+    if (projType == ProjectType.FastAPI) {
+      return pyModConfig[modKey];
+    } else {
+      return modConfig[modKey];
+    }
+  };
 }
 
 export class PathFuncs {
@@ -86,6 +109,10 @@ export class PathFuncs {
     return path.join(this.getAssetsPath(), 'code-templates');
   };
 
+  static getModTemplatesPath = (projType: string) => {
+    return path.join(this.getCodeTemplatesPath(), projType, 'modules');
+  };
+
   static getModulesPath = (projKey: string) => {
     return path.join(this.getProjectPath(projKey), 'src', 'modules');
   };
@@ -94,13 +121,26 @@ export class PathFuncs {
     return path.join(...mPath.split('/'));
   };
 
-  static getWebhookTemplatesPath = (modKey: string) => {
+  static getWebhookTemplatesPath = (
+    modKey: string,
+    projType: ProjectType = ProjectType.Express
+  ) => {
     let mConfig = modConfig[modKey];
     return path.join(
-      PathFuncs.getCodeTemplatesPath(),
+      PathFuncs.getModTemplatesPath(projType),
       mConfig.path,
       'webhook-templates'
     );
+  };
+
+  static getApiDir = (projKey: string) => {
+    // let { projKey, projType } = MainFuncs.getCurProject();
+
+    return path.join(this.getProjectPath(projKey), 'src', 'api');
+    // if (projType == ProjectType.FastAPI) {
+    //   return path.join(this.getProjectPath(projKey), 'api');
+    // } else {
+    // }
   };
 }
 
@@ -126,7 +166,9 @@ export class BinFuncs {
   static appendNodePath = () => {
     let nodeBinPath = this.getNodeBinPath();
     if (process.env.PATH && !process.env.PATH.includes(nodeBinPath)) {
-      process.env.PATH = `${this.getNodeBinPath()}${process.platform == 'win32' ? ';' : ':'}${process.env.PATH}`;
+      process.env.PATH = `${this.getNodeBinPath()}${
+        process.platform == 'win32' ? ';' : ':'
+      }${process.env.PATH}`;
     }
   };
 
@@ -134,16 +176,33 @@ export class BinFuncs {
     let s = new Store();
     let nodeType = s.get(nodeTypeKey);
     if (nodeType == NodeType.Default) {
-      console.log("Using default npm");
+      console.log('Using default npm');
       return process.platform == 'win32' ? 'npm.cmd' : 'npm';
     }
 
     this.appendNodePath();
-    console.log("Using downloaded npm");
+    console.log('Using downloaded npm');
     if (process.platform == 'darwin') {
       return path.join(this.getNodeBinPath(), 'npm');
     } else {
       return path.join(this.getNodeBinPath(), 'npm.cmd');
     }
+  };
+
+  static getPyPath = () => {
+    if (process.platform == 'win32') {
+      return 'py';
+    } else {
+      return 'python3';
+    }
+  };
+
+  static getEnvPyPath = (projKey: string) => {
+    return path.join(
+      PathFuncs.getProjectPath(projKey),
+      '.venv',
+      'bin',
+      this.getPyPath()
+    );
   };
 }

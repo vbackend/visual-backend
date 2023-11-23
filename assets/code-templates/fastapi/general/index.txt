@@ -1,0 +1,28 @@
+from fastapi import FastAPI
+from dotenv import load_dotenv
+from contextlib import asynccontextmanager
+from fastapi.middleware.cors import CORSMiddleware
+from src.api.root_router import root_router
+{{import_statements}}
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+{{func_statements}}
+    yield
+{{end_statements}}
+
+load_dotenv()
+app = FastAPI(lifespan=lifespan)
+app.include_router(router=root_router)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+@app.get("/")
+def root_get():
+    return "Hello world from Visual Backend server!"

@@ -5,6 +5,7 @@ export const endpoint = publicEndpoint;
 
 export const accessTokenKey = 'access_token';
 export const refreshTokenKey = 'refresh_token';
+export const curProjectKey = 'cur_project_key';
 
 export const electronStoreKeys = {
   openWithVsKey: 'open_with_vs',
@@ -18,7 +19,7 @@ export const projWindowSizeNoVs = {
 
 export const projWindowSizeVs = {
   width: 480,
-  height: 600,
+  height: 650,
 };
 
 export const homeWindowSize = {

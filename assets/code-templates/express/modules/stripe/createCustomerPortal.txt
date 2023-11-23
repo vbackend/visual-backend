@@ -1,0 +1,15 @@
+import { stripeCli } from "@/modules/stripe/init.js";
+
+export const createCustomerPortal = async (customerId) => {
+  try {
+    const session = await stripeCli.billingPortal.sessions.create({
+      customer: customerId,
+      return_url: "https://localhost:3000",
+    });
+
+    return session.url;
+  } catch (error) {
+    console.error("Error creating customer portal:", error);
+    throw error;
+  }
+}

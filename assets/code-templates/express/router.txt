@@ -1,0 +1,5 @@
+import express from 'express'
+{{import_statements}}
+
+export const {{func_name}}_router = express.Router();
+{{endpoints}}

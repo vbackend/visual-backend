@@ -1,0 +1,4 @@
+import openai
+
+def {{func_name}}():
+    return

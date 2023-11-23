@@ -1,0 +1,25 @@
+import admin from "firebase-admin";
+
+export const firebaseAuthMiddleware = async (req, res, next) => {
+  let auth = admin.auth();
+  let authHeader = req.headers.authorization;
+
+  if (!authHeader) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
+
+  const token = authHeader.split(' ')[1];
+
+  try {
+    const decodeValue = await auth.verifyIdToken(token);
+
+    if (decodeValue) {
+      console.log(decodeValue);
+      return next();
+    }
+
+    return res.status(401).json({ message: 'Unauthorized' });
+  } catch (e) {
+    return res.status(500).json({ message: 'Internal Error' });
+  }
+};

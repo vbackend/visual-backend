@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import 'ace-builds/src-noconflict/ace';
 import 'ace-builds/src-noconflict/mode-javascript';
 import 'ace-builds/src-noconflict/mode-typescript';
+import 'ace-builds/src-noconflict/mode-python';
 import 'ace-builds/src-noconflict/mode-html';
 import 'ace-builds/src-noconflict/theme-xcode';
 import 'ace-builds/src-noconflict/ext-language_tools';
@@ -21,6 +22,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { setCurFile } from '@/renderer/redux/editor/editorSlice';
 import { BModule } from '@/shared/models/BModule';
+import { ProjectType } from '@/shared/models/project';
 
 function EditorScreen() {
   const dispatch = useDispatch();
@@ -94,6 +96,7 @@ ${editorText}
   }, [searchFuncsOpen]);
 
   const getEditorMode = () => {
+    if (curProject?.projectType == ProjectType.FastAPI) return 'python';
     if (curFile?.metadata.extension) {
       switch (curFile.metadata.extension) {
         case 'ts':

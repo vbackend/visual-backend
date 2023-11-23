@@ -1,0 +1,30 @@
+import jwt from 'jsonwebtoken'
+
+let expiry = {
+    access: '1h',
+    refresh: '1d'
+}
+
+export const generateToken = (payload, type) => {
+
+    let secretKey, expiresIn;
+
+    if (type == 'access') {
+        secretKey = process.env.JWT_ACCESS_SECRET
+        expiresIn = expiry.access
+    } else {
+        secretKey = process.env.JWT_REFRESH_SECRET
+        expiresIn = expiry.refresh
+    }
+
+    try {
+        // Generate the access token
+        const accessToken = jwt.sign(payload, secretKey, { expiresIn });
+
+        return accessToken;
+    } catch (error) {
+        // Handle errors if JWT generation fails
+        console.error('Error generating access token:', error);
+        return null;
+    }
+};

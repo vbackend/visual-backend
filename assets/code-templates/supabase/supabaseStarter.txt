@@ -1,5 +1,0 @@
-import { supabaseCli } from "@/modules/supabase/init.js";
-
-export const ${funcName} = async () => {
-
-};

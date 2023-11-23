@@ -14,12 +14,20 @@ import {
   generateCloudBuildYaml,
   writeCloudBuildYaml,
 } from '@/main/generate/cloudbuild';
+import { ProjectType } from '@/shared/models/project';
+import { createFastAPIProject } from './fastapi/pythonProjectFuncs';
+import Store from 'electron-store';
+import { curProjectKey } from '@/renderer/misc/constants';
+import { freezePyPackages } from '@/main/generate/fastapi/pythonInstall';
 
 export const createProject = async (
   event: Electron.IpcMainInvokeEvent,
   payload: any
 ) => {
-  const { projId, projAccessToken, projKey } = payload;
+  const { projKey, projectType } = payload;
+  if (projectType && projectType == ProjectType.FastAPI) {
+    return createFastAPIProject(payload);
+  }
 
   let projectDir = MainFuncs.getProjectPath(projKey);
 
@@ -60,6 +68,15 @@ export const createProject = async (
   return { error: null };
 };
 
+export const setCurProject = async (
+  event: Electron.IpcMainInvokeEvent,
+  payload: any
+) => {
+  let s = new Store();
+  s.set(curProjectKey, JSON.stringify(payload));
+  return true;
+};
+
 export const initProject = async (
   event: Electron.IpcMainInvokeEvent,
   payload: any
@@ -87,6 +104,16 @@ export const updateYamlAndGitPush = async (
   payload: any
 ) => {
   let { project } = payload;
+  let { projType } = MainFuncs.getCurProject();
+
+  // Freeze requirements
+  console.log('Freezing packages > requirements.txt');
+
+  if (projType == ProjectType.FastAPI) {
+    let success = await freezePyPackages(project.key);
+    if (!success) return false;
+  }
+
   try {
     let { data } = await ProjectService.getProjectSecretStatements(project._id);
     let setSecretsString = '';

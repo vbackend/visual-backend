@@ -11,9 +11,10 @@ axios.interceptors.response.use((response) => {
 }, responseInterceptor);
 
 export class ProjectService {
-  static createProject = async (name: string) =>
+  static createProject = async (name: string, type: string) =>
     await axios.post(`${endpoint}/private/projects`, {
       name,
+      type,
     });
 
   static getProjectData = async (id: string) =>

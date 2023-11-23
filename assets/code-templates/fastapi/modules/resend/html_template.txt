@@ -1,0 +1,8 @@
+<html>
+    <body>
+        <p>
+            <!--Declare a variable like this-->
+            <%=varKey %>
+        </p>
+    </body>
+</html>

@@ -2,7 +2,6 @@ import Margin from '@/renderer/components/general/Margin';
 import { setCurFile } from '@/renderer/redux/editor/editorSlice';
 import {
   addFunc,
-  addFuncs,
   setModuleMetadata,
 } from '@/renderer/redux/module/moduleSlice';
 import { RootState } from '@/renderer/redux/store';
@@ -13,7 +12,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import FuncSection from '../General/FuncSection';
 import { Button, Tooltip } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { BFunc } from '@/shared/models/BFunc';
 import { MdCreateNewFolder, MdNoteAdd } from 'react-icons/md';
 import { FuncButton } from '../General/FuncButton';
@@ -45,6 +44,13 @@ function FirebaseManager() {
   ) => {
     setLoading(true);
     let mConfig = modConfig[curModule?.key!];
+
+    let details = funcGroup.includes('firestore')
+      ? `This module uses the firebase firestore service specifically and admin has already been initialised, and interacts with the ${funcGroup.slice(
+          funcGroup.indexOf('/') + 1
+        )} collection`
+      : `This module uses the firebase ${funcGroup} service specifically and admin has already been initialised`;
+
     let { error, newFunc } = await window.electron.createFunc({
       funcName,
       funcGroup,
@@ -52,7 +58,7 @@ function FirebaseManager() {
       projKey: curProject?.key,
       module: curModule,
       useGpt,
-      details: `This module uses the firebase ${funcGroup} service specifically and admin has already been initialised`,
+      details,
     });
 
     setLoading(false);
@@ -192,7 +198,7 @@ function FirebaseManager() {
           {renderMarginBottomComp('auth')}
 
           <div className="colHeader">
-            <p className="title">Firebase (by col)</p>
+            <p className="title">Firestore</p>
             <Button
               className="folderAddBtn"
               type="text"

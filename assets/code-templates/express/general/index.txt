@@ -1,0 +1,43 @@
+import { config } from 'dotenv';
+import express from 'express';
+import { root_router } from './api/root_router.js';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+
+{{import_statements}}
+const init = async () => {
+  config();
+
+{{func_statements}}
+  const app = express();
+  app.use(cors());
+  app.use(bodyParser.json());
+  app.use('/', root_router);
+  app.get('/', (req: any, res: any) => {
+    res.send('Hello from visual backend server!');
+  });
+
+  const args = process.argv.slice(2);
+  let port = 8080;
+  if (args.length > 0) {
+    port = parseInt(args[0]);
+  }
+
+  const server = app.listen(port, () => {
+    console.log(`Server started at http://localhost:${port}`);
+  });
+
+  process.on('SIGTERM', () => {
+    server.close(() => {
+      process.exit(0);
+    });
+  });
+
+  process.on('SIGINT', () => {
+    server.close(() => {
+      process.exit(0);
+    });
+  });
+};
+
+init();

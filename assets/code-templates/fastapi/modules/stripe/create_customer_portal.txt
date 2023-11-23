@@ -1,0 +1,9 @@
+import stripe
+
+
+def create_customer_portal(customer_id):
+    session = stripe.billing_portal.Session.create(
+        customer=customer_id, return_url="http://localhost:8000"
+    )
+
+    return session.url

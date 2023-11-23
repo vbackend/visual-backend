@@ -1,0 +1,3 @@
+from fastapi import APIRouter
+
+{{func_name}}_router = APIRouter(prefix="/{{route_key}}")

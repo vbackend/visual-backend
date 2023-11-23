@@ -1,0 +1,4 @@
+import resend
+
+def {{func_name}}():
+    return

@@ -1,0 +1,22 @@
+import stripe
+
+
+def sub_invoice_paid(data: dict):
+    invoice_id = data["id"]
+    customer_id = data["customer"]
+    customer_email = data["customer_email"]
+    subscription_id = data["subscription"]
+    invoice_status = data["status"]
+    billing_reason = data["billing_reason"]
+    lines = data["lines"]
+
+    first_item = lines["data"][0]
+    price_id = first_item["price"]["id"]
+
+    if (
+        billing_reason != "subscription_create"
+        and billing_reason != "subscription_cycle"
+    ):
+        return
+
+    return

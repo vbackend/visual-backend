@@ -1,0 +1,13 @@
+import stripe
+
+
+def sub_deleted(data: dict):
+    sub_id = data["id"]
+    customer_id = data["customer"]
+    cancel_at_period_end = data["cancel_at_period_end"]
+
+    if cancel_at_period_end:
+        # deletion comes from sub being cancelled by user
+        pass
+
+    # deletion comes from other reasons

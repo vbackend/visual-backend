@@ -1,0 +1,11 @@
+import resend
+
+def send_email(sender, recipient, subject, html):
+    params = {
+        "from": f"Acme <{sender}>",
+        "to": [recipient],
+        "subject": subject,
+        "html": html,
+    }
+
+    email = resend.Emails.send(params)

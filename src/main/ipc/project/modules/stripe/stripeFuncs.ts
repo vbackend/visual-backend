@@ -1,13 +1,20 @@
 import { insertFuncQuery } from '@/main/db/funcs/funcQueries';
 import { modConfig } from '@/shared/models/BModule';
 import { FileFuncs } from '@/main/helpers/fileFuncs';
-import { PathFuncs } from '@/shared/utils/MainFuncs';
+import { MainFuncs, PathFuncs } from '@/shared/utils/MainFuncs';
 import path from 'path';
 import { BFuncHelpers } from '@/shared/models/BFunc';
+import { GenFuncs } from '@/shared/utils/GenFuncs';
+import { ProjectType } from '@/shared/models/project';
 
-export const addWebhookTemplate = async (payload: any, index: number) => {
-  let { projKey, module, templatesChecked } = payload;
-  let mConfig = modConfig[module.key];
+export const addWebhookTemplate = async (
+  payload: any,
+  index: number,
+  projType: ProjectType = ProjectType.Express
+) => {
+  let { projKey, module } = payload;
+
+  let mConfig = GenFuncs.getModConfig(module.key, projType);
   let templates = mConfig.webhookTemplates;
   let template = templates[index];
 
@@ -19,14 +26,15 @@ export const addWebhookTemplate = async (payload: any, index: number) => {
       func.key,
       module.key,
       func.funcGroup,
-      func.extension
+      MainFuncs.getExtension(projType)
     );
     newFuncs.push(newFunc);
 
     let fromPath = path.join(
-      PathFuncs.getWebhookTemplatesPath(module.key),
+      PathFuncs.getWebhookTemplatesPath(module.key, projType),
       `${newFunc?.key}.txt`
     );
+
     let toPath = path.join(
       PathFuncs.getModulesPath(projKey),
       PathFuncs.getModulePath(mConfig.path),
@@ -42,12 +50,17 @@ export const addWebhookTemplates = async (
   payload: any
 ) => {
   let { projKey, module, templatesChecked } = payload;
+  let { projType } = MainFuncs.getCurProject();
 
-  let templates = modConfig[module.key].webhookTemplates;
+  let mConfig = MainFuncs.getModConfig(module.key, projType);
+
+  let templates = mConfig.webhookTemplates;
   let returnFuncs: any = [];
   for (let i = 0; i < templates.length; i++) {
     if (templatesChecked[i]) {
-      returnFuncs = returnFuncs.concat(await addWebhookTemplate(payload, i));
+      returnFuncs = returnFuncs.concat(
+        await addWebhookTemplate(payload, i, projType)
+      );
     }
   }
   return returnFuncs;

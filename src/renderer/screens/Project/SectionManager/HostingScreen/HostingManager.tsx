@@ -1,6 +1,5 @@
 import { Button, Spin, Tooltip } from 'antd';
-import React, { useCallback, useEffect, useState } from 'react';
-import '@/renderer/styles/Project/SectionManager/HostingManager/HostingManager.scss';
+import { useCallback, useEffect, useState } from 'react';
 import Margin from '@/renderer/components/general/Margin';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/renderer/redux/store';
@@ -12,6 +11,8 @@ import { format } from 'date-fns';
 import clipboardCopy from 'clipboard-copy';
 import { LoadingOutlined } from '@ant-design/icons';
 import { addBuild, setCloudData } from '@/renderer/redux/cloud/cloudSlice';
+
+import '@/renderer/styles/Project/SectionManager/HostingManager/HostingManager.scss';
 
 function HostingManager() {
   const dispatch = useDispatch();

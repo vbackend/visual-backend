@@ -33,6 +33,7 @@ import { RenFuncs } from '@/shared/utils/RenFuncs';
 import DeleteModuleModal from '../SectionManager/Modules/General/DeleteModuleModal';
 import { Divider } from 'antd';
 import { homeWindowSize } from '@/renderer/misc/constants';
+import { ProjectType } from '@/shared/models/project';
 
 let moduleIndex = 2;
 
@@ -109,12 +110,14 @@ function Sidebar() {
             tab={ProjectTab.Hosting}
             scale={0.9}
           />
-          <SidebarBtn
-            shortcut={`${moduleIndex + modules!.length + 1}`}
-            name="Packages"
-            icon={faCube}
-            tab={ProjectTab.Packages}
-          />
+          {/* {curProject?.projectType == ProjectType.Express && (
+            <SidebarBtn
+              shortcut={`${moduleIndex + modules!.length + 1}`}
+              name="Packages"
+              icon={faCube}
+              tab={ProjectTab.Packages}
+            />
+          )} */}
           <SidebarBtn
             shortcut={`${moduleIndex + modules!.length + 2}`}
             name="Env"

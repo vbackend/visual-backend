@@ -29,7 +29,7 @@ export class BFuncHelpers {
       func.funcGroup == '*' ? `${funcName}` : `${func.funcGroup}/${funcName}`;
 
     if (func.extension == 'html')
-      return `import fs from 'fs';    
+      return `import fs from 'fs';
 import ejs from 'ejs';
 import path from 'path'`;
 
@@ -41,7 +41,8 @@ import path from 'path'`;
   };
 
   static getFuncName = (func: BFunc) => {
-    return this.camelise(`${func.key}`);
+    // return this.camelise(`${func.key}`);
+    return func.key;
   };
 
   static getFuncCallTemplate = (f: BFunc) => {
@@ -53,12 +54,12 @@ let htmlFilePath = path.join(process.cwd(), 'src/modules/resend/templates', '${t
 const template = fs.readFileSync(htmlFilePath, 'utf8');
 const data = { varKey: 'value' };
 const htmlString = ejs.render(template, data);`;
-    } else if (f.extension == 'ts') return `${this.getFuncName(f)}();`;
+    } else return `${this.getFuncName(f)}();`;
   };
 
   static getFuncPath = (f: BFunc) => {
     if (f.funcGroup == '*') {
-      return `${this.getFuncName(f)}.${f.extension}`;
-    } else return `${f.funcGroup}/${this.getFuncName(f)}.${f.extension}`;
+      return `${f.key}.${f.extension}`;
+    } else return `${f.funcGroup}/${f.key}.${f.extension}`;
   };
 }

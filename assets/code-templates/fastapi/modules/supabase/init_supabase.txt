@@ -1,0 +1,14 @@
+from supabase import create_client, Client
+import os
+
+def init_supabase():
+    supabase_project_url = os.environ['SUPABASE_PROJECT_URL']
+    supabase_service_key = os.environ['SUPABASE_SERVICE_KEY']
+
+    supabase_cli: Client = create_client(
+      supabase_url=supabase_project_url,
+      supabase_key=supabase_service_key,
+    )
+
+    print("Supabase module initialised")
+    return supabase_cli

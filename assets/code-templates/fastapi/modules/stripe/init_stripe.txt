@@ -1,0 +1,13 @@
+import os
+import stripe
+
+
+def init_stripe():
+    env = os.getenv("ENV")
+    if env == "production":
+        stripe.api_key = os.getenv("STRIPE_LIVE_KEY")
+    else:
+        stripe.api_key = os.getenv("STRIPE_TEST_KEY")
+
+    print("Stripe module initialised")
+

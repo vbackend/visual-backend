@@ -1,5 +1,3 @@
-import { GenFuncs } from '@/shared/utils/GenFuncs';
-import { BFunc, BFuncHelpers } from '@/shared/models/BFunc';
 import { FileFuncs } from '@/main/helpers/fileFuncs';
 import { BrowserWindow, IpcMainInvokeEvent, Menu } from 'electron';
 import { MainFuncs, PathFuncs } from '@/shared/utils/MainFuncs';
@@ -8,8 +6,9 @@ import { deleteFuncByModule } from '@/main/db/funcs/funcQueries';
 import { ModuleActions } from '@/main/actions';
 import { BModuleType, modConfig } from '@/shared/models/BModule';
 import {
-  createFirebaseModuleFiles,
+  deleteFirebaseCredentials,
   deleteFirebaseFiles,
+  writeFirebaseCredentials,
 } from './firebase/firebaseFuncs';
 import {
   createModuleQuery,
@@ -19,9 +18,14 @@ import {
 
 import { deletePackages, installPackages } from '@/main/generate/install';
 import { writeModuleStarterFuncs, writeModuleTemplate } from './helpers';
-import { removeEnvVar, writeEnvVars } from '@/main/generate/env';
+import { removeEnvVars, writeEnvVars } from '@/main/generate/env';
 import { writeIndexFile } from '@/main/generate/general';
-import { createSupabaseModuleFiles } from './supabase/supabaseFuncs';
+import { ProjectType } from '@/shared/models/project';
+import {
+  installPyPackages,
+  uninstallPyPackages,
+} from '@/main/generate/fastapi/pythonInstall';
+import { GenFuncs } from '@/shared/utils/GenFuncs';
 
 export const getModuleFromConfig = (mConfig: any) => {
   return {
@@ -36,42 +40,42 @@ export const createModule = async (
   e: Electron.IpcMainInvokeEvent,
   payload: any
 ) => {
-  let { projKey, key, metadata } = payload;
-  let mConfig = modConfig[key];
+  let { key, metadata } = payload;
+  let { projKey, projType } = MainFuncs.getCurProject();
+
+  let mConfig = MainFuncs.getModConfig(key, projType);
   if (metadata) {
     mConfig.metadata = payload.metadata;
   }
 
   let bModule = getModuleFromConfig(mConfig);
+
+  // 1. Create module query
+  console.log('1. Inserting module into sqlite db');
   await createModuleQuery({
     ...bModule,
     metadata: JSON.stringify(bModule.metadata),
   });
 
-  await writeIndexFile(projKey);
+  // 2. Write index file
+  console.log('2. Writing index file');
+  await writeIndexFile(projKey, projType);
   let newFuncs: any = [];
 
   try {
-    switch (key) {
-      // case BModuleType.FirebaseAuth:
-      // case BModuleType.FirebaseFirestore:
-      //   newFuncs = await createFirebaseModuleFiles(payload);
-      //   break;
-      // // case BModuleType.Supabase:
-      // //   newFuncs = await createSupabaseModuleFiles(payload);
-      default:
-        newFuncs = await createModuleFiles(payload);
-    }
+    console.log('3. Creating module files');
+    newFuncs = await createModuleFiles(payload);
   } catch (error) {
     return { error: 'Failed to create module' };
   }
-  console.log('Successfully created module');
+
   return { newModule: bModule, newFuncs, error: null };
 };
 
 export const createModuleFiles = async (payload: any) => {
-  let { projId, projKey, key } = payload;
-  let bConfig = modConfig[key];
+  let { projId, key } = payload;
+  let { projKey, projType } = MainFuncs.getCurProject();
+  let bConfig = MainFuncs.getModConfig(key, projType);
 
   let envs: Array<{ key: string; val: string }> = [];
   for (let i = 0; i < bConfig.envVars.length; i++) {
@@ -82,18 +86,36 @@ export const createModuleFiles = async (payload: any) => {
 
   let promises = [];
   promises.push(writeEnvVars(projId, projKey, envs));
-  promises.push(installPackages(bConfig.dependencies, projKey));
 
-  // 3. create init file
+  // Module specific actions
+  if (key == BModuleType.Firebase) {
+    promises.push(writeFirebaseCredentials(payload));
+  }
+
+  // Install packages
+  if (projType === ProjectType.FastAPI) {
+    promises.push(installPyPackages(bConfig.dependencies, projKey));
+  } else {
+    promises.push(installPackages(bConfig.dependencies, projKey));
+  }
+
+  // Write index file
   if (bConfig.initFile) {
+    let initTarget = `init.${GenFuncs.getExtension(projType)}`;
     promises.push(
-      writeModuleTemplate(bConfig.path, bConfig.initFile, `init.ts`, projKey)
+      writeModuleTemplate(
+        bConfig.path,
+        bConfig.initFile,
+        initTarget,
+        projKey,
+        projType
+      )
     );
   }
 
-  // 4. handle starter funcs
+  // Write starter funcs
   try {
-    let newFuncs = await writeModuleStarterFuncs(projKey, key);
+    let newFuncs = await writeModuleStarterFuncs(projKey, key, projType);
     await Promise.all(promises);
     return newFuncs;
   } catch (error) {
@@ -108,31 +130,40 @@ export const deleteModule = async (
   window: BrowserWindow
 ) => {
   const { projId, module, projKey } = payload;
+  const { projType } = MainFuncs.getCurProject();
 
   // 1. Delete credentials or env
-  if (module.key.includes('firebase')) {
-    await deleteFirebaseFiles(projId, module, projKey);
-  } else {
-    await deleteModuleFiles(payload);
-  }
+
+  await deleteModuleFiles(payload);
 
   // 2. Delete all funcs
   await deleteFuncByModule(module.key);
 
   await deleteModuleQuery(module.key);
 
-  await writeIndexFile(projKey);
+  await writeIndexFile(projKey, projType);
 };
 
 export const deleteModuleFiles = async (payload: any) => {
-  let { projId, module, projKey } = payload;
+  let { projId, module } = payload;
+  let { projKey, projType } = MainFuncs.getCurProject();
   let key = module.key;
-  let mConfig = modConfig[key];
-  let bModule = getModuleFromConfig(mConfig);
 
+  let mConfig = MainFuncs.getModConfig(key, projType);
+
+  let bModule = getModuleFromConfig(mConfig);
   let promises = [];
+
+  if (module.key == BModuleType.Firebase) {
+    promises.push(deleteFirebaseCredentials(projKey));
+  }
+
   // 2. Delete packages
-  promises.push(deletePackages(mConfig.dependencies, projKey));
+  if (projType == ProjectType.FastAPI) {
+    promises.push(uninstallPyPackages(mConfig.dependencies, projKey));
+  } else {
+    promises.push(deletePackages(mConfig.dependencies, projKey));
+  }
 
   // 3. Delete folder
   let modulePath = path.join(PathFuncs.getModulesPath(projKey), bModule.path);
@@ -142,12 +173,11 @@ export const deleteModuleFiles = async (payload: any) => {
   for (let i = 0; i < mConfig.envVars.length; i++) {
     envs.push({ key: mConfig.envVars[i], val: '' });
   }
-  promises.push(removeEnvVar(projId, projKey, envs));
+  promises.push(removeEnvVars(projId, projKey, envs));
 
   try {
     await Promise.all(promises);
   } catch (error) {
-    console.log('Failed to delete module files:', error);
     return { error: 'Failed to delete module files' };
   }
 };

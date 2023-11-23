@@ -1,0 +1,21 @@
+import stripe
+
+
+def create_checkout():
+    price_id = ""
+    client_reference_id = "123"
+    mode = "subscription"
+
+    session = stripe.checkout.Session.create(
+        line_items=[
+            {
+                "price": price_id,
+                "quantity": 2,
+            },
+        ],
+        success_url="https://example.com/success",
+        cancel_url="https://example.com/cancel",
+        client_reference_id=client_reference_id,
+        mode=mode,
+    )
+    return session.url

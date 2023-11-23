@@ -7,10 +7,16 @@ import {
   FirebaseActions,
   ModuleActions,
   MongoActions,
+  ProjectActions,
   ResendActions,
 } from './actions';
 
 export type Channels = 'ipc-example';
+
+const projectHandler = {
+  setCurProject: (payload: any) =>
+    ipcRenderer.invoke(ProjectActions.SET_CURRENT_PROJECT, payload),
+};
 
 const firebaseHandler = {
   checkFirebaseCredentials: (payload: any) =>
@@ -124,6 +130,7 @@ const electronHandler = {
   checkVsRequirementsMet: () =>
     ipcRenderer.invoke(Actions.CHECK_VS_REQUIREMENTS_MET),
 
+  ...projectHandler,
   ...firebaseHandler,
   ...moduleHandler,
   ...mongoHandler,

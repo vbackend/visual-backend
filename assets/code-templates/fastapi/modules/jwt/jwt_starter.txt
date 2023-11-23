@@ -1,0 +1,4 @@
+import jwt
+
+def {{func_name}}():
+    return

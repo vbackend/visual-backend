@@ -1,62 +1,76 @@
+import { Dispatch, SetStateAction, useState } from 'react';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { Dispatch, SetStateAction, useState } from 'react';
-import '@/renderer/styles/Home/CreateProjectModal.scss';
-import { Button, Input } from 'antd';
+import { Button, Input, Select } from 'antd';
 import Margin from '@/renderer/components/general/Margin';
 import { ProjectService } from '@/renderer/services/ProjectService';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  AppPage,
-  addProject,
-  setCurPage,
-  setCurrentProject,
-} from '@/renderer/redux/app/appSlice';
+import { addProject } from '@/renderer/redux/app/appSlice';
 import { RootState } from '@/renderer/redux/store';
-import {
-  projWindowSizeVs,
-  projWindowSizeNoVs,
-} from '@/renderer/misc/constants';
 import { RenFuncs } from '@/shared/utils/RenFuncs';
+import { ProjectFuncs, ProjectType } from '@/shared/models/project';
+
+import '@/renderer/styles/Home/CreateProjectModal.scss';
 
 type CreateProjectModalProps = {
   setModalOpen: Dispatch<SetStateAction<boolean>>;
 };
+
 function CreateProjectModal({ setModalOpen }: CreateProjectModalProps) {
   const dispatch = useDispatch();
   const openWithVs = useSelector((state: RootState) => state.app.openWithVs);
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState('');
   const [errorText, setErrorText] = useState('');
+  const [projectType, setProjectType] = useState<string | ProjectType>(
+    ProjectType.Express
+  );
+
+  let projectTypes = [
+    {
+      value: ProjectType.Express,
+      text: 'Node.js Express',
+    },
+    {
+      value: ProjectType.FastAPI,
+      text: 'Python FastAPI',
+    },
+  ];
 
   const createClicked = async () => {
     setLoading(true);
     setErrorText('');
+
     try {
-      let { data } = await ProjectService.createProject(name);
+      let { data } = await ProjectService.createProject(name, projectType);
 
       // 2. Create project DB file
-      let projKey = data.key;
-      let projId = data._id;
-      let projAccessToken = data.projectAccessToken;
+      let projKey = ProjectFuncs.getKey(name);
+      // let data: any = {
+      //   name: name,
+      //   key: projKey,
+      //   projectType: ProjectType,
+      // };
 
       let { error } = await window.electron.createProject({
-        projId,
-        projAccessToken,
         projKey,
+        projectType,
       });
+
       if (error) {
         throw error;
       }
 
       dispatch(addProject({ ...data }));
-      RenFuncs.openProject(data, dispatch, openWithVs);
+      await RenFuncs.openProject(data, dispatch, openWithVs);
 
       setModalOpen(false);
     } catch (error: any) {
       // conflict
-      if (error.response.status == 409) {
+      if (error.response && error.response.status == 409) {
         setErrorText('Project name already taken');
+      } else if (projectType == ProjectType.FastAPI) {
+        setErrorText(error);
       } else {
         setErrorText('Failed to create project');
       }
@@ -80,6 +94,18 @@ function CreateProjectModal({ setModalOpen }: CreateProjectModalProps) {
             onChange={(e) => setName(e.target.value)}
             placeholder="Name"
           />
+          <Margin height={15} />
+          <>
+            <p className="inputTitle">Type</p>
+
+            <Select
+              defaultActiveFirstOption
+              className="dbSelect"
+              options={projectTypes}
+              value={projectType}
+              onChange={(val: string) => setProjectType(val)}
+            />
+          </>
           <Margin height={20} />
         </div>
         <Margin height={5} />

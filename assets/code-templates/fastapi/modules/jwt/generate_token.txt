@@ -1,0 +1,34 @@
+import jwt
+import datetime
+import os
+
+expiry = {
+    "access": 30,  # 30 minues
+    "refresh": 30 * 24 * 1,  # 1 day
+}
+
+
+def generate_token(payload, type):
+    exp_minutes = expiry["access"] if type == "access" else expiry["refresh"]
+    secret_key = (
+        os.getenv("JWT_ACCESS_SECRET")
+        if type == "access"
+        else os.getenv("JWT_REFRESH_SECRET")
+    )
+
+    if not secret_key:
+        raise Exception("JWT secret key not found")
+
+    try:
+        # Add expiration time to payload
+        exp = datetime.datetime.utcnow() + datetime.timedelta(minutes=exp_minutes)
+        payload.update({"exp": exp})
+
+        # Generate JWT token
+        token = jwt.encode(payload, secret_key, algorithm="HS256")
+
+        return token
+
+    except Exception as e:
+        print("Failed to generate jwt token")
+        raise e

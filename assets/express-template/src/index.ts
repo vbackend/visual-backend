@@ -1,8 +1,8 @@
-import { config } from 'dotenv';
 import express from 'express';
-import { Router } from './api/Router.js';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import { config } from 'dotenv';
+import { root_router } from './api/root_router.js';
 
 const init = async () => {
   config();
@@ -10,7 +10,7 @@ const init = async () => {
   const app = express();
   app.use(bodyParser.json());
   app.use(cors());
-  app.use('/', Router);
+  app.use('/', root_router);
   app.get('/', (req, res) =>
     res.status(200).send('Hello from visual-backend server!')
   );
@@ -25,19 +25,13 @@ const init = async () => {
     console.log(`Server started at http://localhost:${port}`);
   });
 
-  // let url = await ngrok.connect(port);
-  // console.log('Public url:', url);
-
-  // Handle server shutdown gracefully
   process.on('SIGTERM', () => {
-    // console.log('Received SIGTERM. Shutting down gracefully...');
     server.close(() => {
       process.exit(0);
     });
   });
 
   process.on('SIGINT', () => {
-    // console.log('Received SIGINT. Shutting down gracefully...');
     server.close(() => {
       process.exit(0);
     });
