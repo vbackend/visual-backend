@@ -13,9 +13,7 @@ import { Actions } from '@/main/actions';
 import { FileFuncs } from '@/main/helpers/fileFuncs';
 import { MainFuncs, PathFuncs } from '@/shared/utils/MainFuncs';
 import {
-  createRouteFile,
   createRouterGroupFolder,
-  writeRouterFile,
 } from '@/main/generate/endpoints';
 import { writePyRouterFile } from '@/main/generate/fastapi/pyEndpointsGen';
 

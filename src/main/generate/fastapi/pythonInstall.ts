@@ -11,14 +11,6 @@ export const checkPython3Ver = (): Promise<{
   return new Promise((res, rej) => {
     const pythonProcess = spawn(BinFuncs.getPyPath(), ['--version']);
 
-    // pythonProcess.stdout.on('data', (data) => {
-    //   res({ installed: true, error: null });
-    // });
-
-    // pythonProcess.stderr.on('data', (data) => {
-    //   res({ installed: false, error: "python3 is not installed" });
-    // });
-
     pythonProcess.on('close', (code) => {
       if (code === 0) {
         res({ installed: true, error: '' });
@@ -46,16 +38,10 @@ export const createVirtualEnv = (projKey: string) => {
 };
 
 export const installPyRequirements = async (projKey: string) => {
-  let pyCommand = BinFuncs.getPyPath();
 
   return new Promise((res, rej) => {
     const installProcess = spawn(
-      path.join(
-        PathFuncs.getProjectPath(projKey),
-        '.venv',
-        'bin',
-        BinFuncs.getPyPath()
-      ),
+      BinFuncs.getEnvPyPath(projKey),
       ['-m', 'pip', 'install', '-r', 'requirements.txt'],
       {
         cwd: PathFuncs.getProjectPath(projKey),
@@ -78,12 +64,7 @@ export const installPyPackages = async (
 ) => {
   return new Promise((res, rej) => {
     const installProcess = spawn(
-      path.join(
-        PathFuncs.getProjectPath(projKey),
-        '.venv',
-        'bin',
-        BinFuncs.getPyPath()
-      ),
+      BinFuncs.getEnvPyPath(projKey),
       ['-m', 'pip', 'install', ...packages],
       {
         cwd: PathFuncs.getProjectPath(projKey),
@@ -107,12 +88,7 @@ export const uninstallPyPackages = async (
 ) => {
   return new Promise((res, rej) => {
     const installProcess = spawn(
-      path.join(
-        PathFuncs.getProjectPath(projKey),
-        '.venv',
-        'bin',
-        BinFuncs.getPyPath()
-      ),
+      BinFuncs.getEnvPyPath(projKey),
       ['-m', 'pip', 'uninstall', '-y', ...packages],
       {
         cwd: PathFuncs.getProjectPath(projKey),
@@ -133,12 +109,7 @@ export const uninstallPyPackages = async (
 export const freezePyPackages = async (projKey: string) => {
   return new Promise((res, rej) => {
     const installProcess = spawn(
-      path.join(
-        PathFuncs.getProjectPath(projKey),
-        '.venv',
-        'bin',
-        BinFuncs.getPyPath()
-      ),
+      BinFuncs.getEnvPyPath(projKey),
       ['-m', 'pip', 'freeze'],
       {
         cwd: PathFuncs.getProjectPath(projKey),

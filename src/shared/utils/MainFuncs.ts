@@ -198,11 +198,15 @@ export class BinFuncs {
   };
 
   static getEnvPyPath = (projKey: string) => {
-    return path.join(
-      PathFuncs.getProjectPath(projKey),
-      '.venv',
-      'bin',
-      this.getPyPath()
-    );
+    if (process.platform == 'win32') {
+      return path.join(PathFuncs.getProjectPath(projKey), '.venv', 'scripts', 'python')
+    } else {
+      return path.join(
+        PathFuncs.getProjectPath(projKey),
+        '.venv',
+        'bin',
+        this.getPyPath()
+      );
+    }
   };
 }

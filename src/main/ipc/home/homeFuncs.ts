@@ -6,6 +6,7 @@ import Store from 'electron-store';
 export const setWindowSze = (p: any, mainWindow: BrowserWindow) => {
   // mainWindow?.setSize(payload.width, payload.height);
   let { width, height } = p;
+  if (process.platform == 'win32') width = width + 15;
   const bounds = mainWindow!.getBounds();
 
   // Calculate the difference between the new size and the old size
