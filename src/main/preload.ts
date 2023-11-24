@@ -81,6 +81,8 @@ const editorHandler = {
     ipcRenderer.send(EditorActions.OPEN_FILE, payload),
   openProjectInVs: (payload: any) =>
     ipcRenderer.send(EditorActions.OPEN_PROJECT_IN_VS, payload),
+  openProjectInIntelliJ: (payload: any) =>
+    ipcRenderer.send(EditorActions.OPEN_PROJECT_IN_INTELLIJ, payload),
 };
 
 const electronHandler = {
@@ -121,6 +123,9 @@ const electronHandler = {
     ipcRenderer.invoke(Actions.SET_OPEN_WITH_VS, payload),
   checkVsRequirementsMet: () =>
     ipcRenderer.invoke(Actions.CHECK_VS_REQUIREMENTS_MET),
+
+  getEditorToUse: () => ipcRenderer.invoke(Actions.GET_EDITOR_TO_USE),
+  setEditorToUse: (payload: any) => ipcRenderer.invoke(Actions.SET_EDITOR_TO_USE, payload),
 
   ...firebaseHandler,
   ...moduleHandler,

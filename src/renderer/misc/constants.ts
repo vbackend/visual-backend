@@ -8,6 +8,7 @@ export const refreshTokenKey = 'refresh_token';
 
 export const electronStoreKeys = {
   openWithVsKey: 'open_with_vs',
+  editorToUseKey: 'editor_to_use',
 };
 export const nodeTypeKey = 'node_type';
 

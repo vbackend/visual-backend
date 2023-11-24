@@ -24,7 +24,7 @@ type CreateProjectModalProps = {
 };
 function CreateProjectModal({ setModalOpen }: CreateProjectModalProps) {
   const dispatch = useDispatch();
-  const openWithVs = useSelector((state: RootState) => state.app.openWithVs);
+  const editorToUse = useSelector((state: RootState) => state.app.editorToUse);
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState('');
   const [errorText, setErrorText] = useState('');
@@ -50,7 +50,7 @@ function CreateProjectModal({ setModalOpen }: CreateProjectModalProps) {
       }
 
       dispatch(addProject({ ...data }));
-      RenFuncs.openProject(data, dispatch, openWithVs);
+      RenFuncs.openProject(data, dispatch, editorToUse);
 
       setModalOpen(false);
     } catch (error: any) {

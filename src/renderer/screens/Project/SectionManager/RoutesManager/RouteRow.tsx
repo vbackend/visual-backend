@@ -18,6 +18,7 @@ import { setCurRoute } from '@/renderer/redux/project/projectSlice';
 import { RootState } from '@/renderer/redux/store';
 import { toggleRouteOpened } from '@/renderer/redux/routes/routesSlice';
 import { EditorType, setCurFile } from '@/renderer/redux/editor/editorSlice';
+import { Editor } from '@/renderer/redux/app/appSlice';
 
 type RouteRowProps = {
   node: RouteNode;
@@ -40,7 +41,7 @@ function RouteRow({
   const curProject = useSelector(
     (state: RootState) => state.app.currentProject
   );
-  const openWithVs = useSelector((state: RootState) => state.app.openWithVs);
+  const editorToUse = useSelector((state: RootState) => state.app.editorToUse);
 
   const routeClicked = () => {
     dispatch(setCurRoute(node));
@@ -65,7 +66,7 @@ function RouteRow({
           ? `Middleware: ${node.key}`
           : `${node.type.toUpperCase()}   ${getRoutePath(node)}`;
 
-      if (openWithVs) {
+      if (editorToUse != Editor.VISUALBACKEND) {
         window.electron.openFile({
           path: `/src/api${node.parentFilePath}/${RouteFuncs.getFuncName(
             node

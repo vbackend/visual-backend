@@ -43,3 +43,13 @@ export const openProjectInVs = async (
   console.log(PathFuncs.getProjectPath(projKey));
   exec(`cd "${PathFuncs.getProjectPath(projKey)}" && code .`);
 };
+
+export const openProjectInIntelliJ = async (
+  event: Electron.IpcMainEvent,
+  payload: any
+) => {
+  const { projKey } = payload;
+  console.log('Opening project in IntelliJ');
+  console.log(PathFuncs.getProjectPath(projKey));
+  exec(`cd "${PathFuncs.getProjectPath(projKey)}" && idea .`);
+}

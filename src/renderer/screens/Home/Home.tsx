@@ -4,14 +4,15 @@ import {
   AppPage,
   setCurPage,
   setCurrentProject,
-  setOpenWithVs,
+  setEditorToUse,
   setProjects,
   setUser,
+  Editor
 } from '../../redux/app/appSlice';
 
 import { Project } from '@/shared/models/project';
 import { RootState } from '../../redux/store';
-import { Button, Spin, Switch } from 'antd';
+import { Button, Spin, Switch, Select } from 'antd';
 import Margin from '../../components/general/Margin';
 import { UserService } from '../../services/UserService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -26,13 +27,13 @@ import VsCodeIcon from '@/shared/assets/images/vscode.png';
 
 import '@/renderer/styles/Home/Home.scss';
 import { NodeType } from '@/shared/models/NodeType';
-import OpenWithVsModal from './Modals/OpenWithVsModal';
+import UseExternalEditorModel from './Modals/OpenWithExternalEditorModal';
 import { RenFuncs } from '@/shared/utils/RenFuncs';
 
 function HomeScreen() {
   const dispatch = useDispatch();
   const projects = useSelector((state: RootState) => state.app.projects);
-  const openWithVs = useSelector((state: RootState) => state.app.openWithVs);
+  const editorToOpen = useSelector((state: RootState) => state.app.editorToUse);
 
   const [createModalOpen, setCreateModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -41,13 +42,15 @@ function HomeScreen() {
   const [upgradeModalOpen, setUpgradeModalOpen] = useState(false);
   const [newPremiumModalOpen, setNewPremiumModalOpen] = useState(false);
   const [openWithVsModal, setOpenWithVsModal] = useState(false);
+  const [editorRequested, setEditorRequested] = useState<Editor | null>(null)
 
   const [nodeType, setNodeType] = useState(null);
 
   const init = async () => {
     setLoading(true);
     setNodeType(await window.electron.getNodeType());
-    dispatch(setOpenWithVs(await window.electron.getOpenWithVs()));
+    // dispatch(setOpenVsCode(await window.electron.getOpenWithVs()));
+    dispatch(setEditorToUse(await window.electron.getEditorToUse()));
 
     try {
       let { data } = await UserService.getUser();
@@ -95,17 +98,18 @@ function HomeScreen() {
   };
 
   const projectClicked = (project: Project) => {
-    RenFuncs.openProject(project, dispatch, openWithVs);
+    RenFuncs.openProject(project, dispatch, editorToOpen);
   };
 
-  const switchClicked = async (val: boolean) => {
-    if (val) {
-      setOpenWithVsModal(val);
-    } else {
-      dispatch(setOpenWithVs(val));
-      await window.electron.setOpenWithVs({ openWithVs: val });
+  const handleEditorChange = async (val: Editor) => {
+    if(val == Editor.VISUALBACKEND){
+      dispatch(setEditorToUse(val));
+      await window.electron.setEditorToUse({editorToUse: val});
+    } else{
+      // open the modal
+      setEditorRequested(val)
     }
-  };
+  }
 
   if (nodeType == NodeType.InvalidVersion || nodeType == NodeType.NotFound) {
     return (
@@ -136,7 +140,7 @@ function HomeScreen() {
       {createModalOpen && (
         <CreateProjectModal setModalOpen={setCreateModalOpen} />
       )}
-      {openWithVsModal && <OpenWithVsModal setModalOpen={setOpenWithVsModal} />}
+      {editorRequested != null && <UseExternalEditorModel setModalOpen={setEditorRequested} editorRequested={editorRequested} />}
       <div className="homeContainer">
         {/* SIDEBAR */}
         <HomeSidebar />
@@ -147,16 +151,17 @@ function HomeScreen() {
           <div className="mainContainer">
             <div className="projectsContainer">
               <div className="topBar">
-                <p className="openProjectTxt">Open project: </p>
-                <div className="vsSwitchContainer">
+                {/* <p className="openProjectTxt">Open project: </p> */}
+                <div className="editorSelection">
                   {/* <img className="logoImg" src={VsCodeIcon} alt="vb-logo" /> */}
                   {/* <p>With VS Code</p> */}
-                  <div className="vsImgContainer">
-                    <p>With</p>
-                    <img className="vsImg" src={VsCodeIcon} alt="vs-icon" />
-                  </div>
-                  <Margin height={5} />
-                  <Switch onChange={switchClicked} checked={openWithVs} />
+
+                  <p className='editorSelectionTxt'>Editor: </p>
+
+                  {/* <Margin height={5} /> */}
+                  <Select value={editorToOpen} style={{width: 140}} onChange={handleEditorChange} options={
+                    Object.values(Editor).map((val)=>{return {value: val, label: val}})
+                  } />
                 </div>
               </div>
 

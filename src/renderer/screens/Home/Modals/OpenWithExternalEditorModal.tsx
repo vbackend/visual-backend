@@ -12,14 +12,15 @@ import Margin from '@/renderer/components/general/Margin';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/renderer/redux/store';
 import '@/renderer/styles/Home/OpenWithVsModal.scss';
-import { setOpenWithVs } from '@/renderer/redux/app/appSlice';
+import { setEditorToUse, Editor } from '@/renderer/redux/app/appSlice';
 
-type OpenWithVsModalProps = {
-  setModalOpen: Dispatch<SetStateAction<boolean>>;
+type UseExternalEditorModelProps = {
+  setModalOpen: Dispatch<SetStateAction<Editor | null>>,
+  editorRequested: Editor | null,
 };
-function OpenWithVsModal({ setModalOpen }: OpenWithVsModalProps) {
+function UseExternalEditorModel({ setModalOpen, editorRequested }: UseExternalEditorModelProps) {
   const dispatch = useDispatch();
-  const openWithVs = useSelector((state: RootState) => state.app.openWithVs);
+  // const openWithVs = useSelector((state: RootState) => state.app.editorToUse);
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState('');
   const [errorText, setErrorText] = useState('');
@@ -28,9 +29,9 @@ function OpenWithVsModal({ setModalOpen }: OpenWithVsModalProps) {
   });
 
   const btnClicked = async () => {
-    await window.electron.setOpenWithVs({ openWithVs: true });
-    dispatch(setOpenWithVs(true));
-    setModalOpen(false);
+    await window.electron.setEditorToUse({ editorToUse: editorRequested });
+    dispatch(setEditorToUse(editorRequested));
+    setModalOpen(null);
   };
 
   // const checkVsRequirementsMet = async () => {
@@ -47,26 +48,26 @@ function OpenWithVsModal({ setModalOpen }: OpenWithVsModalProps) {
     <div className="modalBackground openWithVsModal">
       <div className="contentContainer">
         <div className="topBar">
-          <p className="title">Open projects with VS Code</p>
-          <button onClick={() => setModalOpen(false)}>
+          <p className="title">Open projects with {editorRequested}</p>
+          <button onClick={() => setModalOpen(null)}>
             <FontAwesomeIcon icon={faXmark} size="lg" />
           </button>
         </div>
         <div className="middleBar">
           <div className="inputTitle">Requirements:</div>
-          <div className="requirementContainer">
+          {editorRequested == Editor.VSCODE && <div className="requirementContainer">
             <p className="bulletIcon">1. </p>
             <p>Have "code" cli installed</p>
-          </div>
+          </div>}
           <div className="requirementContainer">
-            <p className="bulletIcon">2. </p>
-            <p>Set VS Code as default app for .ts extension</p>
+            <p className="bulletIcon">{editorRequested == Editor.VSCODE? "2.": "1."} </p>
+            <p>Set {editorRequested} as the default app for .ts/.py extension</p>
           </div>
 
           <Margin height={15} />
           <div className="inputTitle">Note:</div>
           <div className="requirementContainer">
-            <p>{"On VS, run server with 'npm run dev $PORT'"}</p>
+            <p>{`On ${editorRequested}, run server with 'npm run dev $PORT'`}</p>
           </div>
         </div>
         <Margin height={20} />
@@ -89,4 +90,4 @@ function OpenWithVsModal({ setModalOpen }: OpenWithVsModalProps) {
   );
 }
 
-export default OpenWithVsModal;
+export default UseExternalEditorModel;

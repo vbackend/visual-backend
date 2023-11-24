@@ -18,6 +18,9 @@ export class Actions {
   static SET_OPEN_WITH_VS = 'set-open-with-vs';
   static CHECK_VS_REQUIREMENTS_MET = 'check-vs-requirements-met';
 
+  static GET_EDITOR_TO_USE = 'get-editor-to-use';
+  static SET_EDITOR_TO_USE = 'set-editor-to-use';
+
   // PROJECT
   static CREATE_PROJECT = 'create-project';
   static CREATE_ROUTE_GROUP = 'create-route-group';
@@ -97,5 +100,6 @@ export class ResendActions {
 
 export class EditorActions {
   static OPEN_PROJECT_IN_VS = 'open-project-in-vs';
+  static OPEN_PROJECT_IN_INTELLIJ = 'open-project-in-intellij';
   static OPEN_FILE = 'open-file';
 }

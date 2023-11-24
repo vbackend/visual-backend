@@ -1,5 +1,6 @@
 import {
   AppPage,
+  Editor,
   Platform,
   setCurPage,
   setCurrentProject,
@@ -74,12 +75,26 @@ export class RenFuncs {
     dispatch(setCurModule(newModule));
   };
 
-  static openProject = (project: Project, dispatch: any, openWithVs: any) => {
+  static openProjectOld = (project: Project, dispatch: any, openWithVs: any) => {
     if (openWithVs) {
       window.electron.openProjectInVs({ projKey: project.key });
     }
     window.electron.setWindowSize(
       openWithVs ? projWindowSizeVs : projWindowSizeNoVs
+    );
+    dispatch(setCurrentProject(project));
+    dispatch(setCurPage(AppPage.Project));
+  };
+
+  static openProject = (project: Project, dispatch: any, editorToUse: Editor) => {
+    console.log("FROM OPENPROJECT FUNCTION IN SHARED UTIL opening project in ", editorToUse)
+    if (editorToUse === Editor.VSCODE) {
+      window.electron.openProjectInVs({ projKey: project.key });
+    } else if(editorToUse === Editor.INTELLIJ){
+      window.electron.openProjectInIntelliJ({projKey: project.key});
+    }
+    window.electron.setWindowSize(
+       editorToUse != Editor.VISUALBACKEND ? projWindowSizeVs : projWindowSizeNoVs
     );
     dispatch(setCurrentProject(project));
     dispatch(setCurPage(AppPage.Project));
