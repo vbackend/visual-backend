@@ -12,7 +12,7 @@ import Margin from '@/renderer/components/general/Margin';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/renderer/redux/store';
 import '@/renderer/styles/Home/OpenWithVsModal.scss';
-import { setEditorToUse, Editor } from '@/renderer/redux/app/appSlice';
+import { setEditorToUse, Editor, Platform } from '@/renderer/redux/app/appSlice';
 
 type UseExternalEditorModelProps = {
   setModalOpen: Dispatch<SetStateAction<Editor | null>>,
@@ -20,6 +20,7 @@ type UseExternalEditorModelProps = {
 };
 function UseExternalEditorModel({ setModalOpen, editorRequested }: UseExternalEditorModelProps) {
   const dispatch = useDispatch();
+  const platform = useSelector((state: RootState)=>state.app.curPlatform)
   // const openWithVs = useSelector((state: RootState) => state.app.editorToUse);
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState('');
@@ -55,12 +56,18 @@ function UseExternalEditorModel({ setModalOpen, editorRequested }: UseExternalEd
         </div>
         <div className="middleBar">
           <div className="inputTitle">Requirements:</div>
-          {editorRequested == Editor.VSCODE && <div className="requirementContainer">
+          {editorRequested == Editor.VSCODE && (
+          <div className="requirementContainer">
             <p className="bulletIcon">1. </p>
             <p>Have "code" cli installed</p>
-          </div>}
+          </div>)}
+          {editorRequested == Editor.INTELLIJ && platform == Platform.Windows && (
           <div className="requirementContainer">
-            <p className="bulletIcon">{editorRequested == Editor.VSCODE? "2.": "1."} </p>
+            <p className="bulletIcon"><div style={{width: 15}}>1. </div></p>
+            <p>Have the IntelliJ IDEA bin folder added to the PATH environment variable.</p>
+          </div>)}
+          <div className="requirementContainer">
+            <p className="bulletIcon">{editorRequested == Editor.VSCODE || platform == Platform.Windows? "2.": "1."}</p>
             <p>Set {editorRequested} as the default app for .ts/.py extension</p>
           </div>
 
