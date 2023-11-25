@@ -6,7 +6,6 @@
 }
 
 .openWithVsModal .middleBar {
-
   .inputTitle {
     margin-bottom: 6px;
   }
@@ -27,15 +26,20 @@
     }
 
     .icon {
-      color: darken($successColor, 10%)
+      color: darken($successColor, 10%);
     }
 
     .reqFailedIcon {
       margin-top: 1.5px;
       color: $errColor;
     }
+  }
 
+  .noteContainer {
+    flex-direction: column;
+
+    p:nth-child(1) {
+      margin-bottom: 10px;
+    }
   }
 }
-
-

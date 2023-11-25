@@ -7,7 +7,7 @@ import {
   setEditorToUse,
   setProjects,
   setUser,
-  Editor
+  Editor,
 } from '../../redux/app/appSlice';
 
 import { Project } from '@/shared/models/project';
@@ -42,7 +42,7 @@ function HomeScreen() {
   const [upgradeModalOpen, setUpgradeModalOpen] = useState(false);
   const [newPremiumModalOpen, setNewPremiumModalOpen] = useState(false);
   const [openWithVsModal, setOpenWithVsModal] = useState(false);
-  const [editorRequested, setEditorRequested] = useState<Editor | null>(null)
+  const [editorRequested, setEditorRequested] = useState<Editor | null>(null);
 
   const [nodeType, setNodeType] = useState(null);
 
@@ -72,7 +72,6 @@ function HomeScreen() {
 
     // Manage redirect back to app after finish checkout
     const handleCheckoutStatus = async (event: any, payload: any) => {
-      console.log('Received checkout status:', payload);
       setUpgradeModalOpen(false);
 
       try {
@@ -102,14 +101,14 @@ function HomeScreen() {
   };
 
   const handleEditorChange = async (val: Editor) => {
-    if(val == Editor.VISUALBACKEND){
+    if (val == Editor.VISUALBACKEND) {
       dispatch(setEditorToUse(val));
-      await window.electron.setEditorToUse({editorToUse: val});
-    } else{
+      await window.electron.setEditorToUse({ editorToUse: val });
+    } else {
       // open the modal
-      setEditorRequested(val)
+      setEditorRequested(val);
     }
-  }
+  };
 
   if (nodeType == NodeType.InvalidVersion || nodeType == NodeType.NotFound) {
     return (
@@ -140,7 +139,12 @@ function HomeScreen() {
       {createModalOpen && (
         <CreateProjectModal setModalOpen={setCreateModalOpen} />
       )}
-      {editorRequested != null && <UseExternalEditorModel setModalOpen={setEditorRequested} editorRequested={editorRequested} />}
+      {editorRequested != null && (
+        <UseExternalEditorModel
+          setModalOpen={setEditorRequested}
+          editorRequested={editorRequested}
+        />
+      )}
       <div className="homeContainer">
         {/* SIDEBAR */}
         <HomeSidebar />
@@ -156,12 +160,18 @@ function HomeScreen() {
                   {/* <img className="logoImg" src={VsCodeIcon} alt="vb-logo" /> */}
                   {/* <p>With VS Code</p> */}
 
-                  <p className='editorSelectionTxt'>Editor: </p>
+                  <p className="editorSelectionTxt">Editor: </p>
 
                   {/* <Margin height={5} /> */}
-                  <Select value={editorToOpen} style={{width: 140}} onChange={handleEditorChange} options={
-                    Object.values(Editor).map((val)=>{return {value: val, label: val}})
-                  } />
+                  <Select
+                    defaultValue={Editor.VISUALBACKEND}
+                    value={editorToOpen}
+                    style={{ width: 160 }}
+                    onChange={handleEditorChange}
+                    options={Object.values(Editor).map((val) => {
+                      return { value: val, label: val };
+                    })}
+                  />
                 </div>
               </div>
 

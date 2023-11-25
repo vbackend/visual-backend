@@ -49,11 +49,9 @@ export const openProjectInIntelliJ = async (
   payload: any
 ) => {
   const { projKey } = payload;
-  console.log('Opening project in IntelliJ');
-  console.log(PathFuncs.getProjectPath(projKey));
-  if(process.platform == 'darwin'){
-    exec(`open -na "IntelliJ IDEA.app” ${PathFuncs.getProjectPath(projKey)}`)
-  } else{
+  if (process.platform == 'win32') {
     exec(`cd "${PathFuncs.getProjectPath(projKey)}" && idea .`);
+  } else {
+    exec(`open -na "IntelliJ IDEA.app" "${PathFuncs.getProjectPath(projKey)}"`);
   }
-}
+};
