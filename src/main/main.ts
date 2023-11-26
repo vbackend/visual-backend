@@ -111,7 +111,8 @@ import {
   setOpenWithVs,
   setWindowSze,
 } from './ipc/home/homeFuncs';
-import { homeWindowSize } from '@/renderer/misc/constants';
+import { electronStoreKeys, homeWindowSize } from '@/renderer/misc/constants';
+import { Editor } from '@/shared/models/Editor';
 
 config();
 
@@ -238,9 +239,9 @@ const init = async () => {
   );
   ipcMain.handle(Actions.CHECK_VS_REQUIREMENTS_MET, checkVsRequirementsMet);
 
-  ipcMain.handle(Actions.GET_EDITOR_TO_USE, getEditorToUse)
+  ipcMain.handle(Actions.GET_EDITOR_TO_USE, getEditorToUse);
   ipcMain.handle(Actions.SET_EDITOR_TO_USE, (e: any, p: any) => {
-    setEditorToUse(e, p, mainWindow!)
+    setEditorToUse(e, p, mainWindow!);
   });
 
   ipcMain.handle(Actions.OPEN_CHECKOUT_PAGE, openCheckoutPage);
@@ -422,9 +423,10 @@ app
 
     await FileFuncs.createDirIfNotExists(BinFuncs.getBinOutputFolder());
 
-    // let s = new Store();
-    // s.delete(electronStoreKeys.openWithVsKey);
-    // console.log('Node type:', s.get(nodeTypeKey));
+    let s = new Store();
+    if (!s.get(electronStoreKeys.editorToUseKey)) {
+      s.set(electronStoreKeys.editorToUseKey, Editor.VISUALBACKEND);
+    }
 
     init();
     projectInit();
