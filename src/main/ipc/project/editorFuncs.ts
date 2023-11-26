@@ -30,6 +30,7 @@ export const saveFileContents = async (
 export const openFile = async (event: Electron.IpcMainEvent, payload: any) => {
   const { path, projKey, contents } = payload;
   let filePath = `${PathFuncs.getProjectPath(projKey)}${path}`;
+  console.log('Opening file path:', filePath);
   shell.openPath(filePath);
   // exec(`"${filePath}"`);
 };

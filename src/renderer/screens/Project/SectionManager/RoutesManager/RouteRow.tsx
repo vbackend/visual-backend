@@ -10,6 +10,7 @@ import { RootState } from '@/renderer/redux/store';
 import { toggleRouteOpened } from '@/renderer/redux/routes/routesSlice';
 import { EditorType, setCurFile } from '@/renderer/redux/editor/editorSlice';
 import { Editor } from '@/renderer/redux/app/appSlice';
+import { GenFuncs } from '@/shared/utils/GenFuncs';
 
 type RouteRowProps = {
   node: RouteNode;

@@ -1,3 +1,4 @@
+import { Editor } from '@/renderer/redux/app/appSlice';
 import { EditorType, setCurFile } from '@/renderer/redux/editor/editorSlice';
 import { RootState } from '@/renderer/redux/store';
 import { BFunc, BFuncHelpers } from '@/shared/models/BFunc';
@@ -12,10 +13,10 @@ export const FuncButton = ({ func, module }: any) => {
   const curProject = useSelector(
     (state: RootState) => state.app.currentProject
   );
-  const openWithVs = useSelector((state: RootState) => state.app.openWithVs);
+  const editorUsed = useSelector((state: RootState) => state.app.editorToUse);
 
   const funcClicked = async (f: BFunc, m: BModule) => {
-    if (openWithVs) {
+    if (editorUsed != Editor.VISUALBACKEND) {
       window.electron.openFile({
         path: RenFuncs.getFuncFileData(f, m).path,
         projKey: curProject!.key,

@@ -1,11 +1,6 @@
-import {
-  faCheck,
-  faCircle,
-  faDotCircle,
-  faXmark,
-} from '@fortawesome/free-solid-svg-icons';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 
 import { Button } from 'antd';
 import Margin from '@/renderer/components/general/Margin';

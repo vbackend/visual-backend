@@ -97,10 +97,10 @@ export class RenFuncs {
     dispatch: any,
     editorToUse: Editor
   ) => {
-    console.log(
-      'FROM OPENPROJECT FUNCTION IN SHARED UTIL opening project in ',
-      editorToUse
-    );
+    window.electron.setCurProject({
+      projKey: project.key,
+      projType: project.projectType,
+    });
     if (editorToUse === Editor.VSCODE) {
       window.electron.openProjectInVs({ projKey: project.key });
     } else if (editorToUse === Editor.INTELLIJ) {

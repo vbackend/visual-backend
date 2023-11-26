@@ -142,6 +142,7 @@ const electronHandler = {
   ...envHandler,
   ...resendHandler,
   ...editorHandler,
+  ...projectHandler,
 
   createProject: (payload: any) =>
     ipcRenderer.invoke(Actions.CREATE_PROJECT, payload),

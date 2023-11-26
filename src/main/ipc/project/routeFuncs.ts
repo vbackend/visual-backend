@@ -199,10 +199,8 @@ export const deleteRoute = async (
         label: 'Delete route',
         click: async () => {
           let deleteIds: Array<number> = [];
-          console.log('Deleting route:\n', route);
 
           getNodeAndChildrenIds(route, deleteIds);
-          console.log('Deleting ids:', deleteIds);
           // return;
           for (let i = 0; i < deleteIds.length; i++) {
             await removeRouteQuery(deleteIds[i]);
