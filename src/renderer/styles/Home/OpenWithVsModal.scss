@@ -2,18 +2,17 @@
 
 .openWithVsModal .contentContainer {
   max-width: none;
-  width: 380px;
+  width: 420px;
 }
 
 .openWithVsModal .middleBar {
-
   .inputTitle {
     margin-bottom: 6px;
   }
 
   .requirementContainer {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     margin-bottom: 4px;
 
     .bulletIcon {
@@ -27,15 +26,20 @@
     }
 
     .icon {
-      color: darken($successColor, 10%)
+      color: darken($successColor, 10%);
     }
 
     .reqFailedIcon {
       margin-top: 1.5px;
       color: $errColor;
     }
+  }
 
+  .noteContainer {
+    flex-direction: column;
+
+    p:nth-child(1) {
+      margin-bottom: 10px;
+    }
   }
 }
-
-

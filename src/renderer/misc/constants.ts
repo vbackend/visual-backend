@@ -9,6 +9,7 @@ export const curProjectKey = 'cur_project_key';
 
 export const electronStoreKeys = {
   openWithVsKey: 'open_with_vs',
+  editorToUseKey: 'editor_to_use',
 };
 export const nodeTypeKey = 'node_type';
 

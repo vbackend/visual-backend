@@ -9,16 +9,17 @@ import PackageManager from './PackageManager/PackageManager';
 import { BModuleType } from '@/shared/models/BModule';
 import EnvManager from './EnvManager/EnvManager';
 import RoutesManager from './RoutesManager/RoutesManager';
+import { Editor } from '@/renderer/redux/app/appSlice';
 
 function SectionManager() {
   let curTab = useSelector((state: RootState) => state.project.currentTab);
-  let openWithVs = useSelector((state: RootState) => state.app.openWithVs);
+  let editorToUse = useSelector((state: RootState) => state.app.editorToUse);
 
   return (
     <div
       className="sectionManager"
       style={
-        openWithVs
+        editorToUse != Editor.VISUALBACKEND
           ? {
               maxWidth: '300px',
               minWidth: '300px',

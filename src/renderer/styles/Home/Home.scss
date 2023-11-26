@@ -20,15 +20,24 @@
   margin-bottom: 10px;
 }
 
-.vsSwitchContainer {
+.editorSelection {
+  margin-left: 10px;
   width: 100%;
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  flex-direction: row;
+  align-items: flex-start;
   margin-bottom: 4px;
+  gap: 10px;
 
   p {
     font-size: $para5;
+  }
+
+  .editorSelectionTxt {
+    font-size: $para4;
+    font-weight: bold;
+    color: $textSecondary;
+    margin-top: 8px;
   }
 }
 

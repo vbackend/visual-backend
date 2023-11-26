@@ -1,5 +1,6 @@
 import {
   AppPage,
+  Editor,
   Platform,
   setCurPage,
   setCurrentProject,
@@ -76,16 +77,11 @@ export class RenFuncs {
     dispatch(setCurModule(newModule));
   };
 
-  static openProject = async (
+  static openProjectOld = (
     project: Project,
     dispatch: any,
     openWithVs: any
   ) => {
-    await window.electron.setCurProject({
-      projKey: project.key,
-      projType: project.projectType,
-    });
-
     if (openWithVs) {
       window.electron.openProjectInVs({ projKey: project.key });
     }
@@ -96,20 +92,26 @@ export class RenFuncs {
     dispatch(setCurPage(AppPage.Project));
   };
 
-  static openFile = (
+  static openProject = (
     project: Project,
-    f: BFunc,
-    m: BModule,
     dispatch: any,
-    openWithVs: any
+    editorToUse: Editor
   ) => {
-    if (openWithVs) {
-      window.electron.openFile({
-        path: RenFuncs.getFuncFileData(f, m).path,
-        projKey: project!.key,
-      });
-    } else {
-      dispatch(setCurFile(RenFuncs.getFuncFileData(f, m)));
+    console.log(
+      'FROM OPENPROJECT FUNCTION IN SHARED UTIL opening project in ',
+      editorToUse
+    );
+    if (editorToUse === Editor.VSCODE) {
+      window.electron.openProjectInVs({ projKey: project.key });
+    } else if (editorToUse === Editor.INTELLIJ) {
+      window.electron.openProjectInIntelliJ({ projKey: project.key });
     }
+    window.electron.setWindowSize(
+      editorToUse != Editor.VISUALBACKEND
+        ? projWindowSizeVs
+        : projWindowSizeNoVs
+    );
+    dispatch(setCurrentProject(project));
+    dispatch(setCurPage(AppPage.Project));
   };
 }

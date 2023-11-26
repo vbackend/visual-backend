@@ -17,7 +17,7 @@ import useShortcut from '@/renderer/hooks/useShortcut';
 import { Spin } from 'antd';
 import { resetCloudState } from '@/renderer/redux/cloud/cloudSlice';
 import { setCurFile } from '@/renderer/redux/editor/editorSlice';
-import { AppPage, setCurPage } from '@/renderer/redux/app/appSlice';
+import { AppPage, Editor, setCurPage } from '@/renderer/redux/app/appSlice';
 import { useHotkeys } from 'react-hotkeys-hook';
 
 function ProjectScreen() {
@@ -27,7 +27,7 @@ function ProjectScreen() {
   const [loading, setLoading] = useState(true);
   const [loadingErr, setLoadingErr] = useState(false);
   const showTerm = useSelector((state: RootState) => state.project.showTerm);
-  const openWithVs = useSelector((state: RootState) => state.app.openWithVs);
+  const editorToUse = useSelector((state: RootState) => state.app.editorToUse);
 
   let initProject = async () => {
     let project = app.currentProject;
@@ -79,7 +79,7 @@ function ProjectScreen() {
       <div className="projectScreen">
         <Sidebar />
         <SectionManager />
-        {!openWithVs ? (
+        { editorToUse == Editor.VISUALBACKEND? (
           <EditorScreen />
         ) : (
           <div
@@ -88,7 +88,7 @@ function ProjectScreen() {
           >
             <div>
               <p style={{ marginBottom: '6px', fontWeight: '600' }}>
-                Project is opened in VS Code
+                Project is opened in {editorToUse}
               </p>
               <p>
                 {'1. Use node version <= 18.18.1'}

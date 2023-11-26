@@ -73,6 +73,7 @@ import {
 import {
   getFileContents,
   openFile,
+  openProjectInIntelliJ,
   openProjectInVs,
   saveFileContents,
 } from './ipc/project/editorFuncs';
@@ -103,8 +104,10 @@ import { initNodeBinaries, setNodeType } from './helpers/binFuncs';
 import {
   checkVsRequirementsMet,
   getDeviceType,
+  getEditorToUse,
   getNodeType,
   getOpenWithVs,
+  setEditorToUse,
   setOpenWithVs,
   setWindowSze,
 } from './ipc/home/homeFuncs';
@@ -235,7 +238,10 @@ const init = async () => {
   );
   ipcMain.handle(Actions.CHECK_VS_REQUIREMENTS_MET, checkVsRequirementsMet);
 
-  ipcMain.handle(Actions.SET_WINDOW_SIZE, setOpenWithVs);
+  ipcMain.handle(Actions.GET_EDITOR_TO_USE, getEditorToUse)
+  ipcMain.handle(Actions.SET_EDITOR_TO_USE, (e: any, p: any) => {
+    setEditorToUse(e, p, mainWindow!)
+  });
 
   ipcMain.handle(Actions.OPEN_CHECKOUT_PAGE, openCheckoutPage);
   ipcMain.handle(Actions.OPEN_CUSTOMER_PORTAL, openCustomerPortal);
@@ -336,6 +342,8 @@ const resendInit = async () => {
 const editorInit = async () => {
   ipcMain.on(EditorActions.OPEN_FILE, openFile);
   ipcMain.on(EditorActions.OPEN_PROJECT_IN_VS, openProjectInVs);
+
+  ipcMain.on(EditorActions.OPEN_PROJECT_IN_INTELLIJ, openProjectInIntelliJ);
 };
 
 let quitting = false;

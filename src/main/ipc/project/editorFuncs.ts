@@ -41,3 +41,15 @@ export const openProjectInVs = async (
   const { projKey } = payload;
   exec(`cd "${PathFuncs.getProjectPath(projKey)}" && code .`);
 };
+
+export const openProjectInIntelliJ = async (
+  event: Electron.IpcMainEvent,
+  payload: any
+) => {
+  const { projKey } = payload;
+  if (process.platform == 'win32') {
+    exec(`cd "${PathFuncs.getProjectPath(projKey)}" && idea .`);
+  } else {
+    exec(`open -na "IntelliJ IDEA.app" "${PathFuncs.getProjectPath(projKey)}"`);
+  }
+};
