@@ -43,6 +43,7 @@ import {
   getMongoDbs,
 } from './ipc/project/modules/mongodb/mongoFuncs';
 import {
+  checkBinInstalled,
   createProject,
   deleteProject,
   initProject,
@@ -233,6 +234,7 @@ const init = async () => {
 
   ipcMain.handle(Actions.GET_DEVICE_TYPE, getDeviceType);
   ipcMain.handle(Actions.GET_NODE_TYPE, getNodeType);
+  ipcMain.handle(Actions.CHECK_BIN_INSTALLED, checkBinInstalled);
   ipcMain.handle(Actions.GET_OPEN_WITH_VS, getOpenWithVs);
   ipcMain.handle(Actions.SET_OPEN_WITH_VS, (e: any, p: any) =>
     setOpenWithVs(e, p, mainWindow!)
@@ -411,8 +413,8 @@ app
   .then(async () => {
     // autoUpdater.checkForUpdates();
 
-    await initNodeBinaries();
-    await setNodeType();
+    // await initNodeBinaries();
+    // await setNodeType();
 
     createWindow();
     fixPath();

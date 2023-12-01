@@ -16,6 +16,7 @@ export class Actions {
   static GET_OPEN_WITH_VS = 'get-open-with-vs';
   static SET_OPEN_WITH_VS = 'set-open-with-vs';
   static CHECK_VS_REQUIREMENTS_MET = 'check-vs-requirements-met';
+  static CHECK_BIN_INSTALLED = 'check-bin-installed';
 
   static GET_EDITOR_TO_USE = 'get-editor-to-use';
   static SET_EDITOR_TO_USE = 'set-editor-to-use';

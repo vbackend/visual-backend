@@ -147,6 +147,9 @@ const electronHandler = {
   createProject: (payload: any) =>
     ipcRenderer.invoke(Actions.CREATE_PROJECT, payload),
 
+  checkBinInstalled: (payload: any) =>
+    ipcRenderer.invoke(Actions.CHECK_BIN_INSTALLED, payload),
+
   openCheckoutPage: (payload: any) =>
     ipcRenderer.invoke(Actions.OPEN_CHECKOUT_PAGE, payload),
 

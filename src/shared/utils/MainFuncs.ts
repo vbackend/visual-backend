@@ -173,20 +173,20 @@ export class BinFuncs {
   };
 
   static getNpmPath = () => {
-    let s = new Store();
-    let nodeType = s.get(nodeTypeKey);
-    if (nodeType == NodeType.Default) {
-      console.log('Using default npm');
-      return process.platform == 'win32' ? 'npm.cmd' : 'npm';
-    }
+    return process.platform == 'win32' ? 'npm.cmd' : 'npm';
+    // let s = new Store();
+    // let nodeType = s.get(nodeTypeKey);
+    // if (nodeType == NodeType.Default) {
+    //   console.log('Using default npm');
+    // }
 
-    this.appendNodePath();
-    console.log('Using downloaded npm');
-    if (process.platform == 'darwin') {
-      return path.join(this.getNodeBinPath(), 'npm');
-    } else {
-      return path.join(this.getNodeBinPath(), 'npm.cmd');
-    }
+    // this.appendNodePath();
+    // console.log('Using downloaded npm');
+    // if (process.platform == 'darwin') {
+    //   return path.join(this.getNodeBinPath(), 'npm');
+    // } else {
+    //   return path.join(this.getNodeBinPath(), 'npm.cmd');
+    // }
   };
 
   static getPyPath = () => {
@@ -199,7 +199,12 @@ export class BinFuncs {
 
   static getEnvPyPath = (projKey: string) => {
     if (process.platform == 'win32') {
-      return path.join(PathFuncs.getProjectPath(projKey), '.venv', 'scripts', 'python')
+      return path.join(
+        PathFuncs.getProjectPath(projKey),
+        '.venv',
+        'scripts',
+        'python'
+      );
     } else {
       return path.join(
         PathFuncs.getProjectPath(projKey),

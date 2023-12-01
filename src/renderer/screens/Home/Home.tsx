@@ -48,8 +48,7 @@ function HomeScreen() {
 
   const init = async () => {
     setLoading(true);
-    setNodeType(await window.electron.getNodeType());
-    // dispatch(setOpenVsCode(await window.electron.getOpenWithVs()));
+    // setNodeType(await window.electron.getNodeType());
     dispatch(setEditorToUse(await window.electron.getEditorToUse()));
 
     try {
@@ -109,17 +108,17 @@ function HomeScreen() {
     }
   };
 
-  if (nodeType == NodeType.InvalidVersion || nodeType == NodeType.NotFound) {
-    return (
-      <div className="emptyContainer">
-        <p style={{ maxWidth: '300px' }}>
-          {nodeType == NodeType.InvalidVersion
-            ? 'The default node version on your machine is invalid. Please use a node version <= 18.18.2'
-            : 'Node could not be found on your machine. Please install node with version <= 18.18.2'}
-        </p>
-      </div>
-    );
-  }
+  // if (nodeType == NodeType.InvalidVersion || nodeType == NodeType.NotFound) {
+  //   return (
+  //     <div className="emptyContainer">
+  //       <p style={{ maxWidth: '300px' }}>
+  //         {nodeType == NodeType.InvalidVersion
+  //           ? 'The default node version on your machine is invalid. Please use a node version <= 18.18.2'
+  //           : 'Node could not be found on your machine. Please install node with version <= 18.18.2'}
+  //       </p>
+  //     </div>
+  //   );
+  // }
 
   if (loading)
     return (

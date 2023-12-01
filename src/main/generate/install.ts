@@ -2,6 +2,34 @@ import { GenFuncs } from '@/shared/utils/GenFuncs';
 import { BinFuncs, MainFuncs, PathFuncs } from '@/shared/utils/MainFuncs';
 import { exec, fork, spawn } from 'child_process';
 
+export function checkNodeVer() {
+  return new Promise<any>((res, rej) => {
+    const nodeProcess = spawn('node', ['-v']);
+
+    let versionString = '';
+
+    nodeProcess.on('close', (code) => {
+      if (code === 0) {
+        res({ installed: true, error: '' });
+      } else {
+        res({ installed: false, error: 'node is not installed' });
+      }
+      return;
+      versionString = versionString.trim();
+      // console.log('Node version:', versionString);
+      const versionParts = versionString.substring(1).split('.');
+      const majorVersion = parseInt(versionParts[0], 10);
+
+      res(true);
+      // if (majorVersion <= 18) {
+      //   res([true, 'Node is installed']);
+      // } else {
+      //   res([false, NodeType.InvalidVersion]);
+      // }
+    });
+  });
+}
+
 export const installPackages = async (
   packages: Array<string>,
   projKey: string
