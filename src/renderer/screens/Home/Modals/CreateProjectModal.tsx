@@ -42,16 +42,17 @@ function CreateProjectModal({ setModalOpen }: CreateProjectModalProps) {
     setErrorText('');
 
     try {
+      let binRes = await window.electron.checkBinInstalled(projectType);
+      if (binRes.error) {
+        setErrorText(binRes.error);
+        setLoading(false);
+        return;
+      }
+
       let { data } = await ProjectService.createProject(name, projectType);
 
       // 2. Create project DB file
       let projKey = ProjectFuncs.getKey(name);
-      // let data: any = {
-      //   name: name,
-      //   key: projKey,
-      //   projectType: ProjectType,
-      // };
-
       let { error } = await window.electron.createProject({
         projKey,
         projectType,

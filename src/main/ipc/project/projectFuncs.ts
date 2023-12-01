@@ -7,7 +7,7 @@ import { getRoutes, insertRoute } from '../../db/route/routeQueries';
 import { getModuleFuncs, getModules } from '@/main/db/modules/moduleQueries';
 import { RouteType } from '@/shared/models/route';
 import { FileFuncs } from '@/main/helpers/fileFuncs';
-import { installPackages } from '@/main/generate/install';
+import { checkNodeVer, installPackages } from '@/main/generate/install';
 import { MainFuncs, PathFuncs } from '@/shared/utils/MainFuncs';
 
 import {
@@ -18,7 +18,35 @@ import { ProjectType } from '@/shared/models/project';
 import { createFastAPIProject } from './fastapi/pythonProjectFuncs';
 import Store from 'electron-store';
 import { curProjectKey } from '@/renderer/misc/constants';
-import { freezePyPackages } from '@/main/generate/fastapi/pythonInstall';
+import {
+  checkPython3Ver,
+  freezePyPackages,
+} from '@/main/generate/fastapi/pythonInstall';
+
+export const checkBinInstalled = async (
+  e: Electron.IpcMainInvokeEvent,
+  payload: any
+) => {
+  let { projType } = payload;
+
+  if (projType == ProjectType.FastAPI) {
+    let { installed, error } = await checkPython3Ver();
+    console.log('Python installed:', installed);
+    if (!installed) {
+      return { error: 'python3 not found' };
+    } else {
+      return { error: null };
+    }
+  } else {
+    let { installed, error } = await checkNodeVer();
+    console.log('Node installed:', installed);
+    if (!installed) {
+      return { error: 'python3 not found' };
+    } else {
+      return { error: null };
+    }
+  }
+};
 
 export const createProject = async (
   event: Electron.IpcMainInvokeEvent,
