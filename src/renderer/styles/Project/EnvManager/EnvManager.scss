@@ -1,98 +1,113 @@
 @import '../projectConfig';
 @import '../../config';
 
-.envManager .headerContainer {
-    padding: $sectionHeaderPadding;
-
-    .header {
-        font-size: $para2;
-        font-weight: bold;
-        margin-bottom: 10px;
-    }
-
-    .installHeader {
-        font-weight: 600;
-        margin-bottom: 5px;
-        font-size: $para3;
-    }
+.envManager {
+  height: 100vh;
+  overflow: hidden;
 }
 
-.envManager .headerContainer .createContainer {
-    width: 80%;
+.envManager .headerContainer2 {
+  padding: $sectionHeaderPadding;
+  padding-top: 0px;
+
+  .header {
+    font-size: $para2;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .installHeader {
+    font-weight: 600;
+    margin-bottom: 5px;
+    font-size: $para3;
+  }
 }
 
+.envManager .envMain {
+  height: calc(100vh - 50px);
+  overflow: scroll;
+  overflow-x: hidden;
+  padding-bottom: 50px;
+}
 
-.envManager .middleContainer {
-    margin-top: 20px;
+.envManager .envMain .middleContainer {
+  margin-top: 20px;
 
-    .header {
-        margin-bottom: 10px;
-        font-size: $para3;
-        font-weight: bold;
-        padding: 0px $sectionHorizPadding;
+  .header {
+    margin-bottom: 10px;
+    font-size: $para3;
+    font-weight: bold;
+    padding: 0px $sectionHorizPadding;
+  }
+
+  .envVarContainer {
+    display: flex;
+    padding: 0px $sectionHorizPadding;
+    flex-direction: column;
+  }
+
+  .envVarContainer .row1 {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+
+    .keyVal {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      font-size: calc($para4 + 1px);
     }
 
-    .envVarContainer {
-        display: flex;
-        padding: 0px $sectionHorizPadding;
-        flex-direction: column;
+    .editBtn {
+      @include flexCenter(row);
+      height: 25px;
+      width: 30px;
+      .icon {
+        color: $iconColor;
+      }
     }
+  }
 
-    .envVarContainer .row1{
-        display: flex;
-        width: 100%;
-        justify-content: space-between;
-        align-items: center;
+  .envVarContainer .row2 {
+    display: flex;
+    margin-bottom: 20px;
 
-        .editBtn {
-            @include flexCenter(row);
-            height: 25px;
-            width: 30px;
-            .icon {
-              color: $iconColor;
-            }
-        }
+    .deleteBtn {
+      @include flexCenter(row);
+      height: 30px;
+      width: 30px;
     }
+  }
 
-    .envVarContainer .row2 {
-        display: flex;
-        margin-bottom: 20px;
+  .pkgRow {
+    padding: 0px $sectionHorizPadding;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 35px;
+    font-size: $para4;
+    transition: 0.2s;
 
-        .deleteBtn {
-            @include flexCenter(row);
-            height: 30px;
-            width: 30px;
-        }
+    &:hover {
+      background-color: #fafafa;
     }
+  }
 
-    .pkgRow {
-        padding: 0px $sectionHorizPadding;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        height: 35px;
-        font-size: $para4;
-        transition: 0.2s;
+  .pkgRow .left {
+    display: flex;
 
-        &:hover {
-            background-color: #fafafa;
-        }
+    .pkgName {
+      width: 100px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
+  }
 
-    .pkgRow .left {
-        display: flex;
-
-        .pkgName {
-            width: 100px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-    }
-
-    .delBtn {
-        height: 80%;
-        @include flexCenter(row);
-        color: grey;
-    }
+  .delBtn {
+    height: 80%;
+    @include flexCenter(row);
+    color: grey;
+  }
 }

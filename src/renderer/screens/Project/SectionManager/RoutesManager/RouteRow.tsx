@@ -52,11 +52,11 @@ function RouteRow({
   };
 
   const rowClicked = (e: any) => {
-    let projType = curProject?.projectType;
+    let projType = curProject?.project_type;
 
     let path = `/src/api${node.parentFilePath}/${RouteFuncs.getFuncName(
       node,
-      curProject!.projectType
+      curProject!.project_type
     )}.${GenFuncs.getExtension(projType!)}`;
 
     if (node.type != RouteType.group) {

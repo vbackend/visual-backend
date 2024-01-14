@@ -38,7 +38,6 @@ export const createVirtualEnv = (projKey: string) => {
 };
 
 export const installPyRequirements = async (projKey: string) => {
-
   return new Promise((res, rej) => {
     const installProcess = spawn(
       BinFuncs.getEnvPyPath(projKey),
@@ -52,7 +51,8 @@ export const installPyRequirements = async (projKey: string) => {
       if (code == 0) {
         res(true);
       } else {
-        rej('Failed to install python requirements');
+        res(false);
+        // rej('Failed to install python requirements');
       }
     });
   });

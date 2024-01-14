@@ -53,13 +53,22 @@ function HomeScreen() {
 
     try {
       let { data } = await UserService.getUser();
-      dispatch(setUser(data));
+      dispatch(setUser(data.user));
 
-      let res = await UserService.getProjects();
-      dispatch(setProjects(res.data));
+      let { data: projectData } = await UserService.getProjects();
+      let projects = [];
+      for (let project of projectData) {
+        projects.push({ ...project, projectType: project.project_type });
+      }
+      // for (let i = 0; i < projectData.length; i++) {
+      //   let proj = projectData[i];
+      //   let { data: projData } = await UserService.getProject(proj.key);
+      //   proj = { ...proj, ...projData };
+      //   projectData[i] = proj;
+      // }
+      dispatch(setProjects(projectData));
     } catch (error) {
       dispatch(setCurPage(AppPage.Auth));
-
       return;
     }
     setLoading(false);
@@ -153,24 +162,19 @@ function HomeScreen() {
           <div className="mainContainer">
             <div className="projectsContainer">
               <div className="topBar">
-                {/* <p className="openProjectTxt">Open project: </p> */}
                 <div className="editorSelection">
-                  {/* <img className="logoImg" src={VsCodeIcon} alt="vb-logo" /> */}
-                  {/* <p>With VS Code</p> */}
-
-                  <p className="editorSelectionTxt">Editor: </p>
-
-                  {/* <Margin height={5} /> */}
+                  <p className="editorSelectionTxt">Open project with: </p>
                   <Select
                     defaultValue={Editor.VISUALBACKEND}
                     value={editorToOpen}
-                    style={{ width: 160 }}
+                    style={{ width: 140 }}
                     onChange={handleEditorChange}
                     options={Object.values(Editor).map((val) => {
                       return { value: val, label: val };
                     })}
                   />
                 </div>
+                <div className="divider"></div>
               </div>
 
               {projects && projects.length === 0 && (

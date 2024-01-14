@@ -34,10 +34,10 @@ export const writeFirebaseCredentials = async (payload: any) => {
   // );
 
   // 3. Add env file to firebase
-  ProjectService.addEnvVars({
-    projectId: projId,
-    envVars: [{ key: 'FIREBASE_CREDENTIALS', val: data }],
-  });
+  // ProjectService.addEnvVars({
+  //   projectId: projId,
+  //   envVars: [{ key: 'FIREBASE_CREDENTIALS', val: data }],
+  // });
 
   await FileFuncs.writeFile(targetFile, data);
   console.log('Successfully written firebase credentials');
@@ -177,10 +177,10 @@ export const deleteFirebaseFiles = async (
 
   if (otherIndex == -1) {
     // delete firebase credentials
-    await ProjectService.deleteEnvVars({
-      projectId,
-      envVars: [{ key: envConsts.FIREBASE_CREDENTIALS }],
-    });
+    // await ProjectService.deleteEnvVars({
+    //   projectId,
+    //   envVars: [{ key: envConsts.FIREBASE_CREDENTIALS }],
+    // });
     await FileFuncs.deleteFile(credPath);
     await FileFuncs.deleteDir(firebasePath);
   } else {

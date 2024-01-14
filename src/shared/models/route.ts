@@ -85,14 +85,14 @@ export class RouteFuncs {
     if (key === '') {
       // Case 1: Root group, id is 1
       if (id == 1) return 'root';
+
       if (parentPath == '') {
         return `root_${type.toLowerCase()}`;
+      } else {
+        console.log('Parent path:', parentPath);
+        console.log('Parent key:', RouteFuncs.getParentKey(parentPath));
+        return `${RouteFuncs.getParentKey(parentPath)}_${type.toLowerCase()}`;
       }
-
-      // Case 2: Middleware
-
-      // Case 3: Endpoint
-      return `${RouteFuncs.getParentKey(parentPath)}_${type.toLowerCase()}`;
     }
 
     // handle key is not empty
@@ -157,7 +157,7 @@ export class RouteFuncs {
     projType: ProjectType = ProjectType.Express
   ) => {
     return this.getFuncNameFromStr(
-      route.parentPath,
+      route.parentFilePath,
       route.key,
       route.type,
       route.id!,

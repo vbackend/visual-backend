@@ -15,7 +15,7 @@ export const writeEnvVars = async (
     await replaceEnvVarInFile(envPath, env.key, newLine1);
   }
   // promises.push(
-  await ProjectService.addEnvVars({ projectId: projId, envVars: envs });
+  // await ProjectService.addEnvVars({ projectId: projId, envVars: envs });
   // );
 
   console.log('Successfully written env vars');
@@ -35,9 +35,9 @@ export const updateEnvVars = async (
     await replaceEnvVarInFile(envPath, env.key, newLine1);
     promises.push(replaceEnvVarInFile(envPath, env.key, newLine1));
   }
-  promises.push(
-    ProjectService.updateEnvVars({ projectId: projId, envVars: envs })
-  );
+  // promises.push(
+  //   ProjectService.updateEnvVars({ projectId: projId, envVars: envs })
+  // );
   await Promise.all(promises);
 
   console.log('Successfully written env vars');
@@ -107,7 +107,7 @@ export const removeEnvVars = async (
   for (let i = 0; i < envs.length; i++) {
     await removeEnvVarInFile(envPath, envs[i].key);
   }
-  await ProjectService.deleteEnvVars({ projectId: projId, envVars: envs });
+  // await ProjectService.deleteEnvVars({ projectId: projId, envVars: envs });
   console.log('Successfully deleted env vars');
   return;
 };

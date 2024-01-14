@@ -108,11 +108,18 @@ import {
   getEditorToUse,
   getNodeType,
   getOpenWithVs,
+  openExternalPage,
   setEditorToUse,
   setOpenWithVs,
   setWindowSze,
 } from './ipc/home/homeFuncs';
-import { electronStoreKeys, homeWindowSize } from '@/renderer/misc/constants';
+import {
+  accessTokenKey,
+  electronStoreKeys,
+  endpoint,
+  homeWindowSize,
+  refreshTokenKey,
+} from '@/renderer/misc/constants';
 import { Editor } from '@/shared/models/Editor';
 
 config();
@@ -232,6 +239,7 @@ const init = async () => {
     setWindowSze(p, mainWindow!)
   );
 
+  ipcMain.handle(Actions.OPEN_EXTERNAL_PAGE, openExternalPage);
   ipcMain.handle(Actions.GET_DEVICE_TYPE, getDeviceType);
   ipcMain.handle(Actions.GET_NODE_TYPE, getNodeType);
   ipcMain.handle(Actions.CHECK_BIN_INSTALLED, checkBinInstalled);
@@ -375,16 +383,42 @@ app.on('quit', async () => {});
 
 app.setAsDefaultProtocolClient('visual-backend');
 
-app.on('open-url', (event, url) => {
-  const parsedUrl = new URL(url);
-  if (url.includes('visual-backend://checkout_completed')) {
-    if (mainWindow) {
-      mainWindow.webContents.send(
-        Actions.UPDATE_CHECKOUT_STATUS,
-        parsedUrl.pathname
-      );
-    }
+import axios from 'axios';
+
+const handleAuthCallback = async (parsedUrl: URL) => {
+  let code = parsedUrl.searchParams.get('code');
+
+  try {
+    console.log('Exchanging code: ', `${endpoint}/exchange_code`);
+    const { data } = await axios.post(`${endpoint}/exchange_code`, {
+      app: 'visual-backend',
+      code,
+    });
+
+    let s = new Store();
+    s.set(accessTokenKey, data.access_token);
+    mainWindow!.webContents.send(Actions.UPDATE_AUTH_STATUS, {
+      status: 'success',
+    });
+  } catch (error) {
+    mainWindow!.webContents.send(Actions.UPDATE_AUTH_STATUS, {
+      status: 'failed',
+    });
   }
+};
+app.on('open-url', async (event, url) => {
+  const parsedUrl = new URL(url);
+  if (parsedUrl.pathname === '/auth/callback') {
+    handleAuthCallback(parsedUrl);
+  }
+  // if (url.includes('visual-backend://checkout_completed')) {
+  //   if (mainWindow) {
+  //     mainWindow.webContents.send(
+  //       Actions.UPDATE_CHECKOUT_STATUS,
+  //       parsedUrl.pathname
+  //     );
+  //   }
+  // }
 });
 
 const gotTheLock = app.requestSingleInstanceLock();
@@ -398,8 +432,15 @@ if (!gotTheLock) {
       if (mainWindow.isMinimized()) mainWindow.restore();
       mainWindow.focus();
     }
-    // the commandLine is array of strings in which last element is deep link url
-    console.log('Welcome Back', `You arrived from: ${commandLine.pop()}`);
+
+    if (commandLine.pop()) {
+      const parsedUrl = new URL(commandLine.pop()!);
+      if (parsedUrl.pathname === '/auth/callback') {
+        handleAuthCallback(parsedUrl);
+      }
+    }
+
+    // console.log('Welcome Back', `You arrived from: ${commandLine.pop()}`);
   });
 
   // // Create mainWindow, load the rest of the app, etc...

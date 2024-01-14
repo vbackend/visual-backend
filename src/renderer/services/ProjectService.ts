@@ -12,19 +12,19 @@ axios.interceptors.response.use((response) => {
 
 export class ProjectService {
   static createProject = async (name: string, type: string) =>
-    await axios.post(`${endpoint}/private/projects`, {
+    await axios.post(`${endpoint}/auth/visual_backend/projects`, {
       name,
       type,
     });
 
-  static getProjectData = async (id: string) =>
-    await axios.get(`${endpoint}/private/projects/${id}`);
+  // static getProjectData = async (id: string) =>
+  //   await axios.get(`${endpoint}/private/projects/${id}`);
 
   static createBuild = async (id: string) =>
     await axios.post(`${endpoint}/private/projects/build/${id}`);
 
   static deleteProject = async (id: string) =>
-    await axios.delete(`${endpoint}/private/projects/${id}`);
+    await axios.delete(`${endpoint}/auth/visual_backend/projects/${id}`);
 
   static getCloudData = async (id: string) =>
     await axios.get(`${endpoint}/private/projects/${id}/cloud`);

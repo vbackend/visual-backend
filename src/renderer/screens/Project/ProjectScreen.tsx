@@ -31,6 +31,7 @@ function ProjectScreen() {
 
   let initProject = async () => {
     let project = app.currentProject;
+    console.log('Project:', project);
     if (!project) {
       dispatch(setCurPage(AppPage.Project));
       return;
@@ -79,7 +80,7 @@ function ProjectScreen() {
       <div className="projectScreen">
         <Sidebar />
         <SectionManager />
-        { editorToUse == Editor.VISUALBACKEND? (
+        {editorToUse == Editor.VISUALBACKEND ? (
           <EditorScreen />
         ) : (
           <div

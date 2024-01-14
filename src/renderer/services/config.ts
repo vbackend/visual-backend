@@ -4,7 +4,7 @@ import axios, { AxiosError } from 'axios';
 export const isPrivatePath = (url: string) => {
   let parsedUrl = new URL(url);
   let authPath = parsedUrl.pathname.split('/')[1];
-  if (authPath == 'private') return true;
+  if (authPath == 'auth') return true;
   return false;
 };
 

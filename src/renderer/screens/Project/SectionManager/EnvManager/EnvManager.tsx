@@ -113,43 +113,52 @@ function EnvManager() {
   return (
     <div className="envManager">
       <div className="headerContainer">
-        <p className="header">Environment</p>
-        <p className="installHeader">Create new</p>
-        <div className="createContainer">
-          <Input
-            value={newEnv.key}
-            onChange={(e) => setNewEnv({ ...newEnv, key: e.target.value })}
-            placeholder="key"
-          />
-          <Margin height={10} />
-          <Input
-            value={newEnv.val}
-            onChange={(e) => setNewEnv({ ...newEnv, val: e.target.value })}
-            placeholder="val"
-          />
-          <Margin height={10} />
-
-          <Button loading={createLoading} type="primary" onClick={createEnvVar}>
-            Create
-          </Button>
-          {createErr && (
-            <>
-              <p className="errorText">{createErr}</p>
-              <Margin height={6} />
-            </>
-          )}
-        </div>
+        <h3>Environment</h3>
       </div>
-      <div className="middleContainer">
-        <p className="header">Variables</p>
-        {envVars.map((envVar: any, index: any) => (
-          <EnvVarComponent
-            key={index}
-            envVar={envVar}
-            saveEnvVar={saveEnvVar}
-            deleteEnv={deleteEnvVar}
-          />
-        ))}
+
+      <div className="envMain">
+        <div className="headerContainer2">
+          <p className="installHeader">Create new</p>
+          <div className="createContainer">
+            <Input
+              value={newEnv.key}
+              onChange={(e) => setNewEnv({ ...newEnv, key: e.target.value })}
+              placeholder="key"
+            />
+            <Margin height={10} />
+            <Input
+              value={newEnv.val}
+              onChange={(e) => setNewEnv({ ...newEnv, val: e.target.value })}
+              placeholder="val"
+            />
+            <Margin height={10} />
+
+            <Button
+              loading={createLoading}
+              type="primary"
+              onClick={createEnvVar}
+            >
+              Create
+            </Button>
+            {createErr && (
+              <>
+                <p className="errorText">{createErr}</p>
+                <Margin height={6} />
+              </>
+            )}
+          </div>
+        </div>
+        <div className="middleContainer">
+          <p className="header">Variables</p>
+          {envVars.map((envVar: any, index: any) => (
+            <EnvVarComponent
+              key={index}
+              envVar={envVar}
+              saveEnvVar={saveEnvVar}
+              deleteEnv={deleteEnvVar}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

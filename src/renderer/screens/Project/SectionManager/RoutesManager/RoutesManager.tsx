@@ -70,7 +70,7 @@ function RoutesManager() {
         />
       )}
 
-      <div className="routesContainer">
+      <div className="routesBg">
         <div className="headerContainer">
           <h3>Routes</h3>
         </div>

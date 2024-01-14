@@ -57,7 +57,7 @@ export const installPackages = async (
         res(true);
       } else {
         console.log('Failed to install packages: ', packages);
-        rej(false);
+        res(false);
       }
     });
   });

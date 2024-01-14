@@ -11,10 +11,10 @@ axios.interceptors.response.use((response) => {
 }, responseInterceptor);
 
 export class UserService {
-  static getUser = async () => await axios.get(`${endpoint}/private/user`);
+  static getUser = async () => await axios.get(`${endpoint}/auth/user`);
 
   static getProjects = async () =>
-    await axios.get(`${endpoint}/private/user/projects`);
+    await axios.get(`${endpoint}/auth/visual_backend/projects`);
 
   static login = async (email: string, password: string) =>
     await axios.post(`${endpoint}/public/auth/login`, {
