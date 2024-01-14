@@ -1,9 +1,10 @@
 @import '../config';
 
 .projectScreen {
-    max-width: 100vw;
-    min-width: 100vw;
-    min-height: 100vh;
-    display: flex;
-    overflow-x: hidden;
+  max-width: 100vw;
+  min-width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }

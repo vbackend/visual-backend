@@ -82,7 +82,7 @@ function HomeSidebar() {
           <img className="logoImg" src={LogoImg} alt="vb-logo" />
           <div className="logoTxt">Visual Backend</div>
         </div>
-        <Margin height={15} />
+        <Margin height={10} />
         <div className="profileContainer">
           {/* <FontAwesomeIcon icon={faCircleUser} className="icon" /> */}
           <div className="iconContainer">
@@ -90,7 +90,9 @@ function HomeSidebar() {
           </div>
           <p>{user.email}</p>
         </div>
-        <div className="profileContainer">
+
+        {/* Premium status */}
+        {/* <div className="profileContainer">
           {user.accountTier == 'starter' ? (
             <div className="iconContainer">
               <LuBadge size={19} />
@@ -106,11 +108,11 @@ function HomeSidebar() {
               ? 'Starter Account'
               : 'Premium Account'}
           </p>
-        </div>
+        </div> */}
 
-        <Margin height={10} />
+        <Margin height={0} />
         <div className="right">
-          {getSubText()}
+          {/* {getSubText()}
           {errText && (
             <p
               className="errorText"
@@ -139,7 +141,7 @@ function HomeSidebar() {
             >
               Upgrade
             </Button>
-          )}
+          )} */}
           <Button className="homeBtn" type="default" onClick={logout}>
             Sign Out
           </Button>

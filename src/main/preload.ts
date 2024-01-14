@@ -10,6 +10,7 @@ import {
   ProjectActions,
   ResendActions,
 } from './actions';
+import { openExternalPage } from './ipc/home/homeFuncs';
 
 export type Channels = 'ipc-example';
 
@@ -136,6 +137,13 @@ const electronHandler = {
   setEditorToUse: (payload: any) =>
     ipcRenderer.invoke(Actions.SET_EDITOR_TO_USE, payload),
 
+  // UPDATE TERMINAL
+  onAuthUpdate: (callback: any) =>
+    ipcRenderer.on(Actions.UPDATE_AUTH_STATUS, callback),
+
+  removeAuthListener: () =>
+    ipcRenderer.removeAllListeners(Actions.UPDATE_AUTH_STATUS),
+
   ...firebaseHandler,
   ...moduleHandler,
   ...mongoHandler,
@@ -150,8 +158,11 @@ const electronHandler = {
   checkBinInstalled: (payload: any) =>
     ipcRenderer.invoke(Actions.CHECK_BIN_INSTALLED, payload),
 
-  openCheckoutPage: (payload: any) =>
+  openGitHubSignin: (payload: any) =>
     ipcRenderer.invoke(Actions.OPEN_CHECKOUT_PAGE, payload),
+
+  openExternalPage: (payload: any) =>
+    ipcRenderer.invoke(Actions.OPEN_EXTERNAL_PAGE, payload),
 
   onCheckoutStatusUpdated: (callback: any) =>
     ipcRenderer.on(Actions.UPDATE_CHECKOUT_STATUS, callback),

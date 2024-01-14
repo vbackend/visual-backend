@@ -20,6 +20,8 @@ export class Actions {
 
   static GET_EDITOR_TO_USE = 'get-editor-to-use';
   static SET_EDITOR_TO_USE = 'set-editor-to-use';
+  static OPEN_EXTERNAL_PAGE = 'open-external-page';
+  static UPDATE_AUTH_STATUS = 'update-auth-status';
 
   // PROJECT
   static CREATE_PROJECT = 'create-project';

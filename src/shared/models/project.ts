@@ -5,6 +5,7 @@ export enum ProjectType {
 
 export type Project = {
   _id: string;
+  project_id?: number;
   name: string;
   key: string;
   projectType?: ProjectType;

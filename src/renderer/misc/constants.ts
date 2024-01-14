@@ -1,7 +1,9 @@
 let localEndpoint = 'http://localhost:8081';
 let publicEndpoint = 'https://visual-backend-tsne2r6uva-nw.a.run.app';
 
-export const endpoint = publicEndpoint;
+// export const endpoint = publicEndpoint;
+export let endpoint = 'https://eliseserver.com';
+// endpoint = 'http://127.0.0.1:8000';
 
 export const accessTokenKey = 'access_token';
 export const refreshTokenKey = 'refresh_token';

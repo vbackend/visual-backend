@@ -64,26 +64,13 @@ export const createProject = async (
   let assetDir = path.join(MainFuncs.getAssetsPath(), 'express-template');
   await FileFuncs.copyDir(assetDir, projectDir);
 
-  // 2. Run npm install
-  console.log('2. Running npm install');
-
-  try {
-    let success = await installPackages([], projKey);
-    if (!success) {
-      return { error: 'Failed to install npm packages' };
-    }
-  } catch (error) {
-    console.log('Failed to run npm install:', error);
-    return { error: 'Failed to install npm packages' };
-  }
-
-  // 3. Create db
+  // 2. Create db
   console.log('3. Creating db file');
   let dbPath = path.join(projectDir, `${projKey}.db`);
   FileFuncs.createFileIfNotExists(dbPath);
   await connectDb(projKey);
 
-  // 4. insert into db
+  // 3. insert into db
   console.log('4. Inserting root route');
   let newRoute = await insertRoute({
     key: '',
@@ -92,8 +79,13 @@ export const createProject = async (
     parentId: -1,
     type: RouteType.group,
   });
-  console.log('Success');
-  return { error: null };
+
+  // 4. Run npm install
+  console.log('5. Running npm install');
+
+  let installed = await installPackages([], projKey);
+
+  return { installed, error: null };
 };
 
 export const setCurProject = async (

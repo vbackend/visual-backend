@@ -19,7 +19,7 @@ import CreateFuncModal from '../General/CreateFuncModal';
 import { BModuleType } from '@/shared/models/BModule';
 import { RenFuncs } from '@/shared/utils/RenFuncs';
 import { FuncButton } from '../General/FuncButton';
-import { MdNoteAdd } from 'react-icons/md';
+import { MdCreateNewFolder, MdNoteAdd } from 'react-icons/md';
 
 function ManageMongo() {
   const dispatch = useDispatch();
@@ -140,11 +140,11 @@ function ManageMongo() {
         />
         // <CreateMongoFuncModal setModalOpen={setCreateModalOpen} col={col} />
       )}
-      <div className="mongoScreen">
+      <div className="moduleSection">
         <div className="headerContainer">
           <h3 className="title">MongoDB</h3>
         </div>
-        <div className="infoContainer">
+        {/* <div className="infoContainer">
           <p>The following global variables are available:</p>
           <Margin height={10} />
           <div className="variableContainer">
@@ -155,13 +155,9 @@ function ManageMongo() {
             <p className="varName">defaultDb: </p>
             <p>{`mongoCli.db('${module?.metadata.defaultDb}')`}</p>
           </div>
-          {/* <Margin height={10} />
-          <div className="variableContainer">
-            Note: Your functions are grouped according to the collections in
-            your default db
-          </div> */}
-        </div>
+        </div> */}
 
+        <Margin height={10} />
         <div className="mainContainer">
           <div className="colHeader">
             <p className="title">Collections</p>

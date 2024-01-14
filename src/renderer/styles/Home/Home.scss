@@ -15,6 +15,7 @@
 
 .homeContainer .topBar {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: flex-end;
   margin-bottom: 10px;
@@ -25,19 +26,19 @@
   width: 100%;
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   margin-bottom: 4px;
-  gap: 10px;
+  gap: 6px;
 
   p {
     font-size: $para5;
   }
 
   .editorSelectionTxt {
-    font-size: $para4;
+    font-size: calc($para4 - 1px);
     font-weight: bold;
     color: $textSecondary;
-    margin-top: 8px;
+    // margin-top: 8px;
   }
 }
 
@@ -69,7 +70,7 @@
 }
 
 .mainContainer {
-  min-height: 250px;
+  min-height: 350px;
   max-height: 400px;
   width: 300px;
 

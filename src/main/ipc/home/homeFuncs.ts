@@ -1,8 +1,15 @@
 import { electronStoreKeys, nodeTypeKey } from '@/renderer/misc/constants';
 import { Editor } from '@/renderer/redux/app/appSlice';
 import { exec } from 'child_process';
-import { BrowserWindow } from 'electron';
+import electron, { BrowserWindow } from 'electron';
 import Store from 'electron-store';
+
+export const openExternalPage = async (
+  e: Electron.IpcMainInvokeEvent,
+  payload: any
+) => {
+  electron.shell.openExternal(payload);
+};
 
 export const setWindowSze = (p: any, mainWindow: BrowserWindow) => {
   // mainWindow?.setSize(payload.width, payload.height);
@@ -84,7 +91,7 @@ export const getEditorToUse = (e: Electron.IpcMainInvokeEvent, p: any) => {
   // console.log("Editor in use: ", s.get(electronStoreKeys.editorToUseKey));
 
   return s.get(electronStoreKeys.editorToUseKey);
-}
+};
 
 export const setEditorToUse = (
   e: Electron.IpcMainInvokeEvent,
@@ -92,7 +99,7 @@ export const setEditorToUse = (
   mainWindow: any
 ) => {
   let s = new Store();
-  let { editorToUse } : {editorToUse: Editor} = p;
+  let { editorToUse }: { editorToUse: Editor } = p;
   s.set(electronStoreKeys.editorToUseKey, editorToUse);
   return;
 };

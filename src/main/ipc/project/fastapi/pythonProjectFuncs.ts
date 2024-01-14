@@ -27,27 +27,14 @@ export const createFastAPIProject = async (payload: any) => {
   let assetDir = path.join(MainFuncs.getAssetsPath(), 'fastapi-template');
   await FileFuncs.copyDir(assetDir, projectDir);
 
-  // 3. Run pip install
-
-  try {
-    console.log('3. Creating python venv');
-    await createVirtualEnv(projKey);
-
-    console.log('4. Installing python requirements.txt');
-    await installPyRequirements(projKey);
-  } catch (error) {
-    console.log('Failed to create python env and install reqs:', error);
-    return { error: 'Failed to create python venv & install requirements' };
-  }
-
-  // 3. Create db
-  console.log('5. Creating db file');
+  // 4. Create db
+  console.log('3. Creating db file');
   let dbPath = path.join(projectDir, `${projKey}.db`);
   FileFuncs.createFileIfNotExists(dbPath);
   await connectDb(projKey);
 
-  // 4. insert into db
-  console.log('6. Inserting root route');
+  // 5. insert into db
+  console.log('4. Inserting root route');
   let newRoute = await insertRoute({
     key: '',
     parentPath: '',
@@ -55,6 +42,18 @@ export const createFastAPIProject = async (payload: any) => {
     parentId: -1,
     type: RouteType.group,
   });
-  console.log('Success');
-  return { error: null };
+
+  // 6. Run pip install
+  try {
+    console.log('3. Creating python venv');
+    await createVirtualEnv(projKey);
+
+    console.log('4. Installing python requirements.txt');
+    let installed = await installPyRequirements(projKey);
+    return { installed, error: null };
+  } catch (error) {
+    console.log('Failed to create python env or install reqs:', error);
+    return { installed: false, error: null };
+    // return { error: 'Failed to create python venv & install requirements' };
+  }
 };

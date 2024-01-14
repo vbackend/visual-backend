@@ -26,6 +26,10 @@ function CreateProjectModal({ setModalOpen }: CreateProjectModalProps) {
     ProjectType.Express
   );
 
+  // For install failed
+  const [installFailed, setInstallFailed] = useState(false);
+  const [projectCreated, setProjectCreated] = useState(null);
+
   let projectTypes = [
     {
       value: ProjectType.Express,
@@ -51,9 +55,10 @@ function CreateProjectModal({ setModalOpen }: CreateProjectModalProps) {
 
       let { data } = await ProjectService.createProject(name, projectType);
 
+      console.log('Data:', data);
       // 2. Create project DB file
       let projKey = ProjectFuncs.getKey(name);
-      let { error } = await window.electron.createProject({
+      let { installed, error } = await window.electron.createProject({
         projKey,
         projectType,
       });
@@ -62,7 +67,15 @@ function CreateProjectModal({ setModalOpen }: CreateProjectModalProps) {
         throw error;
       }
 
-      dispatch(addProject({ ...data }));
+      if (!installed) {
+        dispatch(addProject(data));
+        setInstallFailed(true);
+        setProjectCreated(data);
+        setLoading(false);
+        return;
+      }
+
+      dispatch(addProject(data));
       RenFuncs.openProject(data, dispatch, editorToUse);
 
       setModalOpen(false);
@@ -77,6 +90,11 @@ function CreateProjectModal({ setModalOpen }: CreateProjectModalProps) {
       }
     }
     setLoading(false);
+  };
+
+  const openProject = async () => {
+    RenFuncs.openProject(projectCreated!, dispatch, editorToUse);
+    setModalOpen(false);
   };
 
   return (
@@ -112,12 +130,21 @@ function CreateProjectModal({ setModalOpen }: CreateProjectModalProps) {
         <Margin height={5} />
         <Button
           loading={loading}
-          onClick={createClicked}
+          onClick={installFailed ? openProject : createClicked}
           className="modalActionBtn"
           type="primary"
         >
-          Create
+          {installFailed ? 'Open project' : 'Create'}
         </Button>
+        {installFailed && (
+          <p className="errorText">
+            Project created but failed to{' '}
+            {projectType == ProjectType.Express
+              ? 'npm install'
+              : 'pip install -r requirements.txt'}
+            . Please do so manually
+          </p>
+        )}
         {errorText && <p className="errorText">{errorText}</p>}
         {loading && (
           <p className="btnText">

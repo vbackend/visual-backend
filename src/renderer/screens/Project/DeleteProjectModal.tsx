@@ -42,7 +42,7 @@ function DeleteProjectModal({ setModalOpen }: DeleteProjectModalProps) {
     setErrText('');
 
     try {
-      await ProjectService.deleteProject(curProject!._id);
+      await ProjectService.deleteProject(curProject!.project_id!.toString());
       await window.electron.deleteProject({ project: curProject! });
 
       //  Remove project from redux state

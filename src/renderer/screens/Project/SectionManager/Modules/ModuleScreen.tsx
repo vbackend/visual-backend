@@ -54,9 +54,8 @@ function ModuleScreen() {
   };
 
   return (
-    <div style={{ width: '100%', height: '100vh', backgroundColor: 'white' }}>
-      {getCurScreen()}
-    </div>
+    // <div style={{ width: '100%', height: '100vh', backgroundColor: 'white' }}>
+    <>{getCurScreen()}</>
   );
 }
 

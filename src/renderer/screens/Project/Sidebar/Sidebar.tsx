@@ -23,6 +23,7 @@ import { BModule } from '@/shared/models/BModule';
 import { setCurModule } from '@/renderer/redux/module/moduleSlice';
 import {
   AppPage,
+  Editor,
   setCurPage,
   setCurrentProject,
 } from '@/renderer/redux/app/appSlice';
@@ -42,6 +43,7 @@ function Sidebar() {
   const curProject = useSelector(
     (state: RootState) => state.app.currentProject
   );
+  const editorToUse = useSelector((state: RootState) => state.app.editorToUse);
 
   let modules = useSelector((state: RootState) => state.module.modules);
   let platform = useSelector((state: RootState) => state.app.curPlatform);
@@ -103,21 +105,13 @@ function Sidebar() {
             icon={faDatabase}
             tab={ProjectTab.Module}
           />
-          <SidebarBtn
+          {/* <SidebarBtn
             shortcut={`${moduleIndex + modules!.length}`}
             name="Hosting"
             icon={faCloud}
             tab={ProjectTab.Hosting}
             scale={0.9}
-          />
-          {/* {curProject?.projectType == ProjectType.Express && (
-            <SidebarBtn
-              shortcut={`${moduleIndex + modules!.length + 1}`}
-              name="Packages"
-              icon={faCube}
-              tab={ProjectTab.Packages}
-            />
-          )} */}
+          /> */}
           <SidebarBtn
             shortcut={`${moduleIndex + modules!.length + 2}`}
             name="Env"
@@ -127,25 +121,26 @@ function Sidebar() {
         </div>
 
         <div className="hintsContainer">
-          <p className="title">Shortcuts:</p>
-          <p className="infoText">{`Shortcuts start with ${metaKey}`}</p>
-          <Margin height={10} />
-          <p className="shortcutText">
-            <span>T</span>: Toggle terminal
-          </p>
-          <p className="shortcutText">
-            <span>K</span>: Clear terminal
-          </p>
-          {/* <p className="shortcutText">
-            <span>Num</span>: Toggle sidebar
-          </p> */}
-          <Divider style={{ margin: '10px 0px', backgroundColor: '#eee' }} />
-          <p className="shortcutText">
-            <span>Shift + R/E</span>: <br /> Run/Stop server
-          </p>
-          {/* <p className="shortcutText">
-            <span>Shift + E</span>: Stop server
-          </p> */}
+          {editorToUse == Editor.VISUALBACKEND && (
+            <div className="shortcutsContainer">
+              <p className="title">Shortcuts:</p>
+              <p className="infoText">{`Shortcuts start with ${metaKey}`}</p>
+              <Margin height={10} />
+              <p className="shortcutText">
+                <span>T</span>: Toggle terminal
+              </p>
+              <p className="shortcutText">
+                <span>K</span>: Clear terminal
+              </p>
+              <Divider
+                style={{ margin: '10px 0px', backgroundColor: '#eee' }}
+              />
+              <p className="shortcutText">
+                <span>Shift + R/E</span>: <br /> Run/Stop server
+              </p>
+            </div>
+          )}
+
           <button
             className="deleteBtn"
             onClick={() => setDeleteModalOpen(true)}
