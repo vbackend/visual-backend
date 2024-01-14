@@ -12,6 +12,7 @@ function AuthScreen() {
 
   let redirectUri = 'visual-backend://eliseapp.com/auth/callback';
   let githubSignIn = `https://github.com/login/oauth/authorize?client_id=Iv1.c8341ac1688e6ef8&redirect_uri=${redirectUri}`;
+  const [test, setTest] = useState("")
 
   useEffect(() => {
     let handleMessage: any = (event: any, payload: any) => {
@@ -22,6 +23,10 @@ function AuthScreen() {
 
     window.electron.onAuthUpdate(handleMessage);
   }, []);
+
+
+
+
   return (
     <div className="authBg">
       <h1>Visual Backend</h1>

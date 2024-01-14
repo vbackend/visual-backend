@@ -381,7 +381,13 @@ app.on('window-all-closed', async () => {
 
 app.on('quit', async () => {});
 
-app.setAsDefaultProtocolClient('visual-backend');
+if (process.defaultApp) {
+  if (process.argv.length >= 2) {
+    app.setAsDefaultProtocolClient('visual-backend', process.execPath, [path.resolve(process.argv[1])])
+  }
+} else {
+  app.setAsDefaultProtocolClient('visual-backend')
+}
 
 import axios from 'axios';
 
@@ -389,7 +395,7 @@ const handleAuthCallback = async (parsedUrl: URL) => {
   let code = parsedUrl.searchParams.get('code');
 
   try {
-    console.log('Exchanging code: ', `${endpoint}/exchange_code`);
+
     const { data } = await axios.post(`${endpoint}/exchange_code`, {
       app: 'visual-backend',
       code,
@@ -397,12 +403,13 @@ const handleAuthCallback = async (parsedUrl: URL) => {
 
     let s = new Store();
     s.set(accessTokenKey, data.access_token);
+
     mainWindow!.webContents.send(Actions.UPDATE_AUTH_STATUS, {
       status: 'success',
     });
   } catch (error) {
-    mainWindow!.webContents.send(Actions.UPDATE_AUTH_STATUS, {
-      status: 'failed',
+    mainWindow!.webContents.send(Actions.UPDATE_AUTH_STATUS, {status:
+      "failed"
     });
   }
 };
@@ -433,14 +440,12 @@ if (!gotTheLock) {
       mainWindow.focus();
     }
 
-    if (commandLine.pop()) {
-      const parsedUrl = new URL(commandLine.pop()!);
-      if (parsedUrl.pathname === '/auth/callback') {
-        handleAuthCallback(parsedUrl);
-      }
+    let url = commandLine.pop()
+    let parsedUrl = new URL(url!);
+    if (parsedUrl.pathname === '/auth/callback') {
+      handleAuthCallback(parsedUrl);
     }
 
-    // console.log('Welcome Back', `You arrived from: ${commandLine.pop()}`);
   });
 
   // // Create mainWindow, load the rest of the app, etc...
