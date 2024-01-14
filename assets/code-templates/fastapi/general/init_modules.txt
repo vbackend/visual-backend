@@ -1,0 +1,9 @@
+{{import_statements}}
+
+def init_modules(app):
+{{func_statements}}
+    return
+
+def end_modules(app):
+{{end_statements}}
+    return

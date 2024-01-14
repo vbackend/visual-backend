@@ -3,10 +3,11 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import { config } from 'dotenv';
 import { root_router } from './api/root_router.js';
+import { initModules } from './initModules.js';
 
 const init = async () => {
   config();
-
+  await initModules();
   const app = express();
   app.use(bodyParser.json());
   app.use(cors());

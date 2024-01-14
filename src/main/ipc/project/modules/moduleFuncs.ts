@@ -19,7 +19,7 @@ import {
 import { deletePackages, installPackages } from '@/main/generate/install';
 import { writeModuleStarterFuncs, writeModuleTemplate } from './helpers';
 import { removeEnvVars, writeEnvVars } from '@/main/generate/env';
-import { writeIndexFile } from '@/main/generate/general';
+import { writeIndexFile, writeModuleInitFile } from '@/main/generate/general';
 import { ProjectType } from '@/shared/models/project';
 import {
   installPyPackages,
@@ -59,7 +59,7 @@ export const createModule = async (
 
   // 2. Write index file
   console.log('2. Writing index file');
-  await writeIndexFile(projKey, projType);
+  await writeModuleInitFile(projKey, projType);
   let newFuncs: any = [];
 
   try {
@@ -141,7 +141,8 @@ export const deleteModule = async (
 
   await deleteModuleQuery(module.key);
 
-  await writeIndexFile(projKey, projType);
+  // await writeIndexFile(projKey, projType);
+  await writeModuleInitFile(projKey, projType);
 };
 
 export const deleteModuleFiles = async (payload: any) => {

@@ -1,0 +1,5 @@
+{{import_statements}}
+export const initModules = async () => {
+
+{{func_statements}}
+};

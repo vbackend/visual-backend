@@ -2,12 +2,15 @@ from fastapi import FastAPI
 from dotenv import load_dotenv
 from contextlib import asynccontextmanager
 from src.api.root_router import root_router
+from src.init_modules import init_modules, end_modules
 from fastapi.middleware.cors import CORSMiddleware
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    init_modules(app)
     yield
+    end_modules(app)
 
 
 load_dotenv()
