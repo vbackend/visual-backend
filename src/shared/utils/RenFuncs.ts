@@ -97,10 +97,13 @@ export class RenFuncs {
     dispatch: any,
     editorToUse: Editor
   ) => {
+    console.log(project);
+
     window.electron.setCurProject({
       projKey: project.key,
-      projType: project.projectType,
+      projType: project.project_type,
     });
+
     if (editorToUse === Editor.VSCODE) {
       window.electron.openProjectInVs({ projKey: project.key });
     } else if (editorToUse === Editor.INTELLIJ) {

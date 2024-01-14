@@ -8,7 +8,7 @@ export type Project = {
   project_id?: number;
   name: string;
   key: string;
-  projectType?: ProjectType;
+  project_type?: ProjectType;
   gitlabProjectId: number;
   projectAccessToken: string;
   triggerId: string;

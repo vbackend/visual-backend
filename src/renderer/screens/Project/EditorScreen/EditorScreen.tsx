@@ -96,7 +96,7 @@ ${editorText}
   }, [searchFuncsOpen]);
 
   const getEditorMode = () => {
-    if (curProject?.projectType == ProjectType.FastAPI) return 'python';
+    if (curProject?.project_type == ProjectType.FastAPI) return 'python';
     if (curFile?.metadata.extension) {
       switch (curFile.metadata.extension) {
         case 'ts':

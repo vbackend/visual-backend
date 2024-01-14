@@ -82,7 +82,7 @@ export const createRouteGroup = async (
   let newRoute: Route = {
     parentId: curRoute.id,
     parentPath: GenFuncs.getRoutePath(curRoute),
-    parentFilePath: GenFuncs.getFilePath(curRoute),
+    parentFilePath: GenFuncs.getFilePath(curRoute, projType),
     key: routeKey,
     type: RouteType.group,
   };
@@ -111,7 +111,7 @@ export const createRouteGroup = async (
     return false;
   }
 
-  let parentDir = `${apiDir}${GenFuncs.getFilePath(curRoute)}`;
+  let parentDir = `${apiDir}${GenFuncs.getFilePath(curRoute, projType)}`;
 
   await writeRouterFile(
     curRoute.parentPath,
@@ -141,7 +141,7 @@ export const createEndpoint = async (
   let newRoute: Route = {
     parentId: curRoute.id,
     parentPath: GenFuncs.getRoutePath(curRoute),
-    parentFilePath: GenFuncs.getFilePath(curRoute),
+    parentFilePath: GenFuncs.getFilePath(curRoute, projType),
     key: routeKey,
     type: method,
   };
@@ -156,7 +156,7 @@ export const createEndpoint = async (
   newRoute = { id: newId, ...newRoute };
 
   // 1. Create route folder
-  let parentDir = `${apiDir}${GenFuncs.getFilePath(curRoute)}`;
+  let parentDir = `${apiDir}${GenFuncs.getFilePath(curRoute, projType)}`;
   await createRouteFile(parentDir, newRoute, projType);
 
   // 2. Write router file
@@ -219,7 +219,7 @@ export const deleteRoute = async (
           }
 
           // write router file of parent group
-          let parentDir = `${apiDir}${GenFuncs.getFilePath(parent)}`;
+          let parentDir = `${apiDir}${GenFuncs.getFilePath(parent, projType)}`;
           await writeRouterFile(
             parent.parentPath,
             parent.id,

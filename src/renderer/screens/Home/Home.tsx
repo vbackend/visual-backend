@@ -58,7 +58,7 @@ function HomeScreen() {
       let { data: projectData } = await UserService.getProjects();
       let projects = [];
       for (let project of projectData) {
-        projects.push({ ...project, projectType: project.projectType });
+        projects.push({ ...project, projectType: project.project_type });
       }
       // for (let i = 0; i < projectData.length; i++) {
       //   let proj = projectData[i];

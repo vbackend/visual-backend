@@ -3,7 +3,7 @@ import { db } from '../connect';
 import { error } from 'console';
 
 export const getRoutes = async (): Promise<Array<Route>> => {
-  let query = `SELECT route_id, parent_id, route_key, parent_path, parent_file_path, type FROM route 
+  let query = `SELECT route_id, parent_id, route_key, parent_path, parent_file_path, type FROM route
   ORDER BY route_id ASC`;
 
   return new Promise((resolve, reject) => {
@@ -34,7 +34,7 @@ export const insertRoute = async (route: Route): Promise<null | number> => {
   return new Promise((resolve, reject) => {
     db.run(
       `
-      INSERT INTO route (parent_id, route_key, parent_path, parent_file_path, type) 
+      INSERT INTO route (parent_id, route_key, parent_path, parent_file_path, type)
       VALUES (?, ?, ?, ?, ?)
             `,
       [
@@ -61,7 +61,7 @@ export const getRouteByKeyAndParentId = async (
   parentId: number,
   routeKey: string
 ): Promise<Route> => {
-  let query = `SELECT route_id, parent_id, route_key, parent_path, parent_file_path, type FROM route 
+  let query = `SELECT route_id, parent_id, route_key, parent_path, parent_file_path, type FROM route
   WHERE parent_id=? AND route_key=?`;
 
   return new Promise((resolve, reject) => {
@@ -92,7 +92,7 @@ export const getRouteByKeyAndParentId = async (
 export const getRoutesByParent = async (
   parentPath: string
 ): Promise<Array<Route>> => {
-  let query = `SELECT route_id, parent_id, route_key, parent_path, parent_file_path, type FROM route 
+  let query = `SELECT route_id, parent_id, route_key, parent_path, parent_file_path, type FROM route
   WHERE parent_path=?`;
 
   return new Promise((resolve, reject) => {
@@ -124,7 +124,7 @@ export const checkIfRouteExists = async (
   routeKey: string,
   type: string
 ): Promise<Route> => {
-  let query = `SELECT route_id, parent_id, route_key, parent_path, parent_file_path, type FROM route 
+  let query = `SELECT route_id, parent_id, route_key, parent_path, parent_file_path, type FROM route
   WHERE parent_path=? AND route_key=? AND type=?`;
 
   return new Promise((resolve, reject) => {

@@ -54,17 +54,36 @@ function CreateRouteModal({
       return { valid: false, error: 'Path name cannot be empty for this type' };
     }
     // Regular expression for valid JavaScript function names
-    const validFunctionNameRegex = /^[:]?[a-zA-Z_$][a-zA-Z0-9_$]*$/;
+
+    let validFunctionNameRegex;
+    if (project!.project_type == ProjectType.FastAPI) {
+      validFunctionNameRegex = /^(?:{)?[a-zA-Z_][a-zA-Z0-9_]*(?:})?$/;
+    } else {
+      validFunctionNameRegex = /^[:]?[a-zA-Z_$][a-zA-Z0-9_${}]*$/;
+    }
 
     // Regular expression for valid URL path components
-    const validPathComponentRegex = /^[a-zA-Z0-9\-._~!$&'()*+,;=:@/]*$/;
+
+    let validPathComponentRegex;
+
+    if (project!.project_type == ProjectType.FastAPI) {
+      validPathComponentRegex = /^[a-zA-Z0-9\-._~!$&'()*+,;=@/{}]*$/;
+    } else {
+      validPathComponentRegex = /^[a-zA-Z0-9\-._~!$&'()*+,;=:@/]*$/;
+    }
+
+    console.log(validFunctionNameRegex.test(key));
+    console.log(validPathComponentRegex.test(key));
 
     // Check if the key is valid as both a JavaScript function name and a URL path component
     return {
       valid:
         validFunctionNameRegex.test(key) && validPathComponentRegex.test(key),
-      error:
-        "Path name can only contain alphanumeric characters and '_' or a ':' at the start. It also cannot begin with numbers.",
+      error: `Path name can only contain alphanumeric characters and '_' or ${
+        project!.project_type == ProjectType.FastAPI
+          ? "'{}' around"
+          : "':' at the start"
+      }. It also cannot begin with numbers.`,
     };
   }
 
@@ -144,7 +163,7 @@ function CreateRouteModal({
             onChange={(val) => setType(val)}
             options={[
               { value: 'grp', label: 'GROUP' },
-              project?.projectType == ProjectType.FastAPI
+              project?.project_type == ProjectType.FastAPI
                 ? { value: 'dep', label: 'DEPENDENCY' }
                 : { value: 'mid', label: 'MIDDLEWARE' },
               { value: 'get', label: 'GET' },

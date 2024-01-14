@@ -26,6 +26,7 @@
 .envManager .envMain {
   height: calc(100vh - 50px);
   overflow: scroll;
+  overflow-x: hidden;
   padding-bottom: 50px;
 }
 

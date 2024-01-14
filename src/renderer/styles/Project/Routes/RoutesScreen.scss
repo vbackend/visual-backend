@@ -18,6 +18,7 @@
   height: calc(100vh - 40px - 10px);
   padding-bottom: 50px;
   overflow: scroll;
+  overflow-x: hidden;
 }
 
 .routeHeader {
