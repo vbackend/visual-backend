@@ -83,6 +83,15 @@ export const generateFuncCode = async (payload: any, projType: ProjectType) => {
     projType
   );
 
+  await writeToFuncFile(
+    projKey,
+    module,
+    { key: funcName, funcGroup },
+    funcScaffold,
+    projType
+  );
+  return;
+
   if (!useGpt) {
     await writeToFuncFile(
       projKey,
