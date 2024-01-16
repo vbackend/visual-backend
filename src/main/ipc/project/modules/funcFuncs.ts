@@ -32,7 +32,10 @@ export const getModuleScaffold = async (
 
   // For firebase fast api
   if (projType == ProjectType.FastAPI && m.key == BModuleType.Firebase) {
-    data = data.replace('{{fb_service}}', f.funcGroup);
+    data = data.replace(
+      '{{fb_service}}',
+      f.funcGroup.slice(0, f.funcGroup.indexOf('/'))
+    );
   }
   if (projType == ProjectType.FastAPI) {
     data = data.replace('{{func_name}}', funcName);

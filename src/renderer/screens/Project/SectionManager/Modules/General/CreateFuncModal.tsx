@@ -46,7 +46,7 @@ function CreateFuncModal({ setModalOpen, onCreateClicked, funcGroup }: any) {
             className="input"
           />
           <Margin height={20} />
-          <p className="inputTitle">
+          {/* <p className="inputTitle">
             <HiSparkles style={{ marginRight: '5px' }} />
             Kickstart with AI
           </p>
@@ -64,9 +64,9 @@ function CreateFuncModal({ setModalOpen, onCreateClicked, funcGroup }: any) {
               checked={useGpt}
               onChange={(val) => setUseGpt(val)}
             />
-          </Tooltip>
+          </Tooltip> */}
         </div>
-        <Margin height={20} />
+        {/* <Margin height={20} /> */}
         <Button
           onClick={async () => {
             await onCreateClicked(
